@@ -1,6 +1,8 @@
 package pruebaBotones;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -25,12 +27,21 @@ public class ClaseBotones extends Application {
 		Button botonHola = new Button("Hola");
 		Button botonAdios = new Button("Adios");
 
-		// Funcionalidad botones
-		botonHola.setac
+		// funcionalidad botones
+		botonHola.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0){
+				mensaje.setText(botonHola.getText());
+			}
+		});
+		botonAdios.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0){
+				mensaje.setText(botonAdios.getText());
+			}
+		});
 		
 		// Contenedor y añadir componentes
 		VBox raiz= new VBox();
-		raiz.getChildren().addAll(mensaje, botonHola, botonAdios);
+		raiz.getChildren().addAll(mensaje,botonHola, botonAdios);
 
 		// Escena de trabajo
 		Scene escena=new Scene(raiz, 400, 400);
