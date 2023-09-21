@@ -16,20 +16,33 @@ public class RegistroEventos extends Application {
 
     @Override
     public void start(Stage stage) {
+        // Crea un objeto Circle con centro en (100, 100) y radio de 50
         Circle circle = new Circle(100, 100, 50);
-        circle.setFill(Color.CORAL);
-        // Create a MouseEvent handler
-        EventHandler<MouseEvent> mouseEventHandler = e -> 
-            System.out.println("Mouse event handler has been called.");
-        // Register the MouseEvent handler to the Circle for 
-        // mouse-clicked events
+        circle.setFill(Color.CORAL);  // Establece el color de relleno del círculo como CORAL
+
+        // Crea un controlador de eventos MouseEvent
+        EventHandler<MouseEvent> mouseEventHandler = e ->
+            System.out.println("El controlador de eventos de mouse ha sido llamado.");
+
+        // Registra el controlador de eventos MouseEvent al círculo para eventos de clic del mouse
         circle.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandler);
+
+        // Crea un contenedor HBox
         HBox root = new HBox();
-        root.getChildren().add(circle);
+        root.getChildren().add(circle);  // Agrega el círculo como hijo del contenedor
+
+        // Crea una escena y la asigna al escenario (stage)
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Registering Event Handlers");
+
+        // Establece el título del escenario
+        stage.setTitle("Registrando Controladores de Eventos");
+
+        // Muestra el escenario
         stage.show();
+        
+        // Ajusta el tamaño del escenario para que se ajuste al contenido de la escena
         stage.sizeToScene();
     }
+
 }
