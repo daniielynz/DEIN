@@ -19,9 +19,12 @@ public class WindowEventApp extends Application {
 
     @Override
     public void start(Stage escenario) {
+        // Creamos el checkbox
         puedeCerrarCbx = new CheckBox("Puede Cerrar Ventana");
+        // Creamos el boton de cerrar y le damos el evento de cerrar es escenario
         Button cerrarBtn = new Button("Cerrar");
         cerrarBtn.setOnAction(e -> escenario.close());
+        // Creamos el boton de ocultar y le damos el evento de que oculte el escenario y muestre un dialogo
         Button ocultarBtn = new Button("Ocultar");
         ocultarBtn.setOnAction(e -> {
             mostrarDialogo(escenario);
