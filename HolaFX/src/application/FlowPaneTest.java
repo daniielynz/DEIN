@@ -1,4 +1,3 @@
-// FlowPaneTest.java
 package application;
 import javafx.application.Application;
 import javafx.scene.Scene;

@@ -1,4 +1,3 @@
-// EventRegistration.java
 package application;
 import javafx.application.Application;
 import javafx.event.EventHandler;
