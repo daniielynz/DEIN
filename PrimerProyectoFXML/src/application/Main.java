@@ -9,7 +9,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/Calculadora.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/CalculadoraFXML.fxml"));
             Scene scene = new Scene(root,400,400);
             scene.getStylesheets().add(getClass() .getResource("/css/application.css").toExternalForm());
             primaryStage.setTitle("CALCULADORA");
