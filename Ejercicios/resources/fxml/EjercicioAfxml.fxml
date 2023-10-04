@@ -5,9 +5,11 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -54,14 +56,14 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="tfProfesion" layoutX="133.0" layoutY="3.0" prefHeight="24.0" prefWidth="469.0" />            
+            <TextField fx:id="tfProfesion" layoutX="133.0" layoutY="3.0" prefHeight="24.0" prefWidth="469.0" />            
             <Label layoutX="326.0" layoutY="43.0" prefHeight="22.0" prefWidth="49.0" text="Edad:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox id="cbEdad" layoutX="375.0" layoutY="42.0" prefWidth="150.0" />
-            <TextField id="tfHermanos" layoutX="133.0" layoutY="42.0" />
+            <ComboBox fx:id="cbEdad" layoutX="375.0" layoutY="42.0" onAction="#cargarCombo" prefWidth="150.0" />
+            <TextField fx:id="tfHermanos" layoutX="133.0" layoutY="42.0" />
          </children>
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
@@ -71,17 +73,20 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <RadioButton layoutX="158.0" layoutY="30.0" mnemonicParsing="false" text="Hombre">
+            <RadioButton fx:id="rbHombre" layoutX="158.0" layoutY="30.0" mnemonicParsing="false" text="Hombre">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="rbGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rbMujer" layoutX="272.0" layoutY="30.0" mnemonicParsing="false" text="Mujer" toggleGroup="$rbGroup">
                <font>
                   <Font size="14.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="272.0" layoutY="30.0" mnemonicParsing="false" text="Mujer">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </RadioButton>
-            <RadioButton layoutX="374.0" layoutY="30.0" mnemonicParsing="false" text="Otro">
+            <RadioButton fx:id="rbOtro" layoutX="374.0" layoutY="30.0" mnemonicParsing="false" text="Otro" toggleGroup="$rbGroup">
                <font>
                   <Font size="14.0" />
                </font>
@@ -90,7 +95,7 @@
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
          <children>
-            <CheckBox layoutX="14.0" mnemonicParsing="false" text="¿Practica algun deporte?">
+            <CheckBox fx:id="cbDeporte" layoutX="14.0" mnemonicParsing="false" text="¿Practica algun deporte?">
                <font>
                   <Font size="14.0" />
                </font>
@@ -104,11 +109,12 @@
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
          <children>
-            <Label layoutX="152.0" layoutY="44.0" prefHeight="40.0" prefWidth="317.0" style="-fx-font-weight: bold;" text="Marque del 1 al 10 su grado de aficción">
+            <Label layoutX="153.0" layoutY="59.0" prefHeight="40.0" prefWidth="317.0" style="-fx-font-weight: bold;" text="Marque del 1 al 10 su grado de aficción">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
+            <ListView fx:id="lista" layoutX="408.0" layoutY="-76.0" prefHeight="127.0" prefWidth="200.0" />
          </children>
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
@@ -118,7 +124,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider blockIncrement="1.0" layoutX="134.0" layoutY="37.0" majorTickUnit="1.0" max="10.0" prefHeight="15.0" prefWidth="460.0" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="sldCompras" blockIncrement="1.0" layoutX="134.0" layoutY="37.0" majorTickUnit="1.0" max="10.0" prefHeight="15.0" prefWidth="460.0" showTickLabels="true" showTickMarks="true" />
          </children>
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
@@ -128,17 +134,17 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider layoutX="132.0" layoutY="32.0" majorTickUnit="1.0" max="10.0" prefHeight="38.0" prefWidth="460.0" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="sldTelevision" layoutX="132.0" layoutY="32.0" majorTickUnit="1.0" max="10.0" prefHeight="38.0" prefWidth="460.0" showTickLabels="true" showTickMarks="true" />
          </children>
       </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
+      <Pane id="sldCine" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="7">
          <children>
             <Label layoutX="62.0" layoutY="25.0" prefHeight="29.0" prefWidth="75.0" text="Ir al cine:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider layoutX="137.0" layoutY="32.0" majorTickUnit="1.0" max="10.0" prefHeight="38.0" prefWidth="460.0" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="sldCine" layoutX="137.0" layoutY="32.0" majorTickUnit="1.0" max="10.0" prefHeight="38.0" prefWidth="460.0" showTickLabels="true" showTickMarks="true" />
          </children>
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="8">

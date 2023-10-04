@@ -1,61 +1,84 @@
 package controllers;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
 
 public class EjercicioAcontroller {
-	
-	/*
-    @FXML
-    private TextField txtOperador1;
-    @FXML
-    private TextField txtOperador2;
-    @FXML
-    private TextField txtResultado;
-    @FXML
-    private RadioButton rbSumar;
-    @FXML
-    private ToggleGroup tgOperaciones;
-    @FXML
-    private RadioButton rbRestar;
-    @FXML
-    private RadioButton rbMultiplicar;
-    @FXML
-    private RadioButton rbDividir;
 
-    // Event Listener on Button.onAction
     @FXML
-    public void calcular(ActionEvent event) {
-        try {
-            double op1 = Double.parseDouble(this.txtOperador1.getText());
-            double op2 = Double.parseDouble(this.txtOperador2.getText());
-            Operaciones operaciones = new Operaciones(op1, op2);
-            if (this.rbSumar.isSelected()) {
-                this.txtResultado.setText(operaciones.sumar() + "");
-            } else if (this.rbRestar.isSelected()) {
-                this.txtResultado.setText(operaciones.restar() + "");
-            } else if (this.rbMultiplicar.isSelected()) {
-                this.txtResultado.setText(operaciones.multiplicar() + "");
-            } else if (this.rbDividir.isSelected()) {
-                if (op2 == 0) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText(null);
-                    alert.setTitle("Error");
-                    alert.setContentText("El operando 2 no puede ser 0");
-                    alert.showAndWait();
-                } else {
-                    this.txtResultado.setText(operaciones.dividir() + "");
-                }
-            }
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Formato incorrecto");
-            alert.showAndWait();
-        } 
-    } */
+    private CheckBox cbDeporte;
+
+    @FXML
+    private ComboBox<String> cbEdad;
+    
+    @FXML
+    private ListView<String> lista;
+
+    @FXML
+    private ToggleGroup rbGroup;
+
+    @FXML
+    private RadioButton rbHombre;
+
+    @FXML
+    private RadioButton rbMujer;
+
+    @FXML
+    private RadioButton rbOtro;
+
+    @FXML
+    private Slider sldCine;
+
+    @FXML
+    private Slider sldCompras;
+
+    @FXML
+    private Slider sldTelevision;
+
+    @FXML
+    private TextField tfHermanos;
+
+    @FXML
+    private TextField tfProfesion;
+
+    @FXML
+    void initialize() {
+    	ObservableList<String> listaCombo = FXCollections.observableArrayList("Menores de 18","Entre 18 y 30","Entre 31 y 50","Entre 51 y 70","Mayores de 70");
+    	cbEdad.setItems(listaCombo);
+    	cbEdad.setValue(listaCombo.get(0));
+    	
+    	ObservableList<String> listaList = FXCollections.observableArrayList("Tenis","Fútbol","Baloncesto","Natación","Ciclismo","Otro");
+    	lista.setItems(listaList);
+    }
+    
+    @FXML
+    void cargarCombo(ActionEvent event) {
+    	
+    }
+    
+    @FXML
+    void accionAceptar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void accionCancelar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void accionCheck(ActionEvent event) {
+
+    }
+
 }
+
