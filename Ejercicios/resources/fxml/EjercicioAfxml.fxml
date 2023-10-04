@@ -12,6 +12,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
@@ -62,7 +63,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbEdad" layoutX="375.0" layoutY="42.0" onAction="#cargarCombo" prefWidth="150.0" />
+            <ComboBox fx:id="cbEdad" layoutX="375.0" layoutY="42.0" prefWidth="150.0" />
             <TextField fx:id="tfHermanos" layoutX="133.0" layoutY="42.0" />
          </children>
       </Pane>
@@ -91,20 +92,6 @@
                   <Font size="14.0" />
                </font>
             </RadioButton>
-         </children>
-      </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
-         <children>
-            <CheckBox fx:id="cbDeporte" layoutX="14.0" mnemonicParsing="false" text="¿Practica algun deporte?">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </CheckBox>
-            <Label layoutX="354.0" layoutY="-5.0" prefHeight="29.0" prefWidth="56.0" text="¿Cúal?">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
@@ -153,5 +140,25 @@
             <Button layoutX="327.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="210.0" text="Cancelar" />
          </children>
       </Pane>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+         <children>
+            <CheckBox fx:id="cbDeporte" mnemonicParsing="false" onAction="#accionCheck" prefHeight="19.0" prefWidth="237.0" text="¿Practica algun deporte?">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </CheckBox>
+            <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="155.0" text="¿Cúal?" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </GridPane>

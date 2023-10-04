@@ -58,27 +58,35 @@ public class EjercicioAcontroller {
     	
     	ObservableList<String> listaList = FXCollections.observableArrayList("Tenis","Fútbol","Baloncesto","Natación","Ciclismo","Otro");
     	lista.setItems(listaList);
+    	
+    	//cbDeporte.setOnAction(event -> habilitarLista());
+    	cbDeporte.setSelected(false);
+    	lista.setDisable(true);
     }
     
     @FXML
-    void cargarCombo(ActionEvent event) {
-    	
+    void accionCheck(ActionEvent event) {
+    	lista.setDisable(!cbDeporte.isSelected());
     }
     
     @FXML
     void accionAceptar(ActionEvent event) {
-
+    	String profesion = tfProfesion.getText();
+    	String NHermanos = tfHermanos.getText();
+    	String edad = cbEdad.getSelectionModel().getSelectedItem();
+    	String sexo;
+    	if(rbHombre.isSelected()) {
+    		sexo = rbHombre.getText();
+    	}else if(rbMujer.isSelected()) {
+    		sexo = rbMujer.getText();
+    	}else if(rbOtro.isSelected()) {
+    		sexo = rbOtro.getText();
+    	}
     }
 
     @FXML
     void accionCancelar(ActionEvent event) {
 
     }
-
-    @FXML
-    void accionCheck(ActionEvent event) {
-
-    }
-
 }
 
