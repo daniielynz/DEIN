@@ -13,12 +13,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import model.Persona;
 
-public class EjercicioBcontroller {
+public class EjercicioCcontroller {
 
     @FXML
     private Button btnAgregar;
+    
+    @FXML
+    private Button btnEliminar;
+
+    @FXML
+    private Button btnModificar;
 
     @FXML
     private TableColumn<Persona, String> colApellidos;
@@ -45,6 +52,8 @@ public class EjercicioBcontroller {
 
     @FXML
     void initialize() {
+    	//ponemos events a la tabla 
+    	
     	personas = FXCollections.observableArrayList();
     	// asignamos a la columna colNombre su cabera NOMBRE, asignado en FXML
 		colNombre.setCellValueFactory(new PropertyValueFactory<Persona,String>("nombre") );
@@ -67,6 +76,11 @@ public class EjercicioBcontroller {
 				return cell;
 			
 		});
+    	
+    }
+    
+    @FXML
+    void accionRecuperarDatos(MouseEvent event) {
     	
     }
     
@@ -134,6 +148,16 @@ public class EjercicioBcontroller {
             });
         	ventanaEmergente.show();
     	}
+    }
+    
+    @FXML
+    void accionEliminar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void accionModificar(ActionEvent event) {
+
     }
 }
 
