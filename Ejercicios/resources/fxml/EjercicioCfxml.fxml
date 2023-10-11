@@ -73,7 +73,7 @@
             <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#accionAceptar" text="Agregar Persona" />
          </children>
       </FlowPane>
-      <TableView fx:id="tableInfo" onMouseClicked="#accionRecuperarDatos" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowSpan="3">
+      <TableView fx:id="tableInfo" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowSpan="3">
         <columns>
           <TableColumn fx:id="colNombre" prefWidth="75.0" text="NOMBRE" />
           <TableColumn fx:id="colApellidos" prefWidth="75.0" text="APELLIDOS" />
