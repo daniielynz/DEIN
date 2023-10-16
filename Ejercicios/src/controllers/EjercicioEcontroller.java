@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 import model.Persona;
 
 
-public class EjercicioDcontroller {
+public class EjercicioEcontroller {
 
     @FXML
     private Button btnAgregar;
@@ -52,6 +52,16 @@ public class EjercicioDcontroller {
 
     @FXML
     void initialize() {
+    	//ponemos events a la tabla
+    	tableInfo.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                Persona p = tableInfo.getSelectionModel().getSelectedItem();
+                tfNombre.setText(p.getNombre());
+                tfApellidos.setText(p.getApellidos());
+                tfEdad.setText(p.getEdad()+"");
+            }
+        });
+    	
     	personas = FXCollections.observableArrayList();
     	// asignamos a la columna colNombre su cabera NOMBRE, asignado en FXML
 		colNombre.setCellValueFactory(new PropertyValueFactory<Persona,String>("nombre") );
@@ -62,49 +72,23 @@ public class EjercicioDcontroller {
     
     @FXML
     void accionAgregar(ActionEvent event){
-    	// creamos la ventana emergente y el contenedor
-    	Stage ventanaEmergente = new Stage();
-    	VBox contenedorRaiz = new VBox();
-    		// contenedor para el Nombre
-    		HBox contenedorNombre = new HBox();
-    		contenedorNombre.setSpacing(10);
-    		tfNombre = new TextField();
-    		contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
-    		
-    		// contenedor para los Apellidos
-    		HBox contenedorApellidos = new HBox();
-    		contenedorApellidos.setSpacing(10);
-    		tfApellidos = new TextField();
-    		contenedorApellidos.getChildren().addAll(new javafx.scene.control.Label("Apellidos"), tfApellidos);
-    		
-    		// contenedor para la Edad
-    		HBox contenedorEdad = new HBox();
-    		contenedorEdad.setSpacing(10);
-    		tfEdad = new TextField();
-    		contenedorEdad.getChildren().addAll(new javafx.scene.control.Label("Edad"), tfEdad);
-	    	
-    		// contenedor para los botones
-    		HBox contenedorBotones = new HBox();
-    		contenedorBotones.setSpacing(10);
-	    	Button guardarBtn = new Button("Guardar");
-	    	guardarBtn.setOnAction(e -> guardar(e));
-	        // Creamos el boton de cerrar y le damos el evento de cerrar
-	        Button cerrarBtn = new Button("Cerrar");
-	        cerrarBtn.setOnAction(e -> ventanaEmergente.close());
-	        
-	        contenedorBotones.getChildren().addAll(guardarBtn, cerrarBtn);
-	        
-        // añadimos los botones
-        contenedorRaiz.getChildren().addAll(contenedorNombre, contenedorApellidos, contenedorEdad, contenedorBotones);
-        // Creamos propiedades para el contenedor
-        contenedorRaiz.setPadding(new Insets(20));
-        contenedorRaiz.setSpacing(20);
-        // Creamos la escena
-        Scene escena = new Scene(contenedorRaiz);
-        ventanaEmergente.setScene(escena);
-        ventanaEmergente.setTitle("Nueva Persona");
-        ventanaEmergente.setResizable(false);
-        ventanaEmergente.show();
+    	crearVentanaEmergente("Nueva Persona", "guardar");
+    }
+    
+    
+    
+    @FXML
+    private void accionEliminar(ActionEvent event) {
+    	// Guardo la persona seleccionada
+    	Persona p = tableInfo.getSelectionModel().getSelectedItem();
+    	// La borro de la lista
+    	borrarPersonaLista(p);
+    	alertaInformacion("Se ha eliminado a la persona seleccionada");
+    }
+    
+    @FXML
+    void accionModificar(ActionEvent event) {
+    	crearVentanaEmergente("Editar Persona", "modificar");
     }
     
     /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +108,100 @@ public class EjercicioDcontroller {
         	alertaInformacion("Se ha añadido a la persona correctamente");
     	}else {
     		alertaError(errores);
+    	}
+    }
+    
+    void modificar(ActionEvent event) {
+    	//Antes de modificar, validamos que los campos no tengan errores
+    	String errores = validarCampos();
+ 
+    	if(errores.isEmpty()) {
+    		// Si no da errores sacamos los datos
+    		String nombre = tfNombre.getText();
+        	String apellidos = tfApellidos.getText();
+        	int edad = Integer.parseInt(tfEdad.getText());
+        	// generamos una persona con los datos nuevos
+        	Persona p = new Persona(nombre, apellidos, edad);
+        	// borramos la persona seleccionada
+        	borrarPersonaLista(tableInfo.getSelectionModel().getSelectedItem());
+        	// Añadimos la persona seleccionada
+        	aniadirPersona(p);
+        	alertaInformacion("Se ha modificado la persona seleccionada");
+    	}else {
+    		// mostramos los errores
+    		alertaError(errores);
+    	}
+    }
+    
+    private void crearVentanaEmergente(String titulo, String accion) {
+    	// creamos la ventana emergente y el contenedor
+    	Stage ventanaEmergente = new Stage();
+    	VBox contenedorRaiz = new VBox();
+    		// contenedor para el Nombre
+    		HBox contenedorNombre = new HBox();
+    		contenedorNombre.setSpacing(10);
+    		if(tfNombre == null) {
+    			tfNombre = new TextField();
+    		}
+    		contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
+    		
+    		// contenedor para los Apellidos
+    		HBox contenedorApellidos = new HBox();
+    		contenedorApellidos.setSpacing(10);
+    		if(tfApellidos == null) {
+    			tfApellidos = new TextField();
+    		}
+    		contenedorApellidos.getChildren().addAll(new javafx.scene.control.Label("Apellidos"), tfApellidos);
+    		
+    		// contenedor para la Edad
+    		HBox contenedorEdad = new HBox();
+    		contenedorEdad.setSpacing(10);
+    		if(tfEdad == null) {
+    			tfEdad = new TextField();
+    		}
+    		contenedorEdad.getChildren().addAll(new javafx.scene.control.Label("Edad"), tfEdad);
+	    	
+    		// contenedor para los botones
+    		HBox contenedorBotones = new HBox();
+    		contenedorBotones.setSpacing(10);
+	    	Button guardarBtn = new Button("Guardar");
+	    	if(accion.equals("guardar")) {
+	    		guardarBtn.setOnAction(e -> guardar(e));
+	    	}else if(accion.equals("modificar")) {
+	    		guardarBtn.setOnAction(e -> modificar(e));
+	    	}
+	        // Creamos el boton de cerrar y le damos el evento de cerrar
+	        Button cerrarBtn = new Button("Cerrar");
+	        cerrarBtn.setOnAction(e -> ventanaEmergente.close());
+	        
+	        contenedorBotones.getChildren().addAll(guardarBtn, cerrarBtn);
+	        
+        // añadimos los botones
+        contenedorRaiz.getChildren().addAll(contenedorNombre, contenedorApellidos, contenedorEdad, contenedorBotones);
+        // Creamos propiedades para el contenedor
+        contenedorRaiz.setPadding(new Insets(20));
+        contenedorRaiz.setSpacing(20);
+        // Creamos la escena
+        Scene escena = new Scene(contenedorRaiz);
+        ventanaEmergente.setScene(escena);
+        ventanaEmergente.setTitle("Nueva Persona");
+        ventanaEmergente.setResizable(false);
+        ventanaEmergente.show();
+    }
+    
+    private void borrarPersonaLista(Persona p) {
+    	// Compruebo si esa persona ya existe en la lista para poder borrarla
+    	if(personas.contains(p)) {
+    		// si la persona existe
+    		// la borramos de la lista y cargamos la tabla de nuevo
+    		personas.remove(p);
+    		tableInfo.setItems(personas);
+        	tableInfo.refresh();
+        	// Despues de borrar vacia los campos
+        	vaciarCampos();
+    	}else {
+    		// mensaje de error
+    		alertaError("Esa persona no existe");
     	}
     }
     
@@ -200,6 +278,7 @@ public class EjercicioDcontroller {
 
     
 }
+
 
 
 
