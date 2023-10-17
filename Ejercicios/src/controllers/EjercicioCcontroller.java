@@ -56,9 +56,11 @@ public class EjercicioCcontroller {
     	tableInfo.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 Persona p = tableInfo.getSelectionModel().getSelectedItem();
-                tfNombre.setText(p.getNombre());
-                tfApellidos.setText(p.getApellidos());
-                tfEdad.setText(p.getEdad()+"");
+                if(p!=null) {
+                	tfNombre.setText(p.getNombre());
+                    tfApellidos.setText(p.getApellidos());
+                    tfEdad.setText(p.getEdad()+"");
+                }
             }
         });
     	
@@ -141,7 +143,7 @@ public class EjercicioCcontroller {
     	try {
     		edad = Integer.parseInt(tfEdad.getText());
 		}catch(NumberFormatException e) {
-			errores+= "El numero de hermanos tiene que ser numerico\n";
+			errores+= "La edad tiene que ser numerica\n";
 		}
     	
     	return errores;

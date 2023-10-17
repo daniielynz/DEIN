@@ -1,28 +1,34 @@
 package controllers;
 
-import java.awt.Label;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.Persona;
 
 
-public class EjercicioEcontroller {
+public class EjercicioFcontroller {
 
     @FXML
     private Button btnAgregar;
@@ -31,6 +37,8 @@ public class EjercicioEcontroller {
     private TableColumn<Persona, String> colApellidos;
     
     private ObservableList<Persona> personas;
+    
+    private ObservableList<Persona> listaFiltro;
 
     @FXML
     private TableColumn<Persona, Integer> colEdad;
@@ -49,9 +57,22 @@ public class EjercicioEcontroller {
 
     @FXML
     private TextField tfNombre;
+    
+    @FXML
+    private TextField tfBuscarNombre;
 
     @FXML
     void initialize() {
+    	// ponemos evento al TextField del filtrado por nombre
+    	tfBuscarNombre.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Este código se ejecutará cuando se presione "Enter" en el TextField.
+                String cadena = tfBuscarNombre.getText();
+                mostrarNombresFiltro(cadena);
+            }
+        });
+    	
     	//ponemos events a la tabla
     	tableInfo.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
@@ -93,11 +114,79 @@ public class EjercicioEcontroller {
     	crearVentanaEmergente("Editar Persona", "modificar");
     }
     
+    @FXML
+    void accionImportar(ActionEvent event) {
+    	FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Archivos CSV", "*.csv"));
+        fileChooser.setInitialFileName("datosTabla.csv");
+    	
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileChooser.getInitialFileName()))) {
+        	
+            reader.readLine();
+            String line = reader.readLine();
+            while (line != null) {
+            	String[] partes = line.split(",");
+            	
+            	Persona p = new Persona(partes[0], partes[1], Integer.parseInt(partes[2]));
+            	
+            	if(!personas.contains(p)) {
+            		personas.add(p);
+            		tableInfo.setItems(personas);
+                	tableInfo.refresh();
+            	}
+            	
+            	line = reader.readLine();
+            }
+            alertaInformacion("Se ha importado correctamente");
+        } catch (FileNotFoundException e) {
+            alertaError("No existe el archivo");
+        } catch (IOException e) {
+            System.err.println("Error de E/S: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    void accionExportar(ActionEvent event) {
+    	if(!personas.isEmpty()) {
+    		FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Archivos CSV", "*.csv"));
+            fileChooser.setInitialFileName("datosTabla.csv");
+        	
+        	try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileChooser.getInitialFileName()))) {
+        		writer.write("Nombre,Apellidos,Edad");
+        		writer.newLine();
+                for (Persona p : personas) {
+                    writer.write(p.getNombre()+","+p.getApellidos()+","+p.getEdad());
+                    writer.newLine();
+                }
+                alertaInformacion("Se ha exportado correctamente");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    	}else {
+    		alertaError("Tiene que haber alguna persona");
+    	}
+    	
+    }
+    
     /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     		METODOS 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    void mostrarNombresFiltro(String cadena) {
+    	listaFiltro = FXCollections.observableArrayList();
+    	for (Persona p: personas) {
+            if(p.getNombre().contains(cadena)) {
+            	listaFiltro.add(p);
+            }
+        }
+    	tableInfo.setItems(listaFiltro);
+    	tableInfo.refresh();
+    	// Despues de borrar vacia los campos
+    	vaciarCampos();
+    }
+    
     void guardar(ActionEvent event){
     	// Validamos que los campos sean correctos
     	String errores = validarCampos();

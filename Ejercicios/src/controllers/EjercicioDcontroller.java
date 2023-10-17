@@ -145,7 +145,7 @@ public class EjercicioDcontroller {
     	try {
     		edad = Integer.parseInt(tfEdad.getText());
 		}catch(NumberFormatException e) {
-			errores+= "El numero de hermanos tiene que ser numerico\n";
+			errores+= "La edad tiene que ser numerica\n";
 		}
     	
     	return errores;
