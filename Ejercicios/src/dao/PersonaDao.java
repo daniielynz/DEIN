@@ -23,15 +23,20 @@ public class PersonaDao {
         	ResultSet rs = pstmt.executeQuery();   
 				
 			 while (rs.next()) {
+				 	// Guardamos todos los datos
 		            int idPersona = rs.getInt("id");
 		            String nombre = rs.getString("nombre");
 		            String apellidos = rs.getString("apellidos");
 		            int edad = rs.getInt("edad");
-		            
+		            // Creamos la persona
 		            Persona a = new Persona(idPersona, nombre, apellidos, edad);
-			 }             
-		rs.close();       
-        conexion.closeConexion();
+		            personas.add(a);
+			 }     
+			 rs.close();       
+			 conexion.closeConexion();
+
+			 return personas;
+			 
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();
 	    }    
@@ -58,12 +63,10 @@ public class PersonaDao {
     	return 0;
     }
     
-    public void aniadirPersona(Persona p)  {
-    	System.out.println("hola");
+    public void eliminarPersona(Persona p)  {
         try {
             conexion = new ConexionBD();        	
-        	String consulta = "insert into Persona (id,nombre,apellidos,edad) VALUES ("+ultimoId()+",'"+p.getNombre()+"','"+p.getApellidos()+"',"+p.getEdad()+")";
-        	System.out.println(consulta);
+        	String consulta = "DELETE FROM Persona WHERE id = "+p.getIdPersona()+";";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
         	int rs = pstmt.executeUpdate();
         	      
@@ -71,5 +74,65 @@ public class PersonaDao {
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();
 	    }   
+    }
+    
+    public void aniadirPersona(Persona p)  {
+        try {
+            conexion = new ConexionBD();        	
+        	String consulta = "insert into Persona (id,nombre,apellidos,edad) VALUES ("+ultimoId()+",'"+p.getNombre()+"','"+p.getApellidos()+"',"+p.getEdad()+");";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	int rs = pstmt.executeUpdate();
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }   
+    }
+    
+    public void modificarPersona(Persona p)  {
+        try {
+            conexion = new ConexionBD();        	
+        	String consulta = "UPDATE Persona "
+					        			+ "SET nombre = '"+p.getNombre()+"',"
+					        			+ "apellidos = '"+p.getApellidos()+"',"
+					        			+ "edad = "+p.getEdad()+" "
+					        			+ "WHERE id = "+p.getIdPersona();
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	int rs = pstmt.executeUpdate();
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }   
+    }
+    
+public ObservableList<Persona> buscarPersonasPorNombre(String cadena)  {
+    	
+    	ObservableList<Persona> personas = FXCollections.observableArrayList();
+        try {
+            conexion = new ConexionBD();        	
+        	String consulta = "select * from Persona WHERE nombre LIKE '%"+cadena+"%'";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+				
+			 while (rs.next()) {
+				 	// Guardamos todos los datos
+		            int idPersona = rs.getInt("id");
+		            String nombre = rs.getString("nombre");
+		            String apellidos = rs.getString("apellidos");
+		            int edad = rs.getInt("edad");
+		            // Creamos la persona
+		            Persona a = new Persona(idPersona, nombre, apellidos, edad);
+		            personas.add(a);
+			 }     
+			 rs.close();       
+			 conexion.closeConexion();
+
+			 return personas;
+			 
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }    
+        return personas;    
     }
 }

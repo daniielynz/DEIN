@@ -37,8 +37,6 @@ public class EjercicioHcontroller {
     @FXML
     private TableColumn<Persona, String> colApellidos;
     
-    private ObservableList<Persona> personas;
-    
     private ObservableList<Persona> listaFiltro;
 
     @FXML
@@ -61,6 +59,8 @@ public class EjercicioHcontroller {
     
     @FXML
     private TextField tfBuscarNombre;
+    
+    private Stage ventanaEmergente;
 
     @FXML
     void initialize() {
@@ -74,6 +74,10 @@ public class EjercicioHcontroller {
             }
         });
     	
+    	tfNombre = new TextField();
+    	tfApellidos = new TextField();
+    	tfEdad = new TextField();
+    	
     	//ponemos events a la tabla
     	tableInfo.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
@@ -86,7 +90,6 @@ public class EjercicioHcontroller {
             }
         });
     	
-    	personas = FXCollections.observableArrayList();
     	// asignamos a la columna colNombre su cabera NOMBRE, asignado en FXML
 		colNombre.setCellValueFactory(new PropertyValueFactory<Persona,String>("nombre") );
 		colApellidos.setCellValueFactory(new PropertyValueFactory<Persona,String>("apellidos") );
@@ -132,14 +135,11 @@ public class EjercicioHcontroller {
     }
     
     void mostrarNombresFiltro(String cadena) {
-    	listaFiltro = FXCollections.observableArrayList();
-    	for (Persona p: personas) {
-            if(p.getNombre().contains(cadena)) {
-            	listaFiltro.add(p);
-            }
-        }
-    	tableInfo.setItems(listaFiltro);
-    	tableInfo.refresh();
+    	PersonaDao personaDao = new PersonaDao();
+        ObservableList<Persona> personas = FXCollections.observableArrayList();
+        personas=personaDao.buscarPersonasPorNombre(cadena);
+        tableInfo.setItems(personas);
+        tableInfo.refresh();
     	// Despues de borrar vacia los campos
     	vaciarCampos();
     }
@@ -164,16 +164,21 @@ public class EjercicioHcontroller {
     	String errores = validarCampos();
  
     	if(errores.isEmpty()) {
+    		int idPersona = tableInfo.getSelectionModel().getSelectedItem().getIdPersona();
     		// Si no da errores sacamos los datos
     		String nombre = tfNombre.getText();
         	String apellidos = tfApellidos.getText();
         	int edad = Integer.parseInt(tfEdad.getText());
         	// generamos una persona con los datos nuevos
-        	Persona p = new Persona(nombre, apellidos, edad);
+        	Persona p = new Persona(idPersona, nombre, apellidos, edad);
         	// borramos la persona seleccionada
-        	borrarPersonaLista(tableInfo.getSelectionModel().getSelectedItem());
-        	// Añadimos la persona seleccionada
-        	aniadirPersona(p);
+        	try {
+                PersonaDao personaDao = new PersonaDao();
+                personaDao.modificarPersona(p);
+                cargarTabla();
+            } catch(Exception e) {}
+        	
+        	ventanaEmergente.close();
         	alertaInformacion("Se ha modificado la persona seleccionada");
     	}else {
     		// mostramos los errores
@@ -183,7 +188,7 @@ public class EjercicioHcontroller {
     
     private void crearVentanaEmergente(String titulo, String accion) {
     	// creamos la ventana emergente y el contenedor
-    	Stage ventanaEmergente = new Stage();
+    	ventanaEmergente = new Stage();
     	VBox contenedorRaiz = new VBox();
     		// contenedor para el Nombre
     		HBox contenedorNombre = new HBox();
@@ -232,13 +237,21 @@ public class EjercicioHcontroller {
         // Creamos la escena
         Scene escena = new Scene(contenedorRaiz);
         ventanaEmergente.setScene(escena);
-        ventanaEmergente.setTitle("Nueva Persona");
+        if(accion.equals("guardar")) {
+        	ventanaEmergente.setTitle("Nueva Persona");
+    	}else if(accion.equals("modificar")) {
+    		ventanaEmergente.setTitle("Modificar Persona");
+    	}
         ventanaEmergente.setResizable(false);
         ventanaEmergente.show();
     }
     
     private void borrarPersonaLista(Persona p) {
-    	
+    	try {
+            PersonaDao personaDao = new PersonaDao();
+            personaDao.eliminarPersona(p);
+            cargarTabla();
+        } catch(Exception e) {}
     }
     
     private String validarCampos() {
@@ -293,6 +306,7 @@ public class EjercicioHcontroller {
     	try {
             PersonaDao personaDao = new PersonaDao();
             personaDao.aniadirPersona(p);
+            ventanaEmergente.close();
             cargarTabla();
         } catch(Exception e) {}
     }

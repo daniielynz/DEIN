@@ -275,7 +275,11 @@ public class EjercicioFcontroller {
         // Creamos la escena
         Scene escena = new Scene(contenedorRaiz);
         ventanaEmergente.setScene(escena);
-        ventanaEmergente.setTitle("Nueva Persona");
+        if(accion.equals("guardar")) {
+        	ventanaEmergente.setTitle("Nueva Persona");
+    	}else if(accion.equals("modificar")) {
+    		ventanaEmergente.setTitle("Modificar Persona");
+    	}
         ventanaEmergente.setResizable(false);
         ventanaEmergente.show();
     }

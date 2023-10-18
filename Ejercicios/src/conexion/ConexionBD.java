@@ -12,9 +12,8 @@ public class ConexionBD {
         String host = "localhost";
         String baseDatos = "personas";
         String usuario = "admin";
-        String password = "admin";
+        String password = "dm2";
         String cadenaConexion = "jdbc:mysql://" + host + "/" + baseDatos+ "?serverTimezone=" + TimeZone.getDefault().getID();
-        System.out.println(cadenaConexion);
         conexion = DriverManager.getConnection(cadenaConexion, usuario, password);
         conexion.setAutoCommit(true);
     }
