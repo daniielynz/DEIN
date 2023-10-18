@@ -3,8 +3,14 @@ package model;
 import java.util.Objects;
 
 public class Persona {
+	@Override
+	public String toString() {
+		return "Persona [nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad + ", idPersona=" + idPersona
+				+ "]";
+	}
+
 	private String nombre, apellidos;
-	private int edad;
+	private int edad, idPersona;
 	
 	@Override
 	public int hashCode() {
@@ -27,6 +33,21 @@ public class Persona {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.edad = edad;
+	}
+	
+	public Persona(int idPersona, String nombre, String apellidos, int edad) {
+		this.idPersona = idPersona;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.edad = edad;
+	}
+
+	public int getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(int idPersona) {
+		this.idPersona = idPersona;
 	}
 
 	public String getNombre() {
