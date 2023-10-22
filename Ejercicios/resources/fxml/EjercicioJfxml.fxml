@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="771.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EjercicioJcontroller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="454.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="435.0" minWidth="10.0" prefWidth="435.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="119.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="314.0" minHeight="10.0" prefHeight="274.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="477.0" minHeight="10.0" prefHeight="223.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="205.0" minHeight="0.0" prefHeight="91.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <ImageView fx:id="imgCoche" fitHeight="463.0" fitWidth="764.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+         <image>
+            <Image url="@../images/coches/rojo.png" />
+         </image>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </ImageView>
+      <ImageView fitHeight="82.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
+         <GridPane.margin>
+            <Insets left="150.0" />
+         </GridPane.margin>
+         <image>
+            <Image url="@../images/cooperLogo.png" />
+         </image>
+      </ImageView>
+      <Label text="CONFIGURA TU MINI COOPER" textFill="WHITE" GridPane.columnIndex="1">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgEncenderApagar" fitHeight="39.0" fitWidth="31.0" onMouseClicked="#accionApagarEncender" pickOnBounds="true" preserveRatio="true">
+         <GridPane.margin>
+            <Insets left="40.0" top="50.0" />
+         </GridPane.margin>
+         <image>
+            <Image url="@../images/lucesOn.png" />
+         </image>
+      </ImageView>
+      <FlowPane prefHeight="15.0" prefWidth="719.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+         <children>
+            <FlowPane alignment="CENTER" prefHeight="33.0" prefWidth="771.0">
+               <children>
+                  <Label prefHeight="10.0" prefWidth="233.0" text="Selecciona tu color favorito" textFill="WHITE">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </FlowPane>
+            <FlowPane prefHeight="41.0" prefWidth="771.0">
+               <children>
+                  <ImageView fx:id="rojo" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/rojo.jpg" />
+                     </image>
+                     <FlowPane.margin>
+                        <Insets left="40.0" right="30.0" />
+                     </FlowPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="azulClaro" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/azulClaro.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="azulOscuro" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/azulOscuro.jpg" />
+                     </image>
+                     <FlowPane.margin>
+                        <Insets left="30.0" right="30.0" />
+                     </FlowPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="negro" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/negro.jpg" />
+                     </image>
+                     <FlowPane.margin>
+                        <Insets right="30.0" />
+                     </FlowPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="grisOscuro" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/grisOscuro.jpg" />
+                     </image>
+                     <FlowPane.margin>
+                        <Insets right="30.0" />
+                     </FlowPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="grisClaro" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/grisClaro.jpg" />
+                     </image>
+                     <FlowPane.margin>
+                        <Insets right="30.0" />
+                     </FlowPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="plata" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/plata.jpg" />
+                     </image>
+                     <FlowPane.margin>
+                        <Insets right="30.0" />
+                     </FlowPane.margin>
+                  </ImageView>
+                  <ImageView fx:id="oro" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#accionCambiarColor" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/colores/oro.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </FlowPane>
+         </children>
+      </FlowPane>
+      <ImageView fx:id="imgLuces" fitHeight="459.0" fitWidth="782.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+   </children>
+</GridPane>
