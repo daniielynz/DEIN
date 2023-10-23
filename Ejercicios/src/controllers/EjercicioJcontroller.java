@@ -50,32 +50,26 @@ public class EjercicioJcontroller {
     @FXML
     void accionApagarEncender(MouseEvent event) {
     	if(lucesApagadas==true) {
-    		// URL del coche 
-        	System.out.println("La URL del coche de fondo (FUNCIONA)\n"+this.imgCoche.getImage().getUrl());
-        	
-        	imgLuces = new ImageView();
         	// Activar la imagen de las luces encendidas
         	String imagePath = getClass().getResource("/images/autoLuz.png").toString();
         	Image image = new Image(imagePath);
-    		this.imgLuces = new ImageView(image);
-    		System.out.println("La URL de la imagen de las luces es\n"+this.imgLuces.getImage().getUrl());
+        	this.imgLuces.setImage(image);
     		
     		// Cambiar la imagen del boton de apagar y encender las luces
         	String imagePath2 = getClass().getResource("/images/lucesOff.png").toString();
         	Image image2 = new Image(imagePath2);
-    		this.imgEncenderApagar = new ImageView(image2);
-    		System.out.println("La URL de la imagen del boton encender apagar es\n"+this.imgEncenderApagar.getImage().getUrl());
+    		this.imgEncenderApagar.setImage(image2);
     		
     		this.lucesApagadas=false;
     	}else {
     		// URL del coche 
-    		this.imgLuces = new ImageView();
+    		Image image = null;
+        	this.imgLuces.setImage(image);
     		
     		// Cambiar la imagen del boton de apagar y encender las luces
         	String imagePath2 = getClass().getResource("/images/lucesOn.png").toString();
         	Image image2 = new Image(imagePath2);
-    		this.imgEncenderApagar = new ImageView(image2);
-    		System.out.println("La URL de la imagen del boton encender apagar es\n"+this.imgEncenderApagar.getImage().getUrl());
+    		this.imgEncenderApagar.setImage(image2);
     		
     		this.lucesApagadas=true;
     	}
@@ -84,12 +78,12 @@ public class EjercicioJcontroller {
 
     @FXML
     void accionCambiarColor(MouseEvent event) {
-    	System.out.println(event.getSource());
+    	// Recuperamos el id del ImageView que hemos pulsado
     	ImageView imgV = (ImageView) event.getSource();
-    	String imagePath = getClass().getResource("/images/colores/"+imgV.getId()+".jpg").toString();
+    	// creamos la ruta donde esta el coche que vamos a mostrar y creamos la nueva imagen
+    	String imagePath = getClass().getResource("/images/coches/"+imgV.getId()+".png").toString();
     	Image image = new Image(imagePath);
-		this.imgCoche = new ImageView(image);
-		System.out.println("Imagen del coche\n"+this.imgCoche.getImage().getUrl());
+		this.imgCoche.setImage(image);
     }
 
 }
