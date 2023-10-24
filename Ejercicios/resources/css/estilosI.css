@@ -1,0 +1,30 @@
+.button{
+	-fx-background-color: #BE0277;
+	-fx-text-fill: white;
+	-fx-background-radius: 20;
+}
+
+#tfBuscarNombre{
+	-fx-border-radius: 30;
+}
+
+.table-view .column-header {
+	-fx-text-fill: white;
+	-fx-background-color: #BE0277;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #ECAAD3; 
+}
+
+#btnAgregar{
+	-fx-font-family: 'fa-solid fa-user-plus'; 
+}
+
+#btnModificar{
+	
+}
+
+#btnEliminar{
+	
+}
