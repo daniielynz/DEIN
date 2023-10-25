@@ -15,6 +15,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,6 +28,12 @@ public class EjercicioIcontroller {
 
     @FXML
     private Button btnAgregar;
+    
+    @FXML
+    private Button btnModificar;
+    
+    @FXML
+    private Button btnEliminar;
 
     @FXML
     private TableColumn<Persona, String> colApellidos;
@@ -56,6 +63,14 @@ public class EjercicioIcontroller {
 
     @FXML
     void initialize() {
+    	// Crea un Tooltip
+        Tooltip tooltip = new Tooltip("Boton para modificar la persona seleccionada");
+        btnModificar.setTooltip(tooltip);
+        tooltip.setText("Boton para eliminar la persona seleccionada");
+        btnEliminar.setTooltip(tooltip);
+        tooltip.setText("Buscar personas por nombre");
+        tfBuscarNombre.setTooltip(tooltip);
+        
     	// ponemos evento al TextField del filtrado por nombre
     	tfBuscarNombre.setOnAction(new EventHandler<ActionEvent>() {
             @Override

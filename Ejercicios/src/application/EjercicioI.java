@@ -1,5 +1,8 @@
 package application;
 	
+import java.util.Locale;
+import java.util.ResourceBundle;
+import conexion.Propiedades;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -11,9 +14,15 @@ public class EjercicioI extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EjercicioIfxml.fxml"));
+			String idioma = Propiedades.getValor("idioma");
+			String region = Propiedades.getValor("region");
+			Locale.setDefault(new Locale(idioma, region));
+			ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");			
+			
+			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EjercicioIfxml.fxml"), bundle);
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("/css/estilosI.css").toExternalForm());
+			primaryStage.setTitle(bundle.getString("titulo"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

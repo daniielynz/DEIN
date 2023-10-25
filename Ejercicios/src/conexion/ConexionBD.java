@@ -9,12 +9,16 @@ public class ConexionBD {
     private Connection conexion;
     
     public ConexionBD() throws SQLException {
-        String host = "localhost";
+       /* String host = "localhost";
         String baseDatos = "personas";
         String usuario = "admin";
         String password = "dm2";
-        String cadenaConexion = "jdbc:mysql://" + host + "/" + baseDatos+ "?serverTimezone=" + TimeZone.getDefault().getID();
-        conexion = DriverManager.getConnection(cadenaConexion, usuario, password);
+        String cadenaConexion = "jdbc:mysql://" + host + "/" + baseDatos+ "?serverTimezone=" + TimeZone.getDefault().getID();*/
+    	String url = Propiedades.getValor("url") + "?serverTimezone=" + TimeZone.getDefault().getID();
+        String user = Propiedades.getValor("user");
+        String password = Propiedades.getValor("password");
+        conexion = DriverManager.getConnection(url, user, password);
+        //conexion = DriverManager.getConnection(cadenaConexion, usuario, password);
         conexion.setAutoCommit(true);
     }
     public Connection getConexion() {
