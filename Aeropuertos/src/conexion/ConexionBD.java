@@ -9,7 +9,7 @@ public class ConexionBD {
     private Connection conexion;
     
     public ConexionBD() throws SQLException {
-    	String url = Propiedades.getValor("urlAeropuertos") + "?serverTimezone=" + TimeZone.getDefault().getID();
+    	String url = Propiedades.getValor("url") + "?serverTimezone=" + TimeZone.getDefault().getID();
         String user = Propiedades.getValor("user");
         String password = Propiedades.getValor("password");
         conexion = DriverManager.getConnection(url, user, password);
