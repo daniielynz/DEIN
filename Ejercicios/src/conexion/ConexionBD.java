@@ -13,12 +13,14 @@ public class ConexionBD {
         String baseDatos = "personas";
         String usuario = "admin";
         String password = "dm2";
-        String cadenaConexion = "jdbc:mysql://" + host + "/" + baseDatos+ "?serverTimezone=" + TimeZone.getDefault().getID();*/
+        String cadenaConexion = "jdbc:mysql://" + host + "/" + baseDatos+ "?serverTimezone=" + TimeZone.getDefault().getID();
+    	conexion = DriverManager.getConnection(cadenaConexion, usuario, password); */
+    	// Inicializamos las variables URL, user y password con el valor de los atributos de clase Propiedades
     	String url = Propiedades.getValor("url") + "?serverTimezone=" + TimeZone.getDefault().getID();
         String user = Propiedades.getValor("user");
         String password = Propiedades.getValor("password");
+        // Creamos la conexion
         conexion = DriverManager.getConnection(url, user, password);
-        //conexion = DriverManager.getConnection(cadenaConexion, usuario, password);
         conexion.setAutoCommit(true);
     }
     public Connection getConexion() {

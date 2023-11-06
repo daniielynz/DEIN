@@ -20,12 +20,14 @@ import model.Animal;
 
 
 public class EjercicioScontroller {
-
+	// Boton para agragar
     @FXML
     private Button btnAgregar;
     
+    // Lista para los animales
     private ObservableList<Animal> animales;
-    //
+    
+    // Atributos para las columnas de la tabla y la tabla
     @FXML
     private TableColumn<Animal, Integer> colEdad;
 
@@ -56,7 +58,7 @@ public class EjercicioScontroller {
     @FXML
     private TableView<Animal> tableInfo;
 
-    // textfields de la ventana emergente
+    // Atributos de los textfields de la ventana emergente
     @FXML
     private TextField tfEdad;
 
@@ -90,6 +92,7 @@ public class EjercicioScontroller {
     	tableInfo.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 Animal a = tableInfo.getSelectionModel().getSelectedItem();
+                // Si se ha elegido un animal cargamos los TextFields con sus datos
                 if(a!=null) {
                 	tfEdad.setText(a.getEdad()+"");
                 	tfEspecie.setText(a.getEspecie());
@@ -105,7 +108,7 @@ public class EjercicioScontroller {
         });
     	// inicializamos la lista con los datos de los animales
     	animales = FXCollections.observableArrayList();
-    	// asignamos 
+    	// Asignamos a las columnas de la tabla sus correspondientes propiedades
 		colNombre.setCellValueFactory(new PropertyValueFactory<Animal,String>("nombre") );
 		colSexo.setCellValueFactory(new PropertyValueFactory<Animal,String>("sexo") );
 		colRaza.setCellValueFactory(new PropertyValueFactory<Animal,String>("raza") );
@@ -286,116 +289,118 @@ public class EjercicioScontroller {
     }
     
     private void borrarAnimalLista(Animal a) {
-    	// Compruebo si ese Animal ya existe en la lista para poder borrarlo
-    	if(animales.contains(a)) {
-    		// si el Animal existe
-    		// lo borramos de la lista y cargamos la tabla de nuevo
-    		animales.remove(a);
-    		tableInfo.setItems(animales);
-        	tableInfo.refresh();
-        	// Despues de borrar vacia los campos
-        	vaciarCampos();
-    	}else {
-    		// mensaje de error
-    		alertaError("Esa Animal no existe");
-    	}
+        // Comprueba si ese animal ya existe en la lista para poder borrarlo
+        if (animales.contains(a)) {
+            // Si el animal existe, lo borra de la lista y actualiza la tabla
+            animales.remove(a);
+            tableInfo.setItems(animales);
+            tableInfo.refresh();
+            // Después de borrar, vacía los campos
+            vaciarCampos();
+        } else {
+            // Muestra un mensaje de error si el animal no existe
+            alertaError("Ese animal no existe");
+        }
     }
-    
-    
+
     private String validarCampos() {
-    	String errores = "";
-    	
-    	// Validamos que los TextField no esten vacios
-    	if(tfNombre.getText().isEmpty()) {
-    		errores+= "Tienes que rellenar el campo Nombre\n";
-    	}
-    	if(tfEdad.getText().isEmpty()) {
-    		errores+= "Tienes que rellenar el campo Edad\n";
-    	}
-    	if(tfEspecie.getText().isEmpty()) {
-    		errores+= "Tienes que rellenar el campo Especie\n";
-    	}
-    	if(tfFechaPrimeraCita.getText().isEmpty()) {
-    		errores+= "Tienes que rellenar el campo de Fecha de primera cita\n";
-    	}
-    	if(tfFoto.getText().isEmpty()) {
-    		errores+= "Tienes que rellenar el campo foto\n";
-    	}
-    	if(tfObservaciones.getText().isEmpty()) {
-    		errores+= "Tienes que rellenar el campo observaciones\n";
-    	}
-    	if(tfRaza.getText().isEmpty()) {
-    		errores+= "Tienes que rellenar el campo raza\n";
-    	}
-    	// Validamos que el TextField de la edad y del peso sean numericos
-    	int edad = 0;
-    	try {
-    		edad = Integer.parseInt(tfEdad.getText());
-		}catch(NumberFormatException e) {
-			errores+= "La edad tiene que ser numerica\n";
-		}
-    	int peso = 0;
-    	try {
-    		peso = Integer.parseInt(tfPeso.getText());
-		}catch(NumberFormatException e) {
-			errores+= "El peso tiene que ser numerico\n";
-		}
-    	
-    	return errores;
+        String errores = "";
+        
+        // Validamos que los TextField no estén vacíos
+        if (tfNombre.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo Nombre\n";
+        }
+        if (tfEdad.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo Edad\n";
+        }
+        if (tfEspecie.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo Especie\n";
+        }
+        if (tfFechaPrimeraCita.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo de Fecha de primera cita\n";
+        }
+        if (tfFoto.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo foto\n";
+        }
+        if (tfObservaciones.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo observaciones\n";
+        }
+        if (tfRaza.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo raza\n";
+        }
+        // Validamos que el TextField de la edad y del peso sean numéricos
+        int edad = 0;
+        try {
+            edad = Integer.parseInt(tfEdad.getText());
+        } catch (NumberFormatException e) {
+            errores += "La edad tiene que ser numérica\n";
+        }
+        int peso = 0;
+        try {
+            peso = Integer.parseInt(tfPeso.getText());
+        } catch (NumberFormatException e) {
+            errores += "El peso tiene que ser numérico\n";
+        }
+        
+        return errores;
     }
-    
+
     private void alertaError(String mensaje) {
-    	// Alerta de error con boton
-    	Alert ventanaEmergente = new Alert(AlertType.ERROR);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+        // Crea una alerta de error con un botón "Aceptar"
+        Alert ventanaEmergente = new Alert(AlertType.ERROR);
+        ventanaEmergente.setTitle("Error");
+        ventanaEmergente.setContentText(mensaje);
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
         ventanaEmergente.show();
     }
+
     
     private void alertaInformacion(String mensaje) {
-    	// Alerta de informacion con boton
-    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+        // Crea una alerta de tipo información con un botón "Aceptar"
+        Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+        ventanaEmergente.setTitle("Información");
+        ventanaEmergente.setContentText(mensaje);
+        
+        // Crea un botón "Aceptar" para cerrar la alerta
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
+        
         ventanaEmergente.show();
     }
-    
+
     private void aniadirAnimal(Animal a) {
-    	// Comprueba si el Animal ya existe en la lista
-    	if(!animales.contains(a)) {
-    		// si no existe
-    		// añade el nueva Animal y cargamos la tabla de nuevo
-    		animales.add(a);
-    		tableInfo.setItems(animales);
-        	tableInfo.refresh();
-        	// Despues de borrar vacia los campos
-        	vaciarCampos();
-    	}else {
-    		// mensaje de error
-    		alertaError("Ese animal ya esta registrado");
-    	}
+        // Comprueba si el animal ya existe en la lista
+        if (!animales.contains(a)) {
+            // Si el animal no existe, lo añade a la lista y actualiza la tabla
+            animales.add(a);
+            tableInfo.setItems(animales);
+            tableInfo.refresh();
+            // Después de agregar, vacía los campos
+            vaciarCampos();
+        } else {
+            // Muestra un mensaje de error si el animal ya está registrado
+            alertaError("Ese animal ya está registrado");
+        }
     }
-    
-    // Este metodo solo sirve para vaciar campos
+
+    // Este método solo sirve para vaciar los campos del formulario
     private void vaciarCampos() {
-    	tfEdad.setText("");
-    	tfEspecie.setText("");
-    	tfFechaPrimeraCita.setText("");
-    	tfFoto.setText("");
-    	tfNombre.setText("");
-    	tfObservaciones.setText("");
-    	tfPeso.setText("");
-    	tfRaza.setText("");
-    	tfSexo.setText("");
+        tfEdad.setText("");
+        tfEspecie.setText("");
+        tfFechaPrimeraCita.setText("");
+        tfFoto.setText("");
+        tfNombre.setText("");
+        tfObservaciones.setText("");
+        tfPeso.setText("");
+        tfRaza.setText("");
+        tfSexo.setText("");
     }
+
 
     
 }

@@ -14,7 +14,9 @@ public class EjercicioI extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			// Obtenemos el valor de atributo "Idioma" de la clase "Propiedades"
 			String idioma = Propiedades.getValor("idioma");
+			// Obtenemos el valor de atributo "region" de la clase "Propiedades"
 			String region = Propiedades.getValor("region");
 			Locale.setDefault(new Locale(idioma, region));
 			ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");			
