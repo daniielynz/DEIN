@@ -6,13 +6,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.AeropuertoPrivado;
 import model.AeropuertoPublico;
 
@@ -106,15 +114,7 @@ public class ControllerListadoAeropuertos {
         Tooltip tooltip = new Tooltip("Buscar Aeropuertos por nombre");
         tfNombre.setTooltip(tooltip);
         
-    	// ponemos evento al TextField del filtrado por nombre
-        tfNombre.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // Este código se ejecutará cuando se presione "Enter" en el TextField.
-                String cadena = tfNombre.getText();
-                //mostrarNombresFiltro(cadena);
-            }
-        });
+    	
     	
         // ponemos evento al TextField del filtrado por nombre
         rbPrivados.setOnAction(new EventHandler<ActionEvent>() {
@@ -133,7 +133,16 @@ public class ControllerListadoAeropuertos {
         		colCapacidad.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("capacidad") );
         		colNSocios.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("NSocios") );
         		// en caso de que existan personas en la base de datos, las cargamos en la tabla
-        		cargarTablaAeropuertosPrivados();
+        		cargarTablaAeropuertosPrivados("");
+        		// ponemos evento al TextField del filtrado por nombre
+                tfNombre.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        // Este código se ejecutará cuando se presione "Enter" en el TextField.
+                        String cadena = tfNombre.getText();
+                        cargarTablaAeropuertosPrivados(cadena);
+                    }
+                });
             }
         });
      // ponemos evento al TextField del filtrado por nombre
@@ -154,44 +163,119 @@ public class ControllerListadoAeropuertos {
         		colNTrabajadores2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("numTrabajadores") );
         		colFinanciacion2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("financiacion") );
         		// en caso de que existan personas en la base de datos, las cargamos en la tabla
-        		cargarTablaAeropuertosPublicos();
+        		cargarTablaAeropuertosPublicos("");
+        		// ponemos evento al TextField del filtrado por nombre
+                tfNombre.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        // Este código se ejecutará cuando se presione "Enter" en el TextField.
+                        String cadena = tfNombre.getText();
+                        cargarTablaAeropuertosPublicos(cadena);
+                    }
+                });
             }
         });
     	
     }
     
-    void cargarTablaAeropuertosPrivados() {
+    void cargarTablaAeropuertosPrivados(String cadena) {
     	try {
             AeropuertoDao aeropuertoDao = new AeropuertoDao();
             ObservableList<AeropuertoPrivado> aeropuertosPrivados = FXCollections.observableArrayList();
-            aeropuertosPrivados = aeropuertoDao.cargarAeropuertosPrivados();
+            aeropuertosPrivados = aeropuertoDao.cargarAeropuertosPrivados(cadena);
             tableAeropuertosPrivados.setItems(aeropuertosPrivados);
             tableAeropuertosPrivados.refresh();
         } catch(Exception e) {}
     }
     
-    void cargarTablaAeropuertosPublicos() {
+    void cargarTablaAeropuertosPublicos(String cadena) {
     	try {
             AeropuertoDao aeropuertoDao = new AeropuertoDao();
             ObservableList<AeropuertoPublico> aeropuertosPublico = FXCollections.observableArrayList();
-            aeropuertosPublico = aeropuertoDao.cargarAeropuertosPublicos();
+            aeropuertosPublico = aeropuertoDao.cargarAeropuertosPublicos(cadena);
             tableAeropuertosPublicos.setItems(aeropuertosPublico);
             tableAeropuertosPublicos.refresh();
         } catch(Exception e) {}
     }
-    /*
-    void mostrarNombresFiltro(String cadena) {
-    	PersonaDao personaDao = new PersonaDao();
-        ObservableList<Persona> personas = FXCollections.observableArrayList();
-        personas=personaDao.buscarPersonasPorNombre(cadena);
-        tableInfo.setItems(personas);
-        tableInfo.refresh();
-    	// Despues de borrar vacia los campos
-    	vaciarCampos();
-    }*/
     
     // Este metodo solo sirve para vaciar campos
     private void vaciarCampos() {
     	tfNombre.setText("");
     }
+    
+    // actions de aeropuertos en el menu
+    @FXML
+    void accionAniadirAeropuerto(ActionEvent event) {
+    	System.out.println("hola");
+    }
+    
+    @FXML
+    void accionBorrarAeropuerto(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void accionEditarAeropuerto(ActionEvent event) {
+
+    }
+
+    @FXML
+    void accionInformacionAeropuerto(ActionEvent event) {
+
+    }
+
+    // actions de aviones en el menu
+    @FXML
+    void accionAniadirAviones(ActionEvent event) {
+
+    }
+
+    @FXML
+    void accionAyudaAvion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void accionActivarDesactivarAvion(ActionEvent event) {
+
+    }
+
+    @FXML
+    void accionBorrarAvion(ActionEvent event) {
+
+    }
+    
+    // Metodo que crea ventana
+    private void crearVentanaEmergente(String accion) {
+    	
+    }
+    
+    
+    // Metodos de diferentes ventanas emergentes
+    private void alertaError(String mensaje) {
+    	// Alerta de error con boton
+    	Alert ventanaEmergente = new Alert(AlertType.ERROR);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
+    }
+    
+    private void alertaInformacion(String mensaje) {
+    	// Alerta de informacion con boton
+    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
+    }
+
+    
 }
+

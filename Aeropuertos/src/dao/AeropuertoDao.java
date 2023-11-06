@@ -12,14 +12,13 @@ import model.AeropuertoPublico;
 public class AeropuertoDao {
     private ConexionBD conexion;
 
-public ObservableList<AeropuertoPublico> cargarAeropuertosPublicos()  {
-    	
+public ObservableList<AeropuertoPublico> cargarAeropuertosPublicos(String cadena)  {
 		ObservableList<AeropuertoPublico> aeropuertosPublicos = FXCollections.observableArrayList();
 	    try {
 	        conexion = new ConexionBD();        	
 	    	String consulta = "select a.id, a.nombre, d.pais, d.ciudad, d.calle, d.numero, a.anio_inauguracion, a.capacidad, ap.num_trabajadores, ap.financiacion "
 	    			+ "from aeropuertos a, aeropuertos_publicos ap, direcciones d "
-	    			+ "WHERE a.id = ap.id_aeropuerto AND d.id = a.id_direccion";
+	    			+ "WHERE a.id = ap.id_aeropuerto AND d.id = a.id_direccion AND a.nombre LIKE '%"+cadena+"%'";
 	    	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
 	    	ResultSet rs = pstmt.executeQuery();   
 				
@@ -50,14 +49,13 @@ public ObservableList<AeropuertoPublico> cargarAeropuertosPublicos()  {
 	    return aeropuertosPublicos;    
 	}
     
-    public ObservableList<AeropuertoPrivado> cargarAeropuertosPrivados()  {
-    	
+    public ObservableList<AeropuertoPrivado> cargarAeropuertosPrivados(String cadena)  {
 		ObservableList<AeropuertoPrivado> aeropuertosPrivados = FXCollections.observableArrayList();
 	    try {
 	        conexion = new ConexionBD();        	
 	    	String consulta = "select a.id, a.nombre, d.pais, d.ciudad, d.calle, d.numero, a.anio_inauguracion, a.capacidad, ap.numero_socios "
 	    			+ "from aeropuertos a, aeropuertos_privados ap, direcciones d "
-	    			+ "WHERE a.id = ap.id_aeropuerto AND d.id = a.id_direccion";
+	    			+ "WHERE a.id = ap.id_aeropuerto AND d.id = a.id_direccion AND a.nombre LIKE '%"+cadena+"%'";
 	    	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
 	    	ResultSet rs = pstmt.executeQuery();   
 				
