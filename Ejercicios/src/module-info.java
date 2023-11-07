@@ -12,6 +12,7 @@ module Ejercicios {
 	requires org.kordamp.ikonli.javafx;
 	requires org.kordamp.ikonli.fontawesome5;
 	
+	
 	opens application to javafx.graphics, javafx.fxml;
 	opens controllers to javafx.graphics, javafx.fxml;
 	opens model to javafx.base;
