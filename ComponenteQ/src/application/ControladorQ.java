@@ -4,6 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -43,6 +45,14 @@ public class ControladorQ extends GridPane{
 
 	@FXML
 	void inicio() {
+		fin.addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<? extends Object> arg0, Object arg1, Object arg2) {
+				//código con las instrucciones a realizar
+				System.out.println("hola");
+			}
+		});
+		
 		// Crear una propiedad booleana para rastrear si la cuenta atrás ha finalizado
 	    this.fin = new SimpleBooleanProperty(false);  
 	    // Inicializa el total de minutos
