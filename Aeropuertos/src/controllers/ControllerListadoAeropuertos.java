@@ -250,7 +250,11 @@ public class ControllerListadoAeropuertos {
     
     @FXML
     void accionEditarAeropuerto(ActionEvent event) {
-
+    	ControllerEditarAeropuertos c = new ControllerEditarAeropuertos();
+    	if(aeropuertoPrivadoSeleccionado != null || aeropuertoPublicoSeleccionado != null) {
+    		c.editarAeropuerto(aeropuertoPrivadoSeleccionado, aeropuertoPublicoSeleccionado);
+    	}
+    	
     }
 
     @FXML

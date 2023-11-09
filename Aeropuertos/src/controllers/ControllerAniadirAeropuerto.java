@@ -72,12 +72,6 @@ public class ControllerAniadirAeropuerto {
     @FXML
     void initialize() {
     	this.tipoAeropuerto = "";
-    	/*
-    	ControllerListadoAeropuertos c = new ControllerListadoAeropuertos();
-    	TableView<AeropuertoPrivado> tableAeropuertosPrivados = c.getTableAeropuertosPrivados();
-    	AeropuertoPrivado a = tableAeropuertosPrivados.getSelectionModel().getSelectedItem();
-    	System.out.println(a);
-    	*/
     }
     
     @FXML
