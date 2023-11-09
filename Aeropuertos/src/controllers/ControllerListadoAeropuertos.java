@@ -26,13 +26,13 @@ import model.AeropuertoPublico;
 public class ControllerListadoAeropuertos {
 	// atributos de la tabla de aeropuertos privados
     @FXML
-    private TableColumn<AeropuertoPrivado, String> colAnio;
+    private TableColumn<AeropuertoPrivado, Integer> colAnio;
 
     @FXML
     private TableColumn<AeropuertoPrivado, String>  colCalle;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, String>  colCapacidad;
+    private TableColumn<AeropuertoPrivado, Integer>  colCapacidad;
 
     @FXML
     private TableColumn<AeropuertoPrivado, String>  colCiudad;
@@ -52,45 +52,36 @@ public class ControllerListadoAeropuertos {
     @FXML
     private TableColumn<AeropuertoPrivado, String>  colPais;
     
-    @FXML
-    private TableColumn<AeropuertoPrivado, Integer> colNTrabajadores;
-
-    @FXML
-    private TableColumn<AeropuertoPrivado, String>  colFinanciacion;
-    
     // atributos de la tabla de aeropuertos publicos
     @FXML
-    private TableColumn<AeropuertoPrivado, String> colAnio2;
+    private TableColumn<AeropuertoPublico, Integer> colAnio2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, String>  colCalle2;
+    private TableColumn<AeropuertoPublico, String>  colCalle2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, String>  colCapacidad2;
+    private TableColumn<AeropuertoPublico, Integer>  colCapacidad2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, String>  colCiudad2;
+    private TableColumn<AeropuertoPublico, String>  colCiudad2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, Integer>  colId2;
+    private TableColumn<AeropuertoPublico, Integer>  colId2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, Integer>  colNSocios2;
+    private TableColumn<AeropuertoPublico, String>  colNombre2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, String>  colNombre2;
+    private TableColumn<AeropuertoPublico, Integer> colNumero2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, Integer> colNumero2;
-
-    @FXML
-    private TableColumn<AeropuertoPrivado, String>  colPais2;
+    private TableColumn<AeropuertoPublico, String>  colPais2;
     
     @FXML
-    private TableColumn<AeropuertoPrivado, Integer> colNTrabajadores2;
+    private TableColumn<AeropuertoPublico, Integer> colNTrabajadores2;
 
     @FXML
-    private TableColumn<AeropuertoPrivado, String>  colFinanciacion2;
+    private TableColumn<AeropuertoPublico, Float>  colFinanciacion2;
 
     //
     @FXML
@@ -108,12 +99,38 @@ public class ControllerListadoAeropuertos {
     @FXML
     private TextField tfNombre;
     
-    @FXML
+    private AeropuertoPrivado aeropuertoPrivadoSeleccionado;
+    
+    private AeropuertoPublico aeropuertoPublicoSeleccionado;
+    
+    
+
+	@FXML
     void initialize() {
         Tooltip tooltip = new Tooltip("Buscar Aeropuertos por nombre");
         tfNombre.setTooltip(tooltip);
         
-    	
+        // Asignamos eventos a las tablas un evento para manejar clics en los registros
+        tableAeropuertosPrivados.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+            	AeropuertoPrivado a = tableAeropuertosPrivados.getSelectionModel().getSelectedItem();
+                if (a != null) {
+                	aeropuertoPrivadoSeleccionado = a;
+                	aeropuertoPublicoSeleccionado = null;
+                }
+            }
+        });
+        
+        // Asignamos eventos a la tabla para manejar clics en los registros
+        tableAeropuertosPublicos.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+            	AeropuertoPublico p = tableAeropuertosPublicos.getSelectionModel().getSelectedItem();
+                if (p != null) {
+                	aeropuertoPublicoSeleccionado = p;
+                	aeropuertoPrivadoSeleccionado = null;
+                }
+            }
+        });
     	
         // ponemos evento al TextField del filtrado por nombre
         rbPrivados.setOnAction(new EventHandler<ActionEvent>() {
@@ -128,8 +145,8 @@ public class ControllerListadoAeropuertos {
         		colCiudad.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("ciudad") );
         		colCalle.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("calle") );
         		colNumero.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("numero") );
-        		colAnio.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("anio") );
-        		colCapacidad.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("capacidad") );
+        		colAnio.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("anioInauguracion") );
+        		colCapacidad.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("capacidad") );
         		colNSocios.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("NSocios") );
         		// en caso de que existan personas en la base de datos, las cargamos en la tabla
         		cargarTablaAeropuertosPrivados("");
@@ -151,16 +168,16 @@ public class ControllerListadoAeropuertos {
             	tableAeropuertosPrivados.setVisible(false);
             	tableAeropuertosPublicos.setVisible(true);
             	// cargamos los datos de la tabla
-            	colId2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado, Integer>("Id") );
-        		colNombre2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("nombre") );
-        		colPais2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("pais") );
-        		colCiudad2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("ciudad") );
-        		colCalle2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("calle") );
-        		colNumero2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("numero") );
-        		colAnio2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("anio") );
-        		colCapacidad2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("capacidad") );
-        		colNTrabajadores2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,Integer>("numTrabajadores") );
-        		colFinanciacion2.setCellValueFactory(new PropertyValueFactory<AeropuertoPrivado,String>("financiacion") );
+            	colId2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico, Integer>("Id") );
+        		colNombre2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,String>("nombre") );
+        		colPais2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,String>("pais") );
+        		colCiudad2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,String>("ciudad") );
+        		colCalle2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,String>("calle") );
+        		colNumero2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,Integer>("numero") );
+        		colAnio2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,Integer>("anioInauguracion") );
+        		colCapacidad2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,Integer>("capacidad") );
+        		colNTrabajadores2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,Integer>("NTrabajadores") );
+        		colFinanciacion2.setCellValueFactory(new PropertyValueFactory<AeropuertoPublico,Float>("financiacion") );
         		// en caso de que existan personas en la base de datos, las cargamos en la tabla
         		cargarTablaAeropuertosPublicos("");
         		// ponemos evento al TextField del filtrado por nombre
@@ -223,7 +240,12 @@ public class ControllerListadoAeropuertos {
     
     @FXML
     void accionBorrarAeropuerto(ActionEvent event) {
-
+    	AeropuertoDao aeropuertoDao = new AeropuertoDao();
+    	if(aeropuertoPrivadoSeleccionado != null) {
+            aeropuertoDao.borrarAeropuertoPrivado(aeropuertoPrivadoSeleccionado);
+    	}else if(aeropuertoPublicoSeleccionado != null) {
+    		aeropuertoDao.borrarAeropuertoPublico(aeropuertoPublicoSeleccionado);
+    	}
     }
     
     @FXML
@@ -287,6 +309,15 @@ public class ControllerListadoAeropuertos {
         });
         ventanaEmergente.show();
     }
+    
+    // geter del aeropuerto seleccionado
+	public AeropuertoPrivado getAeropuertoPrivadoSeleccionado() {
+		return aeropuertoPrivadoSeleccionado;
+	}
+
+	public AeropuertoPublico getAeropuertoPublicoSeleccionado() {
+		return aeropuertoPublicoSeleccionado;
+	}
 
     
 }
