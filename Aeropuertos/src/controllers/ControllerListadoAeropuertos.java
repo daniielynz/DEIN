@@ -1,6 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import dao.AeropuertoDao;
+import dao.AvionesDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.AeropuertoPrivado;
 import model.AeropuertoPublico;
+import model.Avion;
 
 public class ControllerListadoAeropuertos {
 	// atributos de la tabla de aeropuertos privados
@@ -99,12 +103,10 @@ public class ControllerListadoAeropuertos {
     @FXML
     private TextField tfNombre;
     
-    private AeropuertoPrivado aeropuertoPrivadoSeleccionado;
+    static private AeropuertoPrivado aeropuertoPrivadoSeleccionado;
     
-    private AeropuertoPublico aeropuertoPublicoSeleccionado;
+    static private AeropuertoPublico aeropuertoPublicoSeleccionado;
     
-    
-
 	@FXML
     void initialize() {
         Tooltip tooltip = new Tooltip("Buscar Aeropuertos por nombre");
@@ -114,10 +116,12 @@ public class ControllerListadoAeropuertos {
         tableAeropuertosPrivados.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
             	AeropuertoPrivado a = tableAeropuertosPrivados.getSelectionModel().getSelectedItem();
+            	
                 if (a != null) {
                 	aeropuertoPrivadoSeleccionado = a;
                 	aeropuertoPublicoSeleccionado = null;
                 }
+                
             }
         });
         
@@ -243,23 +247,89 @@ public class ControllerListadoAeropuertos {
     	AeropuertoDao aeropuertoDao = new AeropuertoDao();
     	if(aeropuertoPrivadoSeleccionado != null) {
             aeropuertoDao.borrarAeropuertoPrivado(aeropuertoPrivadoSeleccionado);
+            alertaInformacion("Se ha borrado el aeropuerto seleccionado");
     	}else if(aeropuertoPublicoSeleccionado != null) {
     		aeropuertoDao.borrarAeropuertoPublico(aeropuertoPublicoSeleccionado);
+    		alertaInformacion("Se ha borrado el aeropuerto seleccionado");
     	}
     }
     
     @FXML
     void accionEditarAeropuerto(ActionEvent event) {
-    	ControllerEditarAeropuertos c = new ControllerEditarAeropuertos();
+    	ControllerEditarAeropuerto c = new ControllerEditarAeropuerto();
     	if(aeropuertoPrivadoSeleccionado != null || aeropuertoPublicoSeleccionado != null) {
-    		c.editarAeropuerto(aeropuertoPrivadoSeleccionado, aeropuertoPublicoSeleccionado);
+    		c.editarAeropuerto();
     	}
     	
     }
 
     @FXML
     void accionInformacionAeropuerto(ActionEvent event) {
-
+    	String datos = "";
+    	if(aeropuertoPrivadoSeleccionado != null){
+    		datos = "Nombre: "+aeropuertoPrivadoSeleccionado.getNombre().toString()+"\n";
+    		datos+= "País: "+aeropuertoPrivadoSeleccionado.getPais().toString()+"\n";
+    		datos+= "Dirección: "+aeropuertoPrivadoSeleccionado.getCalle().toString()+""+aeropuertoPrivadoSeleccionado.getNumero()+","+aeropuertoPrivadoSeleccionado.getCiudad()+"\n";
+    		datos+= "Año de inaguracion: "+aeropuertoPrivadoSeleccionado.getAnioInauguracion()+"\n";
+    		datos+= "Capacidad: "+aeropuertoPrivadoSeleccionado.getCapacidad()+"\n";
+    		// sacamos un listado con todos los aviones del aeropuerto
+			AvionesDao a = new AvionesDao();
+			ArrayList<Avion> arrlAviones = a.listadoAviones(aeropuertoPrivadoSeleccionado.getId());
+			// recorremos sus aviones
+			if(arrlAviones.isEmpty()) {
+					datos+= "No tiene aviones: \n";
+			}else {
+				datos+= "Aviones: \n";
+				for (Avion avion : arrlAviones) {
+    				datos+= "\t Modelo:"+avion.getModelo()+" \n";
+    				datos+= "\t Número de asientos:"+avion.getNumero_asientos()+" \n";
+    				datos+= "\t Velocidad máxima:"+avion.getVelocidad_maxima()+" \n";
+    				if(avion.getActivado() == 1) {
+    					datos+= "\t Activado \n";
+    				}else {
+    					datos+= "\t Desactivado \n";
+    				}
+    				datos+="\t-----------\n";
+    			}
+			}
+    		datos+= "Privado \n";
+    		datos+= "Número de socios: "+aeropuertoPrivadoSeleccionado.getNSocios()+"";
+    		
+    	}else if(aeropuertoPublicoSeleccionado != null) {
+    		datos = "Nombre: "+aeropuertoPublicoSeleccionado.getNombre().toString()+"\n";
+    		datos+= "País: "+aeropuertoPublicoSeleccionado.getPais().toString()+"\n";
+    		datos+= "Dirección: "+aeropuertoPublicoSeleccionado.getCalle().toString()+""+aeropuertoPublicoSeleccionado.getNumero()+","+aeropuertoPublicoSeleccionado.getCiudad()+"\n";
+    		datos+= "Año de inaguracion: "+aeropuertoPublicoSeleccionado.getAnioInauguracion()+"\n";
+    		datos+= "Capacidad: "+aeropuertoPublicoSeleccionado.getCapacidad()+"\n";
+    		// sacamos un listado con todos los aviones del aeropuerto
+			AvionesDao a = new AvionesDao();
+			ArrayList<Avion> arrlAviones = a.listadoAviones(aeropuertoPublicoSeleccionado.getId());
+			// recorremos sus aviones
+			if(arrlAviones.isEmpty()) {
+					datos+= "No tiene aviones: \n";
+			}else {
+				datos+= "Aviones: \n";
+				for (Avion avion : arrlAviones) {
+    				datos+= "\t Modelo:"+avion.getModelo()+" \n";
+    				datos+= "\t Número de asientos:"+avion.getNumero_asientos()+" \n";
+    				datos+= "\t Velocidad máxima:"+avion.getVelocidad_maxima()+" \n";
+    				if(avion.getActivado() == 1) {
+    					datos+= "\t Activado \n";
+    				}else {
+    					datos+= "\t Desactivado \n";
+    				}
+    				datos+="\t-----------\n";
+    			}
+			}
+    		datos+= "Público \n";
+    		datos+= "Financiacion: "+aeropuertoPublicoSeleccionado.getFinanciacion()+"\n";
+    		datos+= "Número de trabajadores: "+aeropuertoPublicoSeleccionado.getNTrabajadores()+"";
+    	}
+    	if(datos.isEmpty()) {
+    		alertaError("Tiene que seleccionar un aeropuerto");
+    	}else {
+    		alertaInformacion(datos);
+    	}
     }
 
     // actions de aviones en el menu
@@ -322,7 +392,6 @@ public class ControllerListadoAeropuertos {
 	public AeropuertoPublico getAeropuertoPublicoSeleccionado() {
 		return aeropuertoPublicoSeleccionado;
 	}
-
     
 }
 

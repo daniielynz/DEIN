@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerEditarAeropuertos">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerEditarAeropuerto">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -107,12 +107,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <RadioButton fx:id="rbPublico" mnemonicParsing="false" onAction="#accionPublico" text="Público">
+                  <RadioButton fx:id="rbPublico" mnemonicParsing="false" text="Público">
                      <toggleGroup>
                         <ToggleGroup fx:id="rbGrupo" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbPrivado" mnemonicParsing="false" onAction="#accionPrivado" text="Privado" toggleGroup="$rbGrupo">
+                  <RadioButton fx:id="rbPrivado" mnemonicParsing="false" text="Privado" toggleGroup="$rbGrupo">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>

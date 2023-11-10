@@ -39,26 +39,30 @@ public class AeropuertoDao {
     
     public void borrarAeropuertoPrivado(AeropuertoPrivado a) {
     	try {
-            conexion = new ConexionBD();        	
+    		conexion = new ConexionBD();        	
             
             // borrar de la tabla de aeropuertos privados
             String consulta = "DELETE FROM aeropuertos_privados WHERE id_aeropuerto = "+a.getId()+";";
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
             int rs2 = pstmt.executeUpdate();
             
+            // sacar el id de direcciones que tiene el aeropuerto
+            consulta = "select id_direccion from aeropuertos where id = "+a.getId();
+        	pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs = pstmt.executeQuery();   
+        	int idDireccion = 0;
+			 if (rs.next()) {
+				 idDireccion = rs.getInt("id_direccion");
+		            rs.close();   
+			 }
+            
             // borrar de la tabla de aeropuertos
         	consulta = "DELETE FROM aeropuertos WHERE id = "+a.getId()+";";
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
         	rs2 = pstmt.executeUpdate();
-            
-            // sacar el id de direcciones que tiene el aeropuerto
-        	consulta = "select id_direccion from aeropuertos WHERE id = "+a.getId();
-        	pstmt = conexion.getConexion().prepareStatement(consulta);      
-        	ResultSet rs = pstmt.executeQuery();   
-        	int idDirecciones = rs.getInt("id_direccion");
-            
-        	// borrar de la tabla de direcciones
-        	consulta = "DELETE FROM direcciones WHERE id = "+idDirecciones+";";
+			 
+			// borrar de la tabla de direcciones
+        	consulta = "DELETE FROM direcciones WHERE id = "+idDireccion;
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
         	rs2 = pstmt.executeUpdate();
         	      
@@ -81,10 +85,9 @@ public class AeropuertoDao {
             consulta = "select id_direccion from aeropuertos where id = "+a.getId();
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
         	ResultSet rs = pstmt.executeQuery();   
-        	int idDirecciones = 0;
+        	int idDireccion = 0;
 			 if (rs.next()) {
-		            idDirecciones = rs.getInt("id_direccion");
-		            System.out.println(idDirecciones);
+				 idDireccion = rs.getInt("id_direccion");
 		            rs.close();   
 			 }
             
@@ -94,7 +97,7 @@ public class AeropuertoDao {
         	rs2 = pstmt.executeUpdate();
 			 
 			// borrar de la tabla de direcciones
-        	consulta = "DELETE FROM direcciones WHERE id = "+idDirecciones;
+        	consulta = "DELETE FROM direcciones WHERE id = "+idDireccion;
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
         	rs2 = pstmt.executeUpdate();
 			 
@@ -123,6 +126,88 @@ public class AeropuertoDao {
         	consulta = "insert into aeropuertos_publicos (id_aeropuerto, financiacion, num_trabajadores) VALUES ("+(ultimoId("aeropuertos")-1)+","+a.getFinanciacion()+","+a.getNTrabajadores()+");";
         	pstmt = conexion.getConexion().prepareStatement(consulta);
         	rs = pstmt.executeUpdate();
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }  
+    }
+    
+    public void editarAeropuertoPublico(AeropuertoPublico a) {
+    	try {
+    		// creamos conexoion
+            conexion = new ConexionBD();      
+            // editamos la tabla de aeropuertos publicos
+            String consulta = "UPDATE aeropuertos_publicos "
+            				+ "SET financiacion = "+a.getFinanciacion()+", num_trabajadores = "+a.getNTrabajadores()+" "
+            				+ "WHERE id_aeropuerto = "+a.getId();
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	int rs = pstmt.executeUpdate();
+            
+        	// sacar el id de direcciones que tiene el aeropuerto
+            consulta = "select id_direccion from aeropuertos where id = "+a.getId();
+        	pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs2 = pstmt.executeQuery();   
+        	int idDireccion = 0;
+			 if (rs2.next()) {
+				 idDireccion = rs2.getInt("id_direccion");
+		            rs2.close();   
+			 }
+        	
+        	// editamos la tabla direcciones
+        	consulta = "UPDATE direcciones "
+    				 + "SET pais = '"+a.getPais()+"', ciudad = '"+a.getCiudad()+"', calle = '"+a.getCalle()+"' , numero = "+a.getNumero()+" "
+    				 + "WHERE id = "+idDireccion;
+        	pstmt = conexion.getConexion().prepareStatement(consulta);
+			rs = pstmt.executeUpdate();
+        	
+        	// editamos la tabla aeropuertos
+        	consulta = "UPDATE aeropuertos "
+    				 + "SET nombre = '"+a.getNombre()+"', anio_inauguracion = "+a.getAnioInauguracion()+", capacidad = "+a.getCapacidad()+", id_direccion = '"+idDireccion+"' "
+    				 + "WHERE id = "+a.getId();
+			pstmt = conexion.getConexion().prepareStatement(consulta);
+			rs = pstmt.executeUpdate();
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }  
+    }
+    
+    public void editarAeropuertoPrivado(AeropuertoPrivado a) {
+    	try {
+    		// creamos conexoion
+            conexion = new ConexionBD();      
+            // editamos la tabla de aeropuertos publicos
+            String consulta = "UPDATE aeropuertos_privados "
+            				+ "SET numero_socios = "+a.getNSocios()+" "
+            				+ "WHERE id_aeropuerto = "+a.getId();
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	int rs = pstmt.executeUpdate();
+            
+        	// sacar el id de direcciones que tiene el aeropuerto
+            consulta = "select id_direccion from aeropuertos where id = "+a.getId();
+        	pstmt = conexion.getConexion().prepareStatement(consulta);      
+        	ResultSet rs2 = pstmt.executeQuery();   
+        	int idDireccion = 0;
+			 if (rs2.next()) {
+				 idDireccion = rs2.getInt("id_direccion");
+		            rs2.close();   
+			 }
+        	
+        	// editamos la tabla direcciones
+        	consulta = "UPDATE direcciones "
+    				 + "SET pais = '"+a.getPais()+"', ciudad = '"+a.getCiudad()+"', calle = '"+a.getCalle()+"' , numero = "+a.getNumero()+" "
+    				 + "WHERE id = "+idDireccion;
+        	pstmt = conexion.getConexion().prepareStatement(consulta);
+			rs = pstmt.executeUpdate();
+        	
+        	// editamos la tabla aeropuertos
+        	consulta = "UPDATE aeropuertos "
+    				 + "SET nombre = '"+a.getNombre()+"', anio_inauguracion = "+a.getAnioInauguracion()+", capacidad = "+a.getCapacidad()+", id_direccion = '"+idDireccion+"' "
+    				 + "WHERE id = "+a.getId();
+			pstmt = conexion.getConexion().prepareStatement(consulta);
+			rs = pstmt.executeUpdate();
         	      
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
