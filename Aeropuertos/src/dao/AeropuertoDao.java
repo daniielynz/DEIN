@@ -19,11 +19,13 @@ public class AeropuertoDao {
     	try {
     		// creamos conexoion
             conexion = new ConexionBD();   
+            
 	    	// obtener todos los aeropuertos
 	        String consulta = "SELECT * FROM aeropuertos";
 	    	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
 	    	ResultSet rs = pstmt.executeQuery();   
 	    	
+	    	// recorremos
 			while (rs.next()) {
 				Aeropuerto a = new Aeropuerto(rs.getInt("id"), rs.getInt("anio_inauguracion"), rs.getInt("capacidad"), rs.getInt("id_direccion"), rs.getString("nombre"), rs.getString("imagen"));
 				listalAeropuertos.add(a);
@@ -40,14 +42,15 @@ public class AeropuertoDao {
     
     public void aniadirAeropuertoPrivado(AeropuertoPrivado a) {
     	try {
-    		// creamos conexoion
-            conexion = new ConexionBD();      
-            // añadir en la tabla de aeropuertos
+    		// creamos conexion
+            conexion = new ConexionBD();  
             
+            // añadir en la tabla de direcciones
             String consulta = "insert into direcciones (pais, ciudad, calle, numero) VALUES ('"+a.getPais()+"','"+a.getCiudad()+"','"+a.getCalle()+"',"+a.getNumero()+");";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
         	pstmt.executeUpdate();
             
+        	// añadimos a la tabla aeropuertos 
             consulta = "insert into aeropuertos (nombre, anio_inauguracion, capacidad, id_direccion, imagen) VALUES ('"+a.getNombre()+"',"+a.getAnioInauguracion()+","+a.getCapacidad()+", "+(ultimoId("direcciones")-1)+" ,'');";
         	pstmt = conexion.getConexion().prepareStatement(consulta);
         	pstmt.executeUpdate();

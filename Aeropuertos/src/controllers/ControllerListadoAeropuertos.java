@@ -196,65 +196,77 @@ public class ControllerListadoAeropuertos {
     	
     }
     
-    void cargarTablaAeropuertosPrivados(String cadena) {
-    	try {
-            AeropuertoDao aeropuertoDao = new AeropuertoDao();
-            ObservableList<AeropuertoPrivado> aeropuertosPrivados = FXCollections.observableArrayList();
-            aeropuertosPrivados = aeropuertoDao.cargarAeropuertosPrivados(cadena);
-            tableAeropuertosPrivados.setItems(aeropuertosPrivados);
-            tableAeropuertosPrivados.refresh();
-        } catch(Exception e) {}
-    }
-    
-    void cargarTablaAeropuertosPublicos(String cadena) {
-    	try {
-            AeropuertoDao aeropuertoDao = new AeropuertoDao();
-            ObservableList<AeropuertoPublico> aeropuertosPublico = FXCollections.observableArrayList();
-            aeropuertosPublico = aeropuertoDao.cargarAeropuertosPublicos(cadena);
-            tableAeropuertosPublicos.setItems(aeropuertosPublico);
-            tableAeropuertosPublicos.refresh();
-        } catch(Exception e) {}
-    }
-    
-    // actions de aeropuertos en el menu
-    @FXML
-    void accionAniadirAeropuerto(ActionEvent event) {
-    	try {
-    		Stage primaryStage = new Stage();
-			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/AniadirAeropuerto.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setTitle("AVIONES-AÑADIR AEROPUERTO");
-			
-			Image icon = new Image(getClass().getResourceAsStream("/images/avion.png"));
-			primaryStage.getIcons().add(icon);
-			
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-    }
-    
-    @FXML
-    void accionBorrarAeropuerto(ActionEvent event) {
-    	AeropuertoDao aeropuertoDao = new AeropuertoDao();
-    	if(aeropuertoPrivadoSeleccionado != null) {
-            aeropuertoDao.borrarAeropuertoPrivado(aeropuertoPrivadoSeleccionado);
-            alertaInformacion("Se ha borrado el aeropuerto seleccionado");
-    	}else if(aeropuertoPublicoSeleccionado != null) {
-    		aeropuertoDao.borrarAeropuertoPublico(aeropuertoPublicoSeleccionado);
-    		alertaInformacion("Se ha borrado el aeropuerto seleccionado");
-    	}
-    }
-    
-    @FXML
-    void accionEditarAeropuerto(ActionEvent event) {
-    	ControllerEditarAeropuerto c = new ControllerEditarAeropuerto();
-    	if(aeropuertoPrivadoSeleccionado != null || aeropuertoPublicoSeleccionado != null) {
-    		c.editarAeropuerto();
-    	}
-    	
-    }
+	void cargarTablaAeropuertosPrivados(String cadena) {
+	    try {
+	        // Carga la tabla de aeropuertos privados con la cadena de búsqueda
+	        AeropuertoDao aeropuertoDao = new AeropuertoDao();
+	        ObservableList<AeropuertoPrivado> aeropuertosPrivados = FXCollections.observableArrayList();
+	        aeropuertosPrivados = aeropuertoDao.cargarAeropuertosPrivados(cadena);
+	        tableAeropuertosPrivados.setItems(aeropuertosPrivados);
+	        tableAeropuertosPrivados.refresh();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir durante la carga
+	        e.printStackTrace();
+	    }
+	}
+
+	void cargarTablaAeropuertosPublicos(String cadena) {
+	    try {
+	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	        AeropuertoDao aeropuertoDao = new AeropuertoDao();
+	        ObservableList<AeropuertoPublico> aeropuertosPublico = FXCollections.observableArrayList();
+	        aeropuertosPublico = aeropuertoDao.cargarAeropuertosPublicos(cadena);
+	        tableAeropuertosPublicos.setItems(aeropuertosPublico);
+	        tableAeropuertosPublicos.refresh();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir durante la carga
+	        e.printStackTrace();
+	    }
+	}
+
+	@FXML
+	void accionAniadirAeropuerto(ActionEvent event) {
+	    try {
+	        // Abre la ventana para añadir un nuevo aeropuerto
+	        Stage primaryStage = new Stage();
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/AniadirAeropuerto.fxml"));
+	        Scene scene = new Scene(root);
+	        primaryStage.setTitle("AVIONES-AÑADIR AEROPUERTO");
+
+	        // Configura el icono de la ventana
+	        Image icon = new Image(getClass().getResourceAsStream("/images/avion.png"));
+	        primaryStage.getIcons().add(icon);
+
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+	        e.printStackTrace();
+	    }
+	}
+
+	@FXML
+	void accionBorrarAeropuerto(ActionEvent event) {
+	    // Borra el aeropuerto privado o público seleccionado
+	    AeropuertoDao aeropuertoDao = new AeropuertoDao();
+	    if(aeropuertoPrivadoSeleccionado != null) {
+	        aeropuertoDao.borrarAeropuertoPrivado(aeropuertoPrivadoSeleccionado);
+	        alertaInformacion("Se ha borrado el aeropuerto seleccionado");
+	    } else if(aeropuertoPublicoSeleccionado != null) {
+	        aeropuertoDao.borrarAeropuertoPublico(aeropuertoPublicoSeleccionado);
+	        alertaInformacion("Se ha borrado el aeropuerto seleccionado");
+	    }
+	}
+
+	@FXML
+	void accionEditarAeropuerto(ActionEvent event) {
+	    ControllerEditarAeropuerto c = new ControllerEditarAeropuerto();
+	    if(aeropuertoPrivadoSeleccionado != null || aeropuertoPublicoSeleccionado != null) {
+	        // Abre la ventana para editar el aeropuerto seleccionado
+	        c.editarAeropuerto();
+	    }
+	}
+
 
     @FXML
     void accionInformacionAeropuerto(ActionEvent event) {
@@ -328,6 +340,7 @@ public class ControllerListadoAeropuertos {
     // actions de aviones en el menu
     @FXML
     void accionAniadirAviones(ActionEvent event) {
+    	// crea la ventana nueva
     	try {
     		Stage primaryStage = new Stage();
 			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/AniadirAvion.fxml"));
@@ -346,6 +359,7 @@ public class ControllerListadoAeropuertos {
 
     @FXML
     void accionActivarDesactivarAvion(ActionEvent event) {
+    	// crea la ventana nueva
     	try {
     		Stage primaryStage = new Stage();
 			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/ActivarDesactivarAvion.fxml"));
@@ -364,6 +378,7 @@ public class ControllerListadoAeropuertos {
 
     @FXML
     void accionBorrarAvion(ActionEvent event) {
+    	// crea la ventana nueva
     	try {
     		Stage primaryStage = new Stage();
 			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/BorrarAvion.fxml"));
@@ -406,7 +421,7 @@ public class ControllerListadoAeropuertos {
         ventanaEmergente.show();
     }
     
-    // geter del aeropuerto seleccionado
+    // geters
 	public AeropuertoPrivado getAeropuertoPrivadoSeleccionado() {
 		return aeropuertoPrivadoSeleccionado;
 	}

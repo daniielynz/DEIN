@@ -29,7 +29,7 @@ public class AvionesDao {
     
     public void activarDesactivarAvion(Avion a) {
     	try {
-    		// creamos conexoion
+    		// creamos conexion
             conexion = new ConexionBD();      
         	// editamos la tabla avion
         	String consulta =  "UPDATE aviones "
@@ -47,7 +47,8 @@ public class AvionesDao {
     public ObservableList<Avion> listadoAviones(int idAeropuerto)  {
     	ObservableList<Avion> listaAviones = FXCollections.observableArrayList();
 	    try {
-	        conexion = new ConexionBD();        	
+	        conexion = new ConexionBD();      
+	        // sacamos un listado de aviones con el id de aeropuerto introducido
 	    	String consulta = "SELECT * "
 			    			+ "FROM aviones "
 			    			+ "WHERE id_aeropuerto = "+idAeropuerto;
@@ -80,6 +81,7 @@ public class AvionesDao {
     public boolean existe(Avion a) {
     	boolean existe = true;
     	try {
+    		// comprobamos que existe el avion
             conexion = new ConexionBD();        	
         	String consulta = "select id from aviones where modelo = '"+a.getModelo()+"' AND id_aeropuerto = "+a.getId_aeropuerto();
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
@@ -100,8 +102,8 @@ public class AvionesDao {
     	try {
     		// creamos conexoion
             conexion = new ConexionBD();      
-            // añadir en la tabla de aeropuertos
             
+            // añadir en la tabla de aviones
             String consulta = "insert into aviones (modelo, numero_asientos, velocidad_maxima, activado, id_aeropuerto) VALUES ('"+a.getModelo()+"',"+a.getNumero_asientos()+","+a.getVelocidad_maxima()+","+a.getActivado()+","+a.getId_aeropuerto()+");";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
         	pstmt.executeUpdate();
@@ -114,7 +116,8 @@ public class AvionesDao {
     
     public int ultimoId(String tabla) {
     	try {
-            conexion = new ConexionBD();        	
+            conexion = new ConexionBD();        
+            // sacamos el ultimo id
         	String consulta = "select MAX(id) as ID from "+tabla;
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
         	ResultSet rs = pstmt.executeQuery();   

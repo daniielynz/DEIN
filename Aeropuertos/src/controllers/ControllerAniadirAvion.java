@@ -71,43 +71,56 @@ public class ControllerAniadirAvion {
     
     @FXML
     void accionCancelar(ActionEvent event) {
-    	Stage stage = (Stage) btnCancelar.getScene().getWindow();
-    	stage.close();
+        // Cierra la ventana actual al hacer clic en el botón Cancelar
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     void accionGuardar(ActionEvent event) {
-    	String errores = validar();
-    	
-    	if(errores.isEmpty()) {
-    		// Recuperamos los datos del formulario
-	    	String modelo = tfModelo.getText().toString();
-			int numero_asientos = Integer.parseInt(tfAsientos.getText().toString());
-			int velocidad_maxima = Integer.parseInt(tfVelMax.getText().toString());
-			int activado = 0;
-			if(rbActivado.isSelected()) {
-				activado = 1;
-			}
-			int id_aeropuerto = cbAeropuertos.getSelectionModel().getSelectedItem().getId();
-			
-			Avion a = new Avion(numero_asientos, velocidad_maxima, activado, id_aeropuerto, modelo);
-			
-			// validamos que no exista un avion de ese modelo en el aeropuerto seleccionado
-	    	AvionesDao avionesDao = new AvionesDao();
-			if(avionesDao.existe(a)) {
-				errores = "Ese avion ya existe en ese aeropuerto";
-				alertaError(errores);
-			}else {
-				// añadimos el avion
-				avionesDao.aniadirAvion(a);
-				alertaInformacion("Se ha añadido correctamente el Avion");
-				vaciarCampos();
-			}
-			
-	    }else {
-	    	alertaError(errores);
-	    }
+        // Valida los campos del formulario y obtiene mensajes de error si los hay
+        String errores = validar();
+
+        // Si no hay errores, procesa la información ingresada
+        if (errores.isEmpty()) {
+            // Recupera los datos del formulario
+            String modelo = tfModelo.getText().toString();
+            int numero_asientos = Integer.parseInt(tfAsientos.getText().toString());
+            int velocidad_maxima = Integer.parseInt(tfVelMax.getText().toString());
+            int activado = 0;
+
+            // Comprueba si el RadioButton "Activado" está seleccionado y actualiza el valor de activado
+            if (rbActivado.isSelected()) {
+                activado = 1;
+            }
+
+            // Obtiene el ID del aeropuerto seleccionado en el ComboBox
+            int id_aeropuerto = cbAeropuertos.getSelectionModel().getSelectedItem().getId();
+
+            // Crea un objeto Avion con los datos obtenidos
+            Avion a = new Avion(numero_asientos, velocidad_maxima, activado, id_aeropuerto, modelo);
+
+            // Valida si el avión ya existe en el aeropuerto seleccionado
+            AvionesDao avionesDao = new AvionesDao();
+            if (avionesDao.existe(a)) {
+                errores = "Ese avión ya existe en ese aeropuerto";
+                alertaError(errores);
+            } else {
+                // Añade el avión utilizando el objeto AvionesDao
+                avionesDao.aniadirAvion(a);
+
+                // Muestra una alerta informativa de que se ha añadido correctamente el avión
+                alertaInformacion("Se ha añadido correctamente el Avión");
+
+                // Limpia los campos del formulario
+                vaciarCampos();
+            }
+        } else {
+            // Si hay errores, muestra una alerta de error con los mensajes de error
+            alertaError(errores);
+        }
     }
+
     
     private void vaciarCampos() {
     	tfModelo.setText("");

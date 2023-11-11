@@ -76,112 +76,138 @@ public class ControllerEditarAeropuerto {
 
     @FXML
     void initialize() {
-    	rbPrivado.setDisable(true);
-    	rbPublico.setDisable(true);
-    	
-    	ControllerListadoAeropuertos c = new ControllerListadoAeropuertos();
-    	if(c.getAeropuertoPrivadoSeleccionado() != null) {
-    		// si el aeropuerto seleccionado es privado, lo guardamos
-    		this.aeropuertoPrivado = c.getAeropuertoPrivadoSeleccionado();
-    		this.aeropuertoPublico = null;
-    		// rellenamos los textfields
-			tfNombre.setText(aeropuertoPrivado.getNombre().toString());
-			tfPais.setText(aeropuertoPrivado.getPais().toString());
-			tfCiudad.setText(aeropuertoPrivado.getCiudad().toString());
-			tfCalle.setText(aeropuertoPrivado.getCalle().toString());
-			tfNumero.setText(aeropuertoPrivado.getNumero()+"");
-			tfAnioInauguracion.setText(aeropuertoPrivado.getAnioInauguracion()+"");
-			tfCapacidad.setText(aeropuertoPrivado.getCapacidad()+"");
-			rbPrivado.setSelected(true);
-			tfNSocios.setText(aeropuertoPrivado.getNSocios()+"");
-			//mostramos los campos de privado
-			this.boxPrivados.setVisible(true);
-			this.boxPublicos.setVisible(false);
-			
-    	}else if(c.getAeropuertoPublicoSeleccionado() != null) {
-    		// si el aeropuerto seleccionado es publico, lo guardamos
-    		this.aeropuertoPublico = c.getAeropuertoPublicoSeleccionado();
-    		this.aeropuertoPrivado = null;
-    		// rellenamos los textfields
-			tfNombre.setText(aeropuertoPublico.getNombre().toString());
-			tfPais.setText(aeropuertoPublico.getPais().toString());
-			tfCiudad.setText(aeropuertoPublico.getCiudad().toString());
-			tfCalle.setText(aeropuertoPublico.getCalle().toString());
-			tfNumero.setText(aeropuertoPublico.getNumero()+"");
-			tfAnioInauguracion.setText(aeropuertoPublico.getAnioInauguracion()+"");
-			tfCapacidad.setText(aeropuertoPublico.getCapacidad()+"");
-			rbPublico.setSelected(true);
-			tfFinanciacion.setText(aeropuertoPublico.getFinanciacion()+"");
-			tfNTrabajadores.setText(aeropuertoPublico.getNTrabajadores()+"");
-			//mostramos los campos de privado
-			this.boxPublicos.setVisible(true);
-			this.boxPrivados.setVisible(false);
-    	}
-    }
-    
-    @FXML
-    void accionCancelar(ActionEvent event) {
-    	Stage stage = (Stage) btnCancelar.getScene().getWindow();
-    	stage.close();
-    }
-    
-    protected void editarAeropuerto() {
-    	try {
-    		Stage primaryStage = new Stage();
-			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EditarAeropuerto.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setTitle("AVIONES-AEROPUERTOS");
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+        // Desactiva la edición de tipo de aeropuerto al iniciar la interfaz
+        rbPrivado.setDisable(true);
+        rbPublico.setDisable(true);
+        
+        // Instancia del controlador para el listado de aeropuertos
+        ControllerListadoAeropuertos c = new ControllerListadoAeropuertos();
+        
+        // Verifica si hay un aeropuerto privado seleccionado
+        if (c.getAeropuertoPrivadoSeleccionado() != null) {
+            // Si el aeropuerto seleccionado es privado, lo guarda
+            this.aeropuertoPrivado = c.getAeropuertoPrivadoSeleccionado();
+            this.aeropuertoPublico = null;
+            
+            // Rellena los campos de texto con los datos del aeropuerto privado
+            tfNombre.setText(aeropuertoPrivado.getNombre().toString());
+            tfPais.setText(aeropuertoPrivado.getPais().toString());
+            tfCiudad.setText(aeropuertoPrivado.getCiudad().toString());
+            tfCalle.setText(aeropuertoPrivado.getCalle().toString());
+            tfNumero.setText(aeropuertoPrivado.getNumero()+"");
+            tfAnioInauguracion.setText(aeropuertoPrivado.getAnioInauguracion()+"");
+            tfCapacidad.setText(aeropuertoPrivado.getCapacidad()+"");
+            rbPrivado.setSelected(true);
+            tfNSocios.setText(aeropuertoPrivado.getNSocios()+"");
+            
+            // Muestra los campos correspondientes a aeropuertos privados
+            this.boxPrivados.setVisible(true);
+            this.boxPublicos.setVisible(false);
+        } else if (c.getAeropuertoPublicoSeleccionado() != null) {
+            // Si el aeropuerto seleccionado es público, lo guarda
+            this.aeropuertoPublico = c.getAeropuertoPublicoSeleccionado();
+            this.aeropuertoPrivado = null;
+            
+            // Rellena los campos de texto con los datos del aeropuerto público
+            tfNombre.setText(aeropuertoPublico.getNombre().toString());
+            tfPais.setText(aeropuertoPublico.getPais().toString());
+            tfCiudad.setText(aeropuertoPublico.getCiudad().toString());
+            tfCalle.setText(aeropuertoPublico.getCalle().toString());
+            tfNumero.setText(aeropuertoPublico.getNumero()+"");
+            tfAnioInauguracion.setText(aeropuertoPublico.getAnioInauguracion()+"");
+            tfCapacidad.setText(aeropuertoPublico.getCapacidad()+"");
+            rbPublico.setSelected(true);
+            tfFinanciacion.setText(aeropuertoPublico.getFinanciacion()+"");
+            tfNTrabajadores.setText(aeropuertoPublico.getNTrabajadores()+"");
+            
+            // Muestra los campos correspondientes a aeropuertos públicos
+            this.boxPublicos.setVisible(true);
+            this.boxPrivados.setVisible(false);
+        }
     }
 
     @FXML
-    void accionGuardar(ActionEvent event) {
-    	String errores = validar();
-    	if(errores.isEmpty()) {
-    		if(aeropuertoPrivado != null) {
-    			// Si el aeropuerto a editar es privado
-    			int numero = Integer.parseInt(tfNumero.getText().toString());
-        		int NSocios = Integer.parseInt(tfNSocios.getText().toString());
-        		String nombre = tfNombre.getText().toString();
-        		String pais = tfPais.getText().toString();
-        		String ciudad = tfCiudad.getText().toString();
-        		String calle = tfCalle.getText().toString();
-        		int anio = Integer.parseInt(tfAnioInauguracion.getText().toString());
-        		int capacidad = Integer.parseInt(tfCapacidad.getText().toString());
-        		
-        		AeropuertoPrivado a = new AeropuertoPrivado(this.aeropuertoPrivado.getId(), numero, NSocios, anio, capacidad, nombre, pais, ciudad, calle);
-        		
-        		AeropuertoDao aeropuertoDao = new AeropuertoDao();
-                aeropuertoDao.editarAeropuertoPrivado(a);
-                vaciarCampos();
-    		}else if(aeropuertoPublico != null) {
-    			// Si el aeropuerto a editar es publico
-    			int numero = Integer.parseInt(tfNumero.getText().toString());
-    			Float financiacion = Float.parseFloat(tfFinanciacion.getText().toString());
-        		int numTrabajadores = Integer.parseInt(tfNTrabajadores.getText().toString());
-        		String nombre = tfNombre.getText().toString();
-        		String pais = tfPais.getText().toString();
-        		String ciudad = tfCiudad.getText().toString();
-        		String calle = tfCalle.getText().toString();
-        		int anio = Integer.parseInt(tfAnioInauguracion.getText().toString());
-        		int capacidad = Integer.parseInt(tfCapacidad.getText().toString());
-        		
-        		AeropuertoPublico a = new AeropuertoPublico(this.aeropuertoPublico.getId(),numero, financiacion, numTrabajadores, anio, capacidad, nombre, pais, ciudad, calle);
-        		
-        		AeropuertoDao aeropuertoDao = new AeropuertoDao();
-                aeropuertoDao.editarAeropuertoPublico(a);
-                vaciarCampos();
-    		}
-            
-    		alertaInformacion("Se ha modificado correctamente el Aeropuerto");
-    	}else {
-    		alertaError(errores);
-    	}
+    void accionCancelar(ActionEvent event) {
+        // Cierra la ventana actual al hacer clic en el botón Cancelar
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+        stage.close();
     }
+
+    protected void editarAeropuerto() {
+        // Abre la ventana de edición de aeropuertos al llamar a la función editarAeropuerto
+        try {
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane) FXMLLoader.load(getClass().getResource("/fxml/EditarAeropuerto.fxml"));
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("AVIONES-AEROPUERTOS");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void accionGuardar(ActionEvent event) {
+        // Valida los campos del formulario y obtiene mensajes de error si los hay
+        String errores = validar();
+
+        // Si no hay errores, procesa la información ingresada
+        if (errores.isEmpty()) {
+            // Si el aeropuerto a editar es privado
+            if (aeropuertoPrivado != null) {
+                // Obtiene los valores ingresados en los campos de texto y conviértelos al tipo correspondiente
+                int numero = Integer.parseInt(tfNumero.getText().toString());
+                int NSocios = Integer.parseInt(tfNSocios.getText().toString());
+                String nombre = tfNombre.getText().toString();
+                String pais = tfPais.getText().toString();
+                String ciudad = tfCiudad.getText().toString();
+                String calle = tfCalle.getText().toString();
+                int anio = Integer.parseInt(tfAnioInauguracion.getText().toString());
+                int capacidad = Integer.parseInt(tfCapacidad.getText().toString());
+
+                // Crea un objeto AeropuertoPrivado con los valores obtenidos y el ID del aeropuerto a editar
+                AeropuertoPrivado a = new AeropuertoPrivado(this.aeropuertoPrivado.getId(), numero, NSocios, anio, capacidad, nombre, pais, ciudad, calle);
+
+                // Guarda el aeropuerto privado editado utilizando el objeto AeropuertoDao
+                AeropuertoDao aeropuertoDao = new AeropuertoDao();
+                aeropuertoDao.editarAeropuertoPrivado(a);
+
+                // Limpia los campos del formulario
+                vaciarCampos();
+            } else if (aeropuertoPublico != null) {
+                // Si el aeropuerto a editar es público
+                // Obtiene los valores ingresados en los campos de texto y conviértelos al tipo correspondiente
+                int numero = Integer.parseInt(tfNumero.getText().toString());
+                Float financiacion = Float.parseFloat(tfFinanciacion.getText().toString());
+                int numTrabajadores = Integer.parseInt(tfNTrabajadores.getText().toString());
+                String nombre = tfNombre.getText().toString();
+                String pais = tfPais.getText().toString();
+                String ciudad = tfCiudad.getText().toString();
+                String calle = tfCalle.getText().toString();
+                int anio = Integer.parseInt(tfAnioInauguracion.getText().toString());
+                int capacidad = Integer.parseInt(tfCapacidad.getText().toString());
+
+                // Crea un objeto AeropuertoPublico con los valores obtenidos y el ID del aeropuerto a editar
+                AeropuertoPublico a = new AeropuertoPublico(this.aeropuertoPublico.getId(), numero, financiacion, numTrabajadores, anio, capacidad, nombre, pais, ciudad, calle);
+
+                // Guarda el aeropuerto público editado utilizando el objeto AeropuertoDao
+                AeropuertoDao aeropuertoDao = new AeropuertoDao();
+                aeropuertoDao.editarAeropuertoPublico(a);
+
+                // Limpia los campos del formulario
+                vaciarCampos();
+            }
+
+            // Muestra una alerta informativa de que se ha modificado correctamente el aeropuerto
+            alertaInformacion("Se ha modificado correctamente el Aeropuerto");
+        } else {
+            // Si hay errores, muestra una alerta de error con los mensajes de error
+            alertaError(errores);
+        }
+    }
+
     
     private void vaciarCampos() {
     	tfNumero.setText("");

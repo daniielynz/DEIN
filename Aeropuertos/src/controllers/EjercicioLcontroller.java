@@ -27,46 +27,58 @@ public class EjercicioLcontroller {
 
     @FXML
     void accionLogin(MouseEvent event) {
-    	Usuario usu = new Usuario(tfUsuario.getText().toString(), passwordField.getText().toString());
-    	validarUsuario(usu);
+        // Recupera el nombre de usuario y la contraseña del formulario
+        Usuario usu = new Usuario(tfUsuario.getText().toString(), passwordField.getText().toString());
+        // Llama a la función para validar el usuario
+        validarUsuario(usu);
     }
-    
+
     public void validarUsuario(Usuario usu){
-    	try {
+        try {
+            // Verifica si el usuario existe en la base de datos
             UsuarioDao usuarioDao = new UsuarioDao();
             boolean existe = usuarioDao.existeUsuario(usu);
             if(existe) {
-            	listadoAeropuertos();
-            }else {
-            	alertaError("Usuario o Contraseña incorrectos");
+                // Si el usuario es válido, muestra el listado de aeropuertos
+                listadoAeropuertos();
+            } else {
+                // Si el usuario no es válido, muestra un mensaje de error
+                alertaError("Usuario o Contraseña incorrectos");
             }
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir durante la validación del usuario
+            e.printStackTrace();
+        }
     }
-    
- // Metodos de diferentes ventanas emergentes
+
+    // Métodos de diferentes ventanas emergentes
+
     private void alertaError(String mensaje) {
-    	// Alerta de error con boton
-    	Alert ventanaEmergente = new Alert(AlertType.ERROR);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+        // Muestra una ventana emergente de error con un botón de aceptar
+        Alert ventanaEmergente = new Alert(AlertType.ERROR);
+        ventanaEmergente.setTitle("info");
+        ventanaEmergente.setContentText(mensaje);
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
         ventanaEmergente.show();
     }
-    
+
     public void listadoAeropuertos(){
-    	try {
-    		Stage primaryStage = new Stage();
-			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EjercicioLfxmlListado.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setTitle("AVIONES-AEROPUERTOS");
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            // Abre la ventana que muestra el listado de aeropuertos
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/EjercicioLfxmlListado.fxml"));
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("AVIONES-AEROPUERTOS");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir al abrir la ventana de listado de aeropuertos
+            e.printStackTrace();
+        }
     }
+
 
 }
