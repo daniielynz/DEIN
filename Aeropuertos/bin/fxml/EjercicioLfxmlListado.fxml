@@ -125,7 +125,6 @@
                   <MenuItem mnemonicParsing="false" onAction="#accionAniadirAviones" text="Añadir" />
               <MenuItem mnemonicParsing="false" onAction="#accionActivarDesactivarAvion" text="Activar" />
                   <MenuItem mnemonicParsing="false" onAction="#accionBorrarAvion" text="Borrar" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionAyudaAvion" text="Ayuda" />
             </items>
           </Menu>
         </menus>

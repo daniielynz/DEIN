@@ -1,7 +1,5 @@
 package controllers;
 
-import java.awt.Taskbar.State;
-
 import dao.AeropuertoDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -71,8 +69,6 @@ public class ControllerEditarAeropuerto {
 
     @FXML
     private TextField tfPais;
-    
-    private String tipoAeropuerto;
     
     private AeropuertoPrivado aeropuertoPrivado;
     
@@ -163,7 +159,6 @@ public class ControllerEditarAeropuerto {
                 aeropuertoDao.editarAeropuertoPrivado(a);
                 vaciarCampos();
     		}else if(aeropuertoPublico != null) {
-    			System.out.println(aeropuertoPublico);
     			// Si el aeropuerto a editar es publico
     			int numero = Integer.parseInt(tfNumero.getText().toString());
     			Float financiacion = Float.parseFloat(tfFinanciacion.getText().toString());

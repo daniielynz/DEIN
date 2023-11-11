@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-
 import dao.AeropuertoDao;
 import dao.AvionesDao;
 import javafx.collections.FXCollections;
@@ -218,11 +216,6 @@ public class ControllerListadoAeropuertos {
         } catch(Exception e) {}
     }
     
-    // Este metodo solo sirve para vaciar campos
-    private void vaciarCampos() {
-    	tfNombre.setText("");
-    }
-    
     // actions de aeropuertos en el menu
     @FXML
     void accionAniadirAeropuerto(ActionEvent event) {
@@ -274,10 +267,10 @@ public class ControllerListadoAeropuertos {
     		datos+= "Capacidad: "+aeropuertoPrivadoSeleccionado.getCapacidad()+"\n";
     		// sacamos un listado con todos los aviones del aeropuerto
 			AvionesDao a = new AvionesDao();
-			ArrayList<Avion> arrlAviones = a.listadoAviones(aeropuertoPrivadoSeleccionado.getId());
+			ObservableList<Avion> arrlAviones = a.listadoAviones(aeropuertoPrivadoSeleccionado.getId());
 			// recorremos sus aviones
 			if(arrlAviones.isEmpty()) {
-					datos+= "No tiene aviones: \n";
+					datos+= "No tiene aviones \n";
 			}else {
 				datos+= "Aviones: \n";
 				for (Avion avion : arrlAviones) {
@@ -303,7 +296,7 @@ public class ControllerListadoAeropuertos {
     		datos+= "Capacidad: "+aeropuertoPublicoSeleccionado.getCapacidad()+"\n";
     		// sacamos un listado con todos los aviones del aeropuerto
 			AvionesDao a = new AvionesDao();
-			ArrayList<Avion> arrlAviones = a.listadoAviones(aeropuertoPublicoSeleccionado.getId());
+			ObservableList<Avion> arrlAviones = a.listadoAviones(aeropuertoPublicoSeleccionado.getId());
 			// recorremos sus aviones
 			if(arrlAviones.isEmpty()) {
 					datos+= "No tiene aviones: \n";
@@ -335,27 +328,56 @@ public class ControllerListadoAeropuertos {
     // actions de aviones en el menu
     @FXML
     void accionAniadirAviones(ActionEvent event) {
-
-    }
-
-    @FXML
-    void accionAyudaAvion(ActionEvent event) {
-
+    	try {
+    		Stage primaryStage = new Stage();
+			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/AniadirAvion.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setTitle("AVIONES-AÑADIR AVION");
+			
+			Image icon = new Image(getClass().getResourceAsStream("/images/avion.png"));
+			primaryStage.getIcons().add(icon);
+			
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML
     void accionActivarDesactivarAvion(ActionEvent event) {
-
+    	try {
+    		Stage primaryStage = new Stage();
+			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/ActivarDesactivarAvion.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setTitle("AVIONES-ACTIVAR/DESACTIVAR AVION");
+			
+			Image icon = new Image(getClass().getResourceAsStream("/images/avion.png"));
+			primaryStage.getIcons().add(icon);
+			
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML
     void accionBorrarAvion(ActionEvent event) {
-
-    }
-    
-    // Metodo que crea ventana
-    private void crearVentanaEmergente(String accion) {
-    	
+    	try {
+    		Stage primaryStage = new Stage();
+			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/BorrarAvion.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setTitle("AVIONES-ELIMINAR AVION");
+			
+			Image icon = new Image(getClass().getResourceAsStream("/images/avion.png"));
+			primaryStage.getIcons().add(icon);
+			
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
     }
     
     

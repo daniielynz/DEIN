@@ -6,11 +6,37 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Aeropuerto;
 import model.AeropuertoPrivado;
 import model.AeropuertoPublico;
+import model.Avion;
 
 public class AeropuertoDao {
     private ConexionBD conexion;
+    
+    public ObservableList<Aeropuerto> nombreAeropuertos() {
+    	ObservableList<Aeropuerto> listalAeropuertos = FXCollections.observableArrayList();
+    	try {
+    		// creamos conexoion
+            conexion = new ConexionBD();   
+	    	// obtener todos los aeropuertos
+	        String consulta = "SELECT * FROM aeropuertos";
+	    	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+	    	ResultSet rs = pstmt.executeQuery();   
+	    	
+			while (rs.next()) {
+				Aeropuerto a = new Aeropuerto(rs.getInt("id"), rs.getInt("anio_inauguracion"), rs.getInt("capacidad"), rs.getInt("id_direccion"), rs.getString("nombre"), rs.getString("imagen"));
+				listalAeropuertos.add(a);
+			}
+			
+			rs.close();  
+			conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }  
+    	
+    	return listalAeropuertos;
+    }
     
     public void aniadirAeropuertoPrivado(AeropuertoPrivado a) {
     	try {
@@ -20,16 +46,16 @@ public class AeropuertoDao {
             
             String consulta = "insert into direcciones (pais, ciudad, calle, numero) VALUES ('"+a.getPais()+"','"+a.getCiudad()+"','"+a.getCalle()+"',"+a.getNumero()+");";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
-        	int rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
             
             consulta = "insert into aeropuertos (nombre, anio_inauguracion, capacidad, id_direccion, imagen) VALUES ('"+a.getNombre()+"',"+a.getAnioInauguracion()+","+a.getCapacidad()+", "+(ultimoId("direcciones")-1)+" ,'');";
         	pstmt = conexion.getConexion().prepareStatement(consulta);
-        	rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
         	
         	// añadir en la tabla de aeropuertos
         	consulta = "insert into aeropuertos_privados (id_aeropuerto, numero_socios) VALUES ("+(ultimoId("aeropuertos")-1)+","+a.getNSocios()+");";
         	pstmt = conexion.getConexion().prepareStatement(consulta);
-        	rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
         	      
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
@@ -39,12 +65,19 @@ public class AeropuertoDao {
     
     public void borrarAeropuertoPrivado(AeropuertoPrivado a) {
     	try {
-    		conexion = new ConexionBD();        	
+    		conexion = new ConexionBD();      
+    		
+    		// primero borramos los aviones del aeropuerto
+    		AvionesDao avionesDao = new AvionesDao();
+    		ObservableList<Avion> listadoAviones = avionesDao.listadoAviones(a.getId());
+    		for(Avion avion : listadoAviones) {
+    			avionesDao.borrarAvion(avion);
+    		}
             
             // borrar de la tabla de aeropuertos privados
             String consulta = "DELETE FROM aeropuertos_privados WHERE id_aeropuerto = "+a.getId()+";";
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
-            int rs2 = pstmt.executeUpdate();
+            pstmt.executeUpdate();
             
             // sacar el id de direcciones que tiene el aeropuerto
             consulta = "select id_direccion from aeropuertos where id = "+a.getId();
@@ -59,12 +92,12 @@ public class AeropuertoDao {
             // borrar de la tabla de aeropuertos
         	consulta = "DELETE FROM aeropuertos WHERE id = "+a.getId()+";";
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
-        	rs2 = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
 			 
 			// borrar de la tabla de direcciones
         	consulta = "DELETE FROM direcciones WHERE id = "+idDireccion;
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
-        	rs2 = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
         	      
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
@@ -74,12 +107,19 @@ public class AeropuertoDao {
     
     public void borrarAeropuertoPublico(AeropuertoPublico a) {
     	try {
-            conexion = new ConexionBD();        	
+            conexion = new ConexionBD();   
+            
+            // primero borramos los aviones del aeropuerto
+    		AvionesDao avionesDao = new AvionesDao();
+    		ObservableList<Avion> listadoAviones = avionesDao.listadoAviones(a.getId());
+    		for(Avion avion : listadoAviones) {
+    			avionesDao.borrarAvion(avion);
+    		}
             
             // borrar de la tabla de aeropuertos privados
             String consulta = "DELETE FROM aeropuertos_publicos WHERE id_aeropuerto = "+a.getId()+";";
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
-            int rs2 = pstmt.executeUpdate();
+            pstmt.executeUpdate();
             
             // sacar el id de direcciones que tiene el aeropuerto
             consulta = "select id_direccion from aeropuertos where id = "+a.getId();
@@ -94,12 +134,12 @@ public class AeropuertoDao {
             // borrar de la tabla de aeropuertos
         	consulta = "DELETE FROM aeropuertos WHERE id = "+a.getId()+";";
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
-        	rs2 = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
 			 
 			// borrar de la tabla de direcciones
         	consulta = "DELETE FROM direcciones WHERE id = "+idDireccion;
         	pstmt = conexion.getConexion().prepareStatement(consulta);      
-        	rs2 = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
 			 
         	
         	conexion.closeConexion();
@@ -116,16 +156,16 @@ public class AeropuertoDao {
             
             String consulta = "insert into direcciones (pais, ciudad, calle, numero) VALUES ('"+a.getPais()+"','"+a.getCiudad()+"','"+a.getCalle()+"',"+a.getNumero()+");";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
-        	int rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
             
             consulta = "insert into aeropuertos (nombre, anio_inauguracion, capacidad, id_direccion, imagen) VALUES ('"+a.getNombre()+"',"+a.getAnioInauguracion()+","+a.getCapacidad()+", "+(ultimoId("direcciones")-1)+" ,'');";
         	pstmt = conexion.getConexion().prepareStatement(consulta);
-        	rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
         	
         	// añadir en la tabla de aeropuertos
         	consulta = "insert into aeropuertos_publicos (id_aeropuerto, financiacion, num_trabajadores) VALUES ("+(ultimoId("aeropuertos")-1)+","+a.getFinanciacion()+","+a.getNTrabajadores()+");";
         	pstmt = conexion.getConexion().prepareStatement(consulta);
-        	rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
         	      
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
@@ -142,7 +182,7 @@ public class AeropuertoDao {
             				+ "SET financiacion = "+a.getFinanciacion()+", num_trabajadores = "+a.getNTrabajadores()+" "
             				+ "WHERE id_aeropuerto = "+a.getId();
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
-        	int rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
             
         	// sacar el id de direcciones que tiene el aeropuerto
             consulta = "select id_direccion from aeropuertos where id = "+a.getId();
@@ -159,14 +199,14 @@ public class AeropuertoDao {
     				 + "SET pais = '"+a.getPais()+"', ciudad = '"+a.getCiudad()+"', calle = '"+a.getCalle()+"' , numero = "+a.getNumero()+" "
     				 + "WHERE id = "+idDireccion;
         	pstmt = conexion.getConexion().prepareStatement(consulta);
-			rs = pstmt.executeUpdate();
+			pstmt.executeUpdate();
         	
         	// editamos la tabla aeropuertos
         	consulta = "UPDATE aeropuertos "
     				 + "SET nombre = '"+a.getNombre()+"', anio_inauguracion = "+a.getAnioInauguracion()+", capacidad = "+a.getCapacidad()+", id_direccion = '"+idDireccion+"' "
     				 + "WHERE id = "+a.getId();
 			pstmt = conexion.getConexion().prepareStatement(consulta);
-			rs = pstmt.executeUpdate();
+			pstmt.executeUpdate();
         	      
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
@@ -183,7 +223,7 @@ public class AeropuertoDao {
             				+ "SET numero_socios = "+a.getNSocios()+" "
             				+ "WHERE id_aeropuerto = "+a.getId();
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
-        	int rs = pstmt.executeUpdate();
+        	pstmt.executeUpdate();
             
         	// sacar el id de direcciones que tiene el aeropuerto
             consulta = "select id_direccion from aeropuertos where id = "+a.getId();
@@ -200,14 +240,14 @@ public class AeropuertoDao {
     				 + "SET pais = '"+a.getPais()+"', ciudad = '"+a.getCiudad()+"', calle = '"+a.getCalle()+"' , numero = "+a.getNumero()+" "
     				 + "WHERE id = "+idDireccion;
         	pstmt = conexion.getConexion().prepareStatement(consulta);
-			rs = pstmt.executeUpdate();
+			pstmt.executeUpdate();
         	
         	// editamos la tabla aeropuertos
         	consulta = "UPDATE aeropuertos "
     				 + "SET nombre = '"+a.getNombre()+"', anio_inauguracion = "+a.getAnioInauguracion()+", capacidad = "+a.getCapacidad()+", id_direccion = '"+idDireccion+"' "
     				 + "WHERE id = "+a.getId();
 			pstmt = conexion.getConexion().prepareStatement(consulta);
-			rs = pstmt.executeUpdate();
+			pstmt.executeUpdate();
         	      
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
@@ -295,7 +335,7 @@ public class AeropuertoDao {
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
         	ResultSet rs = pstmt.executeQuery();   
 				
-			 while (rs.next()) {
+			 if (rs.next()) {
 		            int ultimoId = rs.getInt("ID");
 		            
 		            return ultimoId+1;

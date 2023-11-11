@@ -4,9 +4,11 @@ import dao.UsuarioDao;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -35,8 +37,23 @@ public class EjercicioLcontroller {
             boolean existe = usuarioDao.existeUsuario(usu);
             if(existe) {
             	listadoAeropuertos();
+            }else {
+            	alertaError("Usuario o Contraseña incorrectos");
             }
         } catch(Exception e) {}
+    }
+    
+ // Metodos de diferentes ventanas emergentes
+    private void alertaError(String mensaje) {
+    	// Alerta de error con boton
+    	Alert ventanaEmergente = new Alert(AlertType.ERROR);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
     }
     
     public void listadoAeropuertos(){
