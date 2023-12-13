@@ -4,11 +4,18 @@ import java.util.Objects;
 
 public class Deportista {
 	int id_deportista, peso, altura;
-	String nombre, foto;
-	char sexo;
+	String nombre, foto, sexo;
 	
-	public Deportista(int id_deportista, int peso, int altura, String nombre, String foto, char sexo) {
+	public Deportista(int id_deportista, int peso, int altura, String nombre, String foto, String sexo) {
 		this.id_deportista = id_deportista;
+		this.peso = peso;
+		this.altura = altura;
+		this.nombre = nombre;
+		this.foto = foto;
+		this.sexo = sexo;
+	}
+	
+	public Deportista(int peso, int altura, String nombre, String foto, String sexo) {
 		this.peso = peso;
 		this.altura = altura;
 		this.nombre = nombre;
@@ -36,14 +43,13 @@ public class Deportista {
 		return foto;
 	}
 
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
 	@Override
 	public String toString() {
-		return "Deportista [id_deportista=" + id_deportista + ", peso=" + peso + ", altura=" + altura + ", nombre="
-				+ nombre + ", foto=" + foto + ", sexo=" + sexo + "]";
+		return nombre;
 	}
 
 	@Override

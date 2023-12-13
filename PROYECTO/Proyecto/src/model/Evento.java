@@ -3,7 +3,7 @@ package model;
 import java.util.Objects;
 
 public class Evento {
-	String nombre;
+	String nombre, nombre_deporte, nombre_olimpiada;
 	int id_evento, id_olimpiada, id_deporte;
 	
 	public Evento(String nombre, int id_evento, int id_olimpiada, int id_deporte) {
@@ -11,6 +11,21 @@ public class Evento {
 		this.id_evento = id_evento;
 		this.id_olimpiada = id_olimpiada;
 		this.id_deporte = id_deporte;
+	}
+	
+	public Evento(String nombre, int id_evento, String nombre_olimpiada, String nombre_deporte) {
+		this.nombre = nombre;
+		this.id_evento = id_evento;
+		this.nombre_olimpiada = nombre_olimpiada;
+		this.nombre_deporte = nombre_deporte;
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Evento [nombre=" + nombre + ", nombre_deporte=" + nombre_deporte + ", nombre_olimpiada="
+				+ nombre_olimpiada + ", id_evento=" + id_evento + "]";
 	}
 
 	public String getNombre() {
@@ -45,12 +60,6 @@ public class Evento {
 		Evento other = (Evento) obj;
 		return id_deporte == other.id_deporte && id_evento == other.id_evento && id_olimpiada == other.id_olimpiada
 				&& Objects.equals(nombre, other.nombre);
-	}
-
-	@Override
-	public String toString() {
-		return "Evento [nombre=" + nombre + ", id_evento=" + id_evento + ", id_olimpiada=" + id_olimpiada
-				+ ", id_deporte=" + id_deporte + "]";
 	}
 	
 	
