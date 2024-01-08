@@ -6,49 +6,49 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Evento;
+import model.Olimpiada;
 
-public class EventosDao {
+public class OlimpiadasDao {
 private ConexionBD conexion;
     
-    public ObservableList<Evento> cargarEventos(String cadena)  {
-		ObservableList<Evento> listaEquipos = FXCollections.observableArrayList();
+    public ObservableList<Olimpiada> cargarOlimpiadas(String cadena)  {
+		ObservableList<Olimpiada> listaOlimpiadas = FXCollections.observableArrayList();
 	    try {
 	        conexion = new ConexionBD();        	
-	    	String consulta = "select Evento.id_evento as id_evento, Evento.nombre as nombre, Olimpiada.nombre as olimpiada, Deporte.nombre as deporte "
-			    			+ "from Evento, Olimpiada, Deporte "
-			    			+ "WHERE Evento.nombre LIKE '%"+cadena+"%' "
-	    					+ "AND Deporte.id_deporte = Evento.id_deporte and Evento.id_olimpiada = Olimpiada.id_olimpiada";
+	    	String consulta = "select * "
+			    			+ "from Olimpiada "
+			    			+ "WHERE nombre LIKE '%"+cadena+"%' ";
 	    	
 	    	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
 	    	ResultSet rs = pstmt.executeQuery();   
 	    	
 			 while (rs.next()) {
 				 	// Guardamos todos los datos
+		            int id_olimpiada = rs.getInt("id_olimpiada");
+		            int anio = rs.getInt("anio");
 		            String nombre = rs.getString("nombre");
-		            int id_evento = rs.getInt("id_evento");
-		            String olimpiada = rs.getString("olimpiada");
-		            String deporte = rs.getString("deporte");
+		            String ciudad = rs.getString("ciudad");
+		            String temporada = rs.getString("temporada");
 		            
-		            // Creamos el Evento
-		            Evento e = new Evento(nombre, id_evento, olimpiada, deporte);
-		            listaEquipos.add(e);
+		            // Creamos la Olimpiada
+		            Olimpiada o = new Olimpiada(id_olimpiada, anio, nombre, ciudad, temporada);
+		            listaOlimpiadas.add(o);
 			 }     
 			 rs.close();       
 			 conexion.closeConexion();
 	
-			 return listaEquipos;
+			 return listaOlimpiadas;
 			 
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();
 	    }    
-	    return listaEquipos;    
+	    return listaOlimpiadas;    
 	}
     
     public int ultimoId() {
     	try {
             conexion = new ConexionBD();        	
-        	String consulta = "select MAX(id_evento) as ID from Evento";
+        	String consulta = "select MAX(id_olimpiada) as ID from Olimpiada";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
         	ResultSet rs = pstmt.executeQuery();   
 				

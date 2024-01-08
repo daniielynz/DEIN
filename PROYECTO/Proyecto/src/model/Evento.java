@@ -43,6 +43,16 @@ public class Evento {
 	public int getId_deporte() {
 		return id_deporte;
 	}
+	
+	
+
+	public String getNombre_deporte() {
+		return nombre_deporte;
+	}
+
+	public String getNombre_olimpiada() {
+		return nombre_olimpiada;
+	}
 
 	@Override
 	public int hashCode() {

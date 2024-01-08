@@ -4,6 +4,8 @@ import dao.DeportesDao;
 import dao.DeportistasDao;
 import dao.EquiposDao;
 import dao.EventosDao;
+import dao.OlimpiadasDao;
+import dao.ParticipacionesDao;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,6 +26,8 @@ import model.Deporte;
 import model.Deportista;
 import model.Equipo;
 import model.Evento;
+import model.Olimpiada;
+import model.Participacion;
 
 public class ListadoController {
 
@@ -144,6 +148,60 @@ public class ListadoController {
 		                    // Este código se ejecutará cuando se presione "Enter" en el TextField.
 		                    String cadena = tfBuscarPorNombre.getText();
 		                    cargarTablaEventos(cadena);
+		                }
+		            });
+		        }
+		    });
+		   
+		   // ponemos evento al radioButon de Participacion
+		   rbOlimpiadas.setOnAction(new EventHandler<ActionEvent>() {
+		        @Override
+		        public void handle(ActionEvent event) {
+		        	ocultarTablas();
+		        	tablaOlimpiadas.setVisible(true);
+		        	// cargamos los datos de la tabla Evento
+		        	colNombreOlimpiada.setCellValueFactory(new PropertyValueFactory<Olimpiada, String>("nombre") );
+		        	colAnioOlimpiada.setCellValueFactory(new PropertyValueFactory<Olimpiada, Integer>("anio") );
+		        	colIdOlimpiada.setCellValueFactory(new PropertyValueFactory<Olimpiada, Integer>("id_olimpiada") );
+		        	colCiudadOlimpiada.setCellValueFactory(new PropertyValueFactory<Olimpiada, String>("ciudad") );
+		            colTemporada.setCellValueFactory(new PropertyValueFactory<Olimpiada, String>("temporada") );
+		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
+		    		cargarTablaOlimpiadas("");
+		    		
+		    		// ponemos evento al TextField del filtrado por nombre
+		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
+		                @Override
+		                public void handle(ActionEvent event) {
+		                    // Este código se ejecutará cuando se presione "Enter" en el TextField.
+		                    String cadena = tfBuscarPorNombre.getText();
+		                    cargarTablaOlimpiadas(cadena);
+		                }
+		            });
+		        }
+		    });
+		   
+		   // ponemos evento al radioButon de Participacion
+		   rbParticipaciones.setOnAction(new EventHandler<ActionEvent>() {
+		        @Override
+		        public void handle(ActionEvent event) {
+		        	ocultarTablas();
+		        	tablaParticipaciones.setVisible(true);
+		        	// cargamos los datos de la tabla Participacion
+		        	colDeportistaParticipacion.setCellValueFactory(new PropertyValueFactory<Participacion, String>("deportista") );
+		        	colEdadParticipacion.setCellValueFactory(new PropertyValueFactory<Participacion, Integer>("edad") );
+		        	colEquipoParticipacion.setCellValueFactory(new PropertyValueFactory<Participacion, String>("equipo") );
+		        	colEventoParticipacion.setCellValueFactory(new PropertyValueFactory<Participacion, String>("evento") );
+		        	colMedallaParticipacion.setCellValueFactory(new PropertyValueFactory<Participacion, String>("medalla") );
+		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
+		        	cargarTablaParticipaciones("");
+		    		
+		    		// ponemos evento al TextField del filtrado por nombre
+		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
+		                @Override
+		                public void handle(ActionEvent event) {
+		                    // Este código se ejecutará cuando se presione "Enter" en el TextField.
+		                    String cadena = tfBuscarPorNombre.getText();
+		                    cargarTablaParticipaciones(cadena);
 		                }
 		            });
 		        }
@@ -366,15 +424,30 @@ public class ListadoController {
 	 	**************************************************************************************************************************************************
 	*/
     @FXML
-    private TableColumn<?, ?> colNombreOlimpiada;
+    private TableColumn<Olimpiada, String> colNombreOlimpiada;
     @FXML
-    private TableColumn<?, ?> colAnioOlimpiada;
+    private TableColumn<Olimpiada, Integer> colAnioOlimpiada;
     @FXML
-    private TableColumn<?, ?> colIdOlimpiada;
+    private TableColumn<Olimpiada, Integer> colIdOlimpiada;
     @FXML
-    private TableView<?> tablaOlimpiadas;
+    private TableColumn<Olimpiada, String> colTemporada;
     @FXML
-    private TableColumn<?, ?> colCiudadOlimpiada;
+    private TableView<Olimpiada> tablaOlimpiadas;
+    @FXML
+    private TableColumn<Olimpiada, String> colCiudadOlimpiada;
+    
+    void cargarTablaOlimpiadas(String cadena) {
+	    try {
+	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	    	OlimpiadasDao olimpiadasDao = new OlimpiadasDao();
+	        ObservableList<Olimpiada> listaOlimpiadas =  olimpiadasDao.cargarOlimpiadas(cadena);
+	        tablaOlimpiadas.setItems(listaOlimpiadas);
+	        tablaOlimpiadas.refresh();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir durante la carga
+	        e.printStackTrace();
+	    }
+	}
     
     @FXML
     void accionAniadirOlimpiada(ActionEvent event) {
@@ -398,18 +471,30 @@ public class ListadoController {
 	 	**************************************************************************************************************************************************
 	*/
     @FXML
-    private TableView<?> tablaParticipaciones;
+    private TableView<Participacion> tablaParticipaciones;
     @FXML
-    private TableColumn<?, ?> colDeportistaParticipacion;
+    private TableColumn<Participacion, String> colDeportistaParticipacion;
     @FXML
-    private TableColumn<?, ?> colEdadParticipacion;
+    private TableColumn<Participacion, Integer> colEdadParticipacion;
     @FXML
-    private TableColumn<?, ?> colEquipoParticipacion;
+    private TableColumn<Participacion, String> colEquipoParticipacion;
     @FXML
-    private TableColumn<?, ?> colEventoParticipacion;
+    private TableColumn<Participacion, String> colEventoParticipacion;
     @FXML
-    private TableColumn<?, ?> colMedallaParticipacion;
+    private TableColumn<Participacion, String> colMedallaParticipacion;
     
+    void cargarTablaParticipaciones(String cadena) {
+	    try {
+	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	    	ParticipacionesDao participacionesDao = new ParticipacionesDao();
+	        ObservableList<Participacion> listaParticipaciones =  participacionesDao.cargarParticipaciones(cadena);
+	        tablaParticipaciones.setItems(listaParticipaciones);
+	        tablaParticipaciones.refresh();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir durante la carga
+	        e.printStackTrace();
+	    }
+	}
     
     @FXML
     void accionAniadirParticipacion(ActionEvent event) {

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Participacion {
 	int id_deportista, id_evento, id_equipo, edad;
-	String medalla;
+	String medalla, deportista, evento, equipo;
 	
 	public Participacion(int id_deportista, int id_evento, int id_equipo, int edad, String medalla) {
 		this.id_deportista = id_deportista;
@@ -12,6 +12,26 @@ public class Participacion {
 		this.id_equipo = id_equipo;
 		this.edad = edad;
 		this.medalla = medalla;
+	}
+	
+	public Participacion(String deportista, String evento, String equipo, int edad, String medalla) {
+		this.deportista = deportista;
+		this.evento = evento;
+		this.equipo = equipo;
+		this.edad = edad;
+		this.medalla = medalla;
+	}
+
+	public String getDeportista() {
+		return deportista;
+	}
+
+	public String getEvento() {
+		return evento;
+	}
+
+	public String getEquipo() {
+		return equipo;
 	}
 
 	public int getId_deportista() {
