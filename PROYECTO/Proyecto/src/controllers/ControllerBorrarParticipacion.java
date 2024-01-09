@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.DeportistasDao;
+import dao.ParticipacionesDao;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,14 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import model.Deportista;
-	
+import model.Participacion;
 
-public class ControllerBorrarDeportista {
-	
-	private Deportista deportistaSeleccionado;
+public class ControllerBorrarParticipacion {
+	private Participacion participacionSeleccionada;
 	@FXML
-	private ComboBox<Deportista> cbDeportistas;
+	private ComboBox<Participacion> cbDeportistas;
 	@FXML
     private Button btnBorrar;
 	@FXML
@@ -24,18 +23,18 @@ public class ControllerBorrarDeportista {
 	
 	@FXML
     void initialize() {
-		DeportistasDao deportistaDao = new DeportistasDao();
-        ObservableList<Deportista> listaDeportista =  deportistaDao.cargarDeportista("");
-        cbDeportistas.setItems(listaDeportista);
+		ParticipacionesDao participacionesDao = new ParticipacionesDao();
+        ObservableList<Participacion> listaParticipaciones =  participacionesDao.cargarParticipaciones("");
+        cbDeportistas.setItems(listaParticipaciones);
     }
 	
 	@FXML
     void accionBorrar(ActionEvent event) {
-    	if(deportistaSeleccionado != null) {
-    		DeportistasDao dao = new DeportistasDao();
+    	if(participacionSeleccionada != null) {
+    		ParticipacionesDao dao = new ParticipacionesDao();
     		// hay que borrar el deportista de la participacion
-        	dao.borrarDeportista(deportistaSeleccionado);
-        	alertaInformacion("Se ha borrado el deportista seleccionado");
+        	dao.borrarParticipacion(participacionSeleccionada);
+        	alertaInformacion("Se ha borrado la participacion seleccionada");
     	}
     }
 	
@@ -47,8 +46,8 @@ public class ControllerBorrarDeportista {
     }
     
     @FXML
-    void accionElegirDeportista(ActionEvent event) {
-    	deportistaSeleccionado = cbDeportistas.getSelectionModel().getSelectedItem();
+    void accionElegirParticipacion(ActionEvent event) {
+    	participacionSeleccionada = cbDeportistas.getSelectionModel().getSelectedItem();
     }
     
     private void alertaInformacion(String mensaje) {

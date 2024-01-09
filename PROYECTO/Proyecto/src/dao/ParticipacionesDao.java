@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Deportista;
 import model.Participacion;
 
 public class ParticipacionesDao {
@@ -47,4 +48,39 @@ private ConexionBD conexion;
 	    }    
 	    return listaParticipaciones;    
 	}
+    
+    public void borrarParticipacion(Participacion a) {
+    	try {
+    		conexion = new ConexionBD();   
+    		
+    		// sacamos el id del deportista de la participacion
+    		String consulta = "select id_deportista from Deportista where nombre = "+a.getDeportista();
+    		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+    		ResultSet rs = pstmt.executeQuery(); 
+    		int id_deportista = rs.getInt("id_deportista");
+    		
+    		// sacamos el id del evento de la participacion
+    		consulta = "select id_evento from Evento where nombre = "+a.getEvento();
+    		pstmt = conexion.getConexion().prepareStatement(consulta);      
+    		rs = pstmt.executeQuery(); 
+    		int id_evento = rs.getInt("id_evento");
+    		
+    		// sacamos el id del equipo de la participacion
+    		consulta = "select id_equipo from Equipo where nombre = "+a.getEquipo();
+    		pstmt = conexion.getConexion().prepareStatement(consulta);      
+    		rs = pstmt.executeQuery(); 
+    		int id_equipo = rs.getInt("id_equipo");
+    		
+    		// borramos la participacion
+    		consulta = "DELETE FROM Participacion WHERE id_deportista = "+id_deportista+" AND id_evento = "+id_evento+" AND id_equipo = "+id_equipo;
+            pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+            
+            
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    } 
+    }
 }

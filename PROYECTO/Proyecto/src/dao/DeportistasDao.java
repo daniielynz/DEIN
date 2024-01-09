@@ -30,15 +30,17 @@ public class DeportistasDao {
     	try {
     		conexion = new ConexionBD();   
     		
-    		// borrar de la tabla Deportista
-            String consulta = "DELETE FROM Deportista WHERE id_deportista = "+a.getId_deportista();
-            PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+    		// borrar de la tabla Participacion
+    		String consulta = "DELETE FROM Participacion WHERE id_deportista = "+a.getId_deportista();
+    		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
             pstmt.executeUpdate();
-            
-            // borrar de la tabla Participacion
-            consulta = "DELETE FROM Participacion WHERE id_deportista = "+a.getId_deportista();
+    		
+    		// borrar de la tabla Deportista
+            consulta = "DELETE FROM Deportista WHERE id_deportista = "+a.getId_deportista();
             pstmt = conexion.getConexion().prepareStatement(consulta);      
             pstmt.executeUpdate();
+            
+            
         	      
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
