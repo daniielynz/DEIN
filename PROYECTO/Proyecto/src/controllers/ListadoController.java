@@ -12,12 +12,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -57,11 +62,31 @@ public class ListadoController {
 		        	colPesoDeportista.setCellValueFactory(new PropertyValueFactory<Deportista,Integer>("peso") );
 		        	colAlturaDeportista.setCellValueFactory(new PropertyValueFactory<Deportista,Integer>("altura") );
 		        	colFotoDeportista.setCellValueFactory(new PropertyValueFactory<Deportista,String>("foto") );
-		        	
-		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
 		    		cargarTablaDeportistas("");
 		    		
-		    		// ponemos evento al TextField del filtrado por nombre
+		    		//// Creamos un menú contextual para la tabla ////
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem modifyItem = new MenuItem("Modificar");
+                    MenuItem deleteItem = new MenuItem("Eliminar");
+
+                    modifyItem.setOnAction(e -> {
+                        alertaInformacion("Se esta intentado modificar un deportista");
+                    });
+
+                    deleteItem.setOnAction(e -> {
+                    	Deportista deportistaSeleccionado = tablaDeportistas.getSelectionModel().getSelectedItem();
+                        if(deportistaSeleccionado!=null) {
+                        	DeportistasDao dao = new DeportistasDao();
+	                		// hay que borrar el deportista de la participacion
+	                    	dao.borrarDeportista(deportistaSeleccionado);
+	                    	alertaInformacion("Se ha borrado el deportista seleccionado");
+	                    	cargarTablaDeportistas("");
+                        }
+                    });
+                    contextMenu.getItems().addAll(modifyItem, deleteItem);
+                    tablaDeportistas.setContextMenu(contextMenu);
+		    		
+                    //// Filtrado por nombre de Deportista ////
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
 		                @Override
 		                public void handle(ActionEvent event) {
@@ -217,6 +242,17 @@ public class ListadoController {
     	tablaParticipaciones.setVisible(false);
     }
 		    
+    private void alertaInformacion(String mensaje) {
+    	// Alerta de informacion con boton
+    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
+    }
     
     /* 	**************************************************************************************************************************************************
      	**************************************************************************************************************************************************
