@@ -6,18 +6,19 @@ public class Participacion {
 	int id_deportista, id_evento, id_equipo, edad;
 	String medalla, deportista, evento, equipo;
 	
-	public Participacion(int id_deportista, int id_evento, int id_equipo, int edad, String medalla) {
-		this.id_deportista = id_deportista;
+	public Participacion(String deportista, int id_evento, String evento, String equipo, int edad, String medalla) {
+		this.deportista = deportista;
 		this.id_evento = id_evento;
-		this.id_equipo = id_equipo;
+		this.evento = evento;
+		this.equipo = equipo;
 		this.edad = edad;
 		this.medalla = medalla;
 	}
 	
-	public Participacion(String deportista, String evento, String equipo, int edad, String medalla) {
-		this.deportista = deportista;
-		this.evento = evento;
-		this.equipo = equipo;
+	public Participacion(int id_deportista, int id_evento, int id_equipo, int edad, String medalla) {
+		this.id_deportista = id_deportista;
+		this.id_evento = id_evento;
+		this.id_equipo = id_equipo;
 		this.edad = edad;
 		this.medalla = medalla;
 	}
@@ -75,8 +76,11 @@ public class Participacion {
 	@Override
 	public String toString() {
 		return "Participacion [id_deportista=" + id_deportista + ", id_evento=" + id_evento + ", id_equipo=" + id_equipo
-				+ ", edad=" + edad + ", medalla=" + medalla + "]";
+				+ ", edad=" + edad + ", medalla=" + medalla + ", deportista=" + deportista + ", evento=" + evento
+				+ ", equipo=" + equipo + "]";
 	}
+
+	
 	
 	
 }

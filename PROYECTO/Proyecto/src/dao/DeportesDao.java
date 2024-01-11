@@ -7,12 +7,11 @@ import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Deporte;
+import model.Deportista;
 
 public class DeportesDao {
     private ConexionBD conexion;
     
-    
-
     public ObservableList<Deporte> cargarDeportes(String cadena)  {
 		ObservableList<Deporte> listaDeportes = FXCollections.observableArrayList();
 	    try {
@@ -43,6 +42,33 @@ public class DeportesDao {
 	    }    
 	    return listaDeportes;    
 	}
+    
+    public void borrarDeporte(Deporte a) {
+    	try {
+    		conexion = new ConexionBD();   
+    		
+    		// borrar de la tabla Participacion
+    		String consulta = "DELETE FROM Participacion WHERE id_evento IN (SELECT id_evento FROM Evento WHERE id_deporte = "+a.getId_deporte()+")";
+    		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+    		
+    		// borrar de la tabla Evento
+    		consulta = "DELETE FROM Evento WHERE id_deporte = "+ a.getId_deporte();
+    		pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+    		
+    		// borrar de la tabla Deporte
+            consulta = "DELETE FROM Deporte WHERE id_deporte = "+a.getId_deporte();
+            pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+            
+            
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    } 
+    }
     
     public int ultimoId() {
     	try {

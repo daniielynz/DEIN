@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Evento;
 import model.Olimpiada;
 
 public class OlimpiadasDao {
@@ -44,6 +45,33 @@ private ConexionBD conexion;
 	    }    
 	    return listaOlimpiadas;    
 	}
+    
+    public void borrarOlimpiada(Olimpiada a) {
+    	try {
+    		conexion = new ConexionBD();   
+    		
+    		// borrar de la tabla Participacion
+    		String consulta = "DELETE FROM Participacion WHERE id_evento IN (SELECT id_evento FROM Evento WHERE id_olimpiada = "+a.getId_olimpiada()+")";
+    		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+    		
+    		// borrar de la tabla Evento
+    		consulta = "DELETE FROM Evento WHERE id_olimpiada = "+ a.getId_olimpiada();
+    		pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+    		
+    		// borrar de la tabla Olimpiada
+            consulta = "DELETE FROM Olimpiada WHERE id_olimpiada = "+a.getId_olimpiada();
+            pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+            
+            
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    } 
+    }
     
     public int ultimoId() {
     	try {
