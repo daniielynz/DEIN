@@ -64,6 +64,7 @@ public class ListadoController {
 		        	colFotoDeportista.setCellValueFactory(new PropertyValueFactory<Deportista,String>("foto") );
 		    		cargarTablaDeportistas("");
 		    		
+<<<<<<< HEAD
 		    		//// Creamos un menú contextual para la tabla ////
                     ContextMenu contextMenu = new ContextMenu();
                     MenuItem modifyItem = new MenuItem("Modificar");
@@ -87,6 +88,34 @@ public class ListadoController {
                     tablaDeportistas.setContextMenu(contextMenu);
 		    		
                     //// Filtrado por nombre de Deportista ////
+=======
+		    		// Creamos un menú contextual para la tabla
+		            ContextMenu contextMenu = new ContextMenu();
+		            MenuItem itemModificar = new MenuItem("Modificar");
+		            MenuItem itemBorrar = new MenuItem("Eliminar");
+
+		            // Manejamos eventos de clic para las opciones del menú contextual
+		            itemModificar.setOnAction(e -> {
+		                Deportista deportistaSeleccionado = tablaDeportistas.getSelectionModel().getSelectedItem();
+		                alertaInformacion("Modificar Deportista");
+		            });
+
+		            itemBorrar.setOnAction(e -> {
+		            	Deportista deportistaSeleccionado = tablaDeportistas.getSelectionModel().getSelectedItem();
+		                if(deportistaSeleccionado!=null) {
+		                	DeportistasDao dao = new DeportistasDao();
+		                	// hay que borrar el deportista de la participacion
+		                	dao.borrarDeportista(deportistaSeleccionado);
+		                	alertaInformacion("Se ha borrado el deportista seleccionado");
+		                	cargarTablaDeportistas("");
+		                }
+		            });
+		            // agregamos los items al menu
+		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            tablaDeportistas.setContextMenu(contextMenu);
+		    	
+		    		// ponemos evento al TextField del filtrado por nombre
+>>>>>>> 01bc1ea19846824074b203cd73ccecaf79877d28
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
 		                @Override
 		                public void handle(ActionEvent event) {
@@ -108,9 +137,32 @@ public class ListadoController {
 		        	// cargamos los datos de la tabla
 		        	colIdDeporte.setCellValueFactory(new PropertyValueFactory<Deporte,Integer>("id_deporte") );
 		        	colNombreDeporte.setCellValueFactory(new PropertyValueFactory<Deporte,String>("nombre") );
-		        	
-		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
 		    		cargarTablaDeportes("");
+		    		
+		    		// Creamos un menú contextual para la tabla
+		            ContextMenu contextMenu = new ContextMenu();
+		            MenuItem itemModificar= new MenuItem("Modificar");
+		            MenuItem itemBorrar = new MenuItem("Eliminar");
+
+		            // Manejamos eventos de clic para las opciones del menú contextual
+		            itemModificar.setOnAction(e -> {
+		                Deporte deporteSeleccionado = tablaDeporte.getSelectionModel().getSelectedItem();
+		                alertaInformacion("Modificar Deporte");
+		            });
+
+		            itemBorrar.setOnAction(e -> {
+		            	Deporte deporteSeleccionado = tablaDeporte.getSelectionModel().getSelectedItem();
+		                if(deporteSeleccionado!=null) {
+		                	DeportesDao dao = new DeportesDao();
+		                	// hay que borrar el deportista de la participacion
+		                	dao.borrarDeporte(deporteSeleccionado);
+		                	alertaInformacion("Se ha borrado el deporte seleccionado");
+		                	cargarTablaDeportes("");
+		                }
+		            });
+		            // agregamos los items al menu
+		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            tablaDeporte.setContextMenu(contextMenu);
 		    		
 		    		// ponemos evento al TextField del filtrado por nombre
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
@@ -135,9 +187,32 @@ public class ListadoController {
 		        	colIdEquipo.setCellValueFactory(new PropertyValueFactory<Equipo,Integer>("id_equipo") );
 		        	colNombreEquipo.setCellValueFactory(new PropertyValueFactory<Equipo,String>("nombre") );
 		        	colInicialesEquipo.setCellValueFactory(new PropertyValueFactory<Equipo,String>("iniciales") );
-		        	
-		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
 		    		cargarTablaEquipos("");
+		    		
+		    		// Creamos un menú contextual para la tabla
+		            ContextMenu contextMenu = new ContextMenu();
+		            MenuItem itemModificar = new MenuItem("Modificar");
+		            MenuItem itemBorrar = new MenuItem("Eliminar");
+
+		            // Manejamos eventos de clic para las opciones del menú contextual
+		            itemModificar.setOnAction(e -> {
+		                Equipo equipoSeleccionado = tablaEquipos.getSelectionModel().getSelectedItem();
+		                alertaInformacion("Modificar Equipo");
+		            });
+
+		            itemBorrar.setOnAction(e -> {
+		            	Equipo equipoSeleccionado = tablaEquipos.getSelectionModel().getSelectedItem();
+		                if(equipoSeleccionado!=null) {
+		                	EquiposDao dao = new EquiposDao();
+		                	// hay que borrar el deportista de la participacion
+		                	dao.borrarEquipo(equipoSeleccionado);
+		                	alertaInformacion("Se ha borrado el Equipo seleccionado");
+		                	cargarTablaEquipos("");
+		                }
+		            });
+		            // agregamos los items al menu
+		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            tablaEquipos.setContextMenu(contextMenu);
 		    		
 		    		// ponemos evento al TextField del filtrado por nombre
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
@@ -162,9 +237,33 @@ public class ListadoController {
 		            colNombreEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("nombre") );
 		            colIdEvento.setCellValueFactory(new PropertyValueFactory<Evento, Integer>("id_evento") );
 		            colDeporteEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("nombre_deporte") );
-		            colOlimpiadaEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("nombre_olimpiada") );	        	
-		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
+		            colOlimpiadaEvento.setCellValueFactory(new PropertyValueFactory<Evento, String>("nombre_olimpiada") );	    
 		    		cargarTablaEventos("");
+		    		
+		    		// Creamos un menú contextual para la tabla
+		            ContextMenu contextMenu = new ContextMenu();
+		            MenuItem itemModificar = new MenuItem("Modificar");
+		            MenuItem itemBorrar = new MenuItem("Eliminar");
+
+		            // Manejamos eventos de clic para las opciones del menú contextual
+		            itemModificar.setOnAction(e -> {
+		                Evento eventoSeleccionado = tablaEventos.getSelectionModel().getSelectedItem();
+		                alertaInformacion("Modificar Evento");
+		            });
+
+		            itemBorrar.setOnAction(e -> {
+		            	Evento eventoSeleccionado = tablaEventos.getSelectionModel().getSelectedItem();
+		                if(eventoSeleccionado!=null) {
+		                	EventosDao dao = new EventosDao();
+		                	// hay que borrar el deportista de la participacion
+		                	dao.borrarEvento(eventoSeleccionado);
+		                	alertaInformacion("Se ha borrado el Evento seleccionado");
+		                	cargarTablaEventos("");
+		                }
+		            });
+		            // agregamos los items al menu
+		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            tablaEventos.setContextMenu(contextMenu);
 		    		
 		    		// ponemos evento al TextField del filtrado por nombre
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
@@ -178,7 +277,7 @@ public class ListadoController {
 		        }
 		    });
 		   
-		   // ponemos evento al radioButon de Participacion
+		   // ponemos evento al radioButon de Olimpiada
 		   rbOlimpiadas.setOnAction(new EventHandler<ActionEvent>() {
 		        @Override
 		        public void handle(ActionEvent event) {
@@ -190,8 +289,32 @@ public class ListadoController {
 		        	colIdOlimpiada.setCellValueFactory(new PropertyValueFactory<Olimpiada, Integer>("id_olimpiada") );
 		        	colCiudadOlimpiada.setCellValueFactory(new PropertyValueFactory<Olimpiada, String>("ciudad") );
 		            colTemporada.setCellValueFactory(new PropertyValueFactory<Olimpiada, String>("temporada") );
-		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
 		    		cargarTablaOlimpiadas("");
+		    		
+		    		// Creamos un menú contextual para la tabla
+		            ContextMenu contextMenu = new ContextMenu();
+		            MenuItem itemModificar = new MenuItem("Modificar");
+		            MenuItem itemBorrar = new MenuItem("Eliminar");
+
+		            // Manejamos eventos de clic para las opciones del menú contextual
+		            itemModificar.setOnAction(e -> {
+		                Olimpiada olimpiadaSeleccionada = tablaOlimpiadas.getSelectionModel().getSelectedItem();
+		                alertaInformacion("Modificar Olimpiada");
+		            });
+
+		            itemBorrar.setOnAction(e -> {
+		            	Olimpiada olimpiadaSeleccionada = tablaOlimpiadas.getSelectionModel().getSelectedItem();
+		                if(olimpiadaSeleccionada!=null) {
+		                	OlimpiadasDao dao = new OlimpiadasDao();
+		                	// hay que borrar el deportista de la participacion
+		                	dao.borrarOlimpiada(olimpiadaSeleccionada);
+		                	alertaInformacion("Se ha borrado la olimpiada seleccionado");
+		                	cargarTablaOlimpiadas("");
+		                }
+		            });
+		            // agregamos los items al menu
+		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            tablaOlimpiadas.setContextMenu(contextMenu);
 		    		
 		    		// ponemos evento al TextField del filtrado por nombre
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
@@ -219,6 +342,33 @@ public class ListadoController {
 		        	colMedallaParticipacion.setCellValueFactory(new PropertyValueFactory<Participacion, String>("medalla") );
 		    		// en caso de que existan personas en la base de datos, las cargamos en la tabla
 		        	cargarTablaParticipaciones("");
+		        	
+
+		    		
+		    		// Creamos un menú contextual para la tabla
+		            ContextMenu contextMenu = new ContextMenu();
+		            MenuItem itemModificar= new MenuItem("Modificar");
+		            MenuItem itemBorrar = new MenuItem("Eliminar");
+
+		            // Manejamos eventos de clic para las opciones del menú contextual
+		            itemModificar.setOnAction(e -> {
+		            	Participacion participacionSeleccionada = tablaParticipaciones.getSelectionModel().getSelectedItem();
+		                alertaInformacion("Modificar Participacion");
+		            });
+
+		            itemBorrar.setOnAction(e -> {
+		            	Participacion participacionSeleccionada = tablaParticipaciones.getSelectionModel().getSelectedItem();
+		                if(participacionSeleccionada!=null) {
+		                	ParticipacionesDao dao = new ParticipacionesDao();
+		                	// hay que borrar el deportista de la participacion
+		                	dao.borrarParticipacion(participacionSeleccionada);
+		                	alertaInformacion("Se ha borrado la participacion seleccionada");
+		                	cargarTablaParticipaciones("");
+		                }
+		            });
+		            // agregamos los items al menu
+		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            tablaParticipaciones.setContextMenu(contextMenu);
 		    		
 		    		// ponemos evento al TextField del filtrado por nombre
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
@@ -240,6 +390,18 @@ public class ListadoController {
     	tablaEventos.setVisible(false);
     	tablaOlimpiadas.setVisible(false);
     	tablaParticipaciones.setVisible(false);
+    }
+    
+    private void alertaInformacion(String mensaje) {
+    	// Alerta de informacion con boton
+    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
     }
 		    
     private void alertaInformacion(String mensaje) {
@@ -298,18 +460,7 @@ public class ListadoController {
     }
     @FXML
     void accionBorrarDeportista(ActionEvent event) {
-    	try {
-	        // Abre la ventana para añadir un nuevo aeropuerto
-	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/borrarDeportista.fxml"));
-	        Scene scene = new Scene(root);
-	        primaryStage.setTitle("BORRAR DEPORTISTA");
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
-	        e.printStackTrace();
-	    }
+    	
     }
     
     void cargarTablaDeportistas(String cadena) {

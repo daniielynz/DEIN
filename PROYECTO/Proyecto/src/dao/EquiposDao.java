@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Deportista;
 import model.Equipo;
 
 public class EquiposDao {
@@ -42,6 +43,28 @@ public class EquiposDao {
 	    }    
 	    return listaEquipos;    
 	}
+    
+    public void borrarEquipo(Equipo a) {
+    	try {
+    		conexion = new ConexionBD();   
+    		
+    		// borrar de la tabla Participacion
+    		String consulta = "DELETE FROM Participacion WHERE id_equipo = "+a.getId_equipo();
+    		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+    		
+    		// borrar de la tabla Equipo
+            consulta = "DELETE FROM Equipo WHERE id_equipo = "+a.getId_equipo();
+            pstmt = conexion.getConexion().prepareStatement(consulta);      
+            pstmt.executeUpdate();
+            
+            
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    } 
+    }
     
     public int ultimoId() {
     	try {
