@@ -52,6 +52,8 @@ public class DeportistasDao {
     	try {
             conexion = new ConexionBD();
             
+            System.out.println(a);
+            
             // editamos la tabla Deportista
             String consulta = "UPDATE Deportista "
             				+ "SET nombre = '"+a.getNombre()+"', sexo = '"+a.getSexo()+"', peso = "+a.getPeso()+", altura = "+a.getAltura()+", foto = "+a.getFoto()+" "
@@ -62,7 +64,7 @@ public class DeportistasDao {
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();
-	    }  
+	    }
     }
 
     public ObservableList<Deportista> cargarDeportista(String cadena)  {

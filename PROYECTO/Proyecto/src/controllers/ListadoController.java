@@ -24,7 +24,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Deporte;
@@ -71,16 +70,23 @@ public class ListadoController {
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
-		                Deportista deportistaSeleccionado = tablaDeportistas.getSelectionModel().getSelectedItem();
-		                alertaInformacion("Modificar Deportista");
+		            	Deportista deportistaSeleccionado = tablaDeportistas.getSelectionModel().getSelectedItem();
+		                if(deportistaSeleccionado != null) {
+		                	ControllerEditarDeportista contr = new ControllerEditarDeportista();
+		                	// Modificamos el deportista
+		                	contr.editarDeportista(deportistaSeleccionado);
+		                	// mensaje una vez de haya modificado
+		                	cargarTablaDeportistas("");
+		                }
 		            });
 
 		            itemBorrar.setOnAction(e -> {
 		            	Deportista deportistaSeleccionado = tablaDeportistas.getSelectionModel().getSelectedItem();
 		                if(deportistaSeleccionado!=null) {
 		                	DeportistasDao dao = new DeportistasDao();
-		                	// hay que borrar el deportista de la participacion
+		                	// borramos el deportista
 		                	dao.borrarDeportista(deportistaSeleccionado);
+		                	// mensaje una vez de haya modificado
 		                	alertaInformacion("Se ha borrado el deportista seleccionado");
 		                	cargarTablaDeportistas("");
 		                }
@@ -417,15 +423,6 @@ public class ListadoController {
 	    }
     }
     
-    @FXML
-    void accionEditarDeportista(ActionEvent event) {
-
-    }
-    @FXML
-    void accionBorrarDeportista(ActionEvent event) {
-    	
-    }
-    
     void cargarTablaDeportistas(String cadena) {
 	    try {
 	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
@@ -453,16 +450,6 @@ public class ListadoController {
     private TableColumn<Deporte, Integer> colIdDeporte;
     @FXML
     void accionAniadirDeporte(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void accionEditarDeporte(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void accionBorrarDeporte(ActionEvent event) {
 
     }
     
@@ -501,16 +488,6 @@ public class ListadoController {
 
     }
     
-    @FXML
-    void accionBorrarEvento(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void accionEditarEvento(ActionEvent event) {
-
-    }
-    
     void cargarTablaEventos(String cadena) {
 	    try {
 	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
@@ -541,16 +518,6 @@ public class ListadoController {
     
     @FXML
     void accionAniadirEquipo(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void accionEditarEquipo(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void accionBorrarEquipo(ActionEvent event) {
 
     }
     
@@ -604,16 +571,6 @@ public class ListadoController {
 
     }
     
-    @FXML
-    void accionEditarOlimpiada(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void accionBorrarOlimpiada(ActionEvent event) {
-
-    }
-    
     /* 	**************************************************************************************************************************************************
 	 	**************************************************************************************************************************************************
 	 	*								PARTICIPACION
@@ -648,15 +605,6 @@ public class ListadoController {
     
     @FXML
     void accionAniadirParticipacion(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void accionEditarParticipacion(ActionEvent event) {
-
-    }
-    @FXML
-    void accionBorrarParticipacion(ActionEvent event) {
 
     }
     

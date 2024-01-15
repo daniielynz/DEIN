@@ -114,43 +114,31 @@
           <Menu mnemonicParsing="false" text="Deportes">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#accionAniadirDeporte" text="Añadir" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionEditarDeporte" text="Editar" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionBorrarDeporte" text="Borrar" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Deportistas">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#accionAniadirDeportista" text="Añadir" />
-              <MenuItem mnemonicParsing="false" onAction="#accionEditarDeportista" text="Editar" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionBorrarDeportista" text="Borrar" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Equipos">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#accionAniadirEquipo" text="Añadir" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionEditarEquipo" text="Editar" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionBorrarEquipo" text="Borrar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Eventos">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#accionAniadirEvento" text="Añadir" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionEditarEvento" text="Editar" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionBorrarEvento" text="Borrar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Olimpiadas">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#accionAniadirOlimpiada" text="Añadir" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionEditarOlimpiada" text="Editar" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionBorrarOlimpiada" text="Borrar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Participaciones">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#accionAniadirParticipacion" text="Añadir" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionEditarParticipacion" text="Editar" />
-                  <MenuItem mnemonicParsing="false" onAction="#accionBorrarParticipacion" text="Borrar" />
                </items>
             </Menu>
         </menus>
