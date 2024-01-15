@@ -63,6 +63,31 @@ public class ListadoController {
 		        	colFotoDeportista.setCellValueFactory(new PropertyValueFactory<Deportista,String>("foto") );
 		    		cargarTablaDeportistas("");
 		    		
+<<<<<<< HEAD
+		    		//// Creamos un menú contextual para la tabla ////
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem modifyItem = new MenuItem("Modificar");
+                    MenuItem deleteItem = new MenuItem("Eliminar");
+
+                    modifyItem.setOnAction(e -> {
+                        alertaInformacion("Se esta intentado modificar un deportista");
+                    });
+
+                    deleteItem.setOnAction(e -> {
+                    	Deportista deportistaSeleccionado = tablaDeportistas.getSelectionModel().getSelectedItem();
+                        if(deportistaSeleccionado!=null) {
+                        	DeportistasDao dao = new DeportistasDao();
+	                		// hay que borrar el deportista de la participacion
+	                    	dao.borrarDeportista(deportistaSeleccionado);
+	                    	alertaInformacion("Se ha borrado el deportista seleccionado");
+	                    	cargarTablaDeportistas("");
+                        }
+                    });
+                    contextMenu.getItems().addAll(modifyItem, deleteItem);
+                    tablaDeportistas.setContextMenu(contextMenu);
+		    		
+                    //// Filtrado por nombre de Deportista ////
+=======
 		    		// Creamos un menú contextual para la tabla
 		            ContextMenu contextMenu = new ContextMenu();
 		            MenuItem itemModificar = new MenuItem("Modificar");
@@ -96,6 +121,7 @@ public class ListadoController {
 		            tablaDeportistas.setContextMenu(contextMenu);
 		    	
 		    		// ponemos evento al TextField del filtrado por nombre
+>>>>>>> 01bc1ea19846824074b203cd73ccecaf79877d28
 		            tfBuscarPorNombre.setOnAction(new EventHandler<ActionEvent>() {
 		                @Override
 		                public void handle(ActionEvent event) {
@@ -384,6 +410,17 @@ public class ListadoController {
         ventanaEmergente.show();
     }
 		    
+    private void alertaInformacion(String mensaje) {
+    	// Alerta de informacion con boton
+    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
+    }
     
     /* 	**************************************************************************************************************************************************
      	**************************************************************************************************************************************************
