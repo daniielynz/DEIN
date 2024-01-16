@@ -7,258 +7,122 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx.base.jar">
-=======
-	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx.controls.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/commons-beanutils-1.9.4.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx.fxml.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/commons-collections4-4.4.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx.graphics.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/commons-digester-2.1.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx.media.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/commons-logging-1.2.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx.swing.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/ikonli-core-12.3.1.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx.web.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/ikonli-fontawesome5-pack-12.3.1.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx/javafx-swt.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/ikonli-javafx-12.3.1.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/commons-beanutils-1.9.4.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/commons-collections4-4.4.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-annotation-processors-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/commons-digester-2.1.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-castor-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/commons-logging-1.2.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-chart-customizers-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-chart-themes-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-annotation-processors-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-custom-visualization-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-chart-customizers-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-fastexcel-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-chart-themes-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-fonts-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-custom-visualization-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-functions-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-fastexcel-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-javaflow-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-fonts-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-metadata-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-functions-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports-xalan-6.20.6.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/jasperreports-metadata-6.20.6.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx.base.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/org.springframework.asm-3.0.1.release.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx.controls.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/org.springframework.beans-3.1.2.release.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx.fxml.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/jasperreports/org.springframework.core-3.1.0.release.jar">
-=======
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx.graphics.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx.media.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx.swing.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx.web.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/javafx-swt.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/mysql-connector-j-8.1.0.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/org.springframework.asm-3.0.1.release.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/org.springframework.beans-3.1.2.release.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/dm2/eclipse-workspace/Ejercicios_Jasper/lib/org.springframework.core-3.1.0.release.jar">
->>>>>>> parent of 10537ea (DELETE JASPER)
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
