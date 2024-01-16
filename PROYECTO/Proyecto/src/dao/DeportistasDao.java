@@ -56,7 +56,7 @@ public class DeportistasDao {
             
             // editamos la tabla Deportista
             String consulta = "UPDATE Deportista "
-            				+ "SET nombre = '"+a.getNombre()+"', sexo = '"+a.getSexo()+"', peso = "+a.getPeso()+", altura = "+a.getAltura()+", foto = "+a.getFoto()+" "
+            				+ "SET nombre = '"+a.getNombre()+"', sexo = '"+a.getSexo()+"', peso = "+a.getPeso()+", altura = "+a.getAltura()+" "
             				+ "WHERE id_deportista = "+a.getId_deportista();
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
         	pstmt.executeUpdate();

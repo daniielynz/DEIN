@@ -1,5 +1,6 @@
 package controllers;
 
+import dao.DeportesDao;
 import dao.DeportistasDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +15,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Deportista;
+import model.Deporte;
 
-public class ControllerEditarDeportista {
-	private Deportista deportista;
+public class ControllerEditarDeporte {
+	private Deporte deporte;
 	
 	// Atributo de la ventana emergente
     private Stage ventanaEmergente;
@@ -39,49 +40,30 @@ public class ControllerEditarDeportista {
     
     @FXML
     private Button btnCancelar;
-
 	
-	public void editarDeportista(Deportista d) {
-		this.deportista = d;
+	public void editarDeporte(Deporte d) {
+		this.deporte = d;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
         ventanaEmergente = new Stage();
         
         // Le ponemos titulo a la ventana
-        ventanaEmergente.setTitle("MODIFICAR DEPORTISTA");
+        ventanaEmergente.setTitle("MODIFICAR DEPORTE");
         
         // Creamos un contenedor VBox como raíz de la ventana emergente
         VBox contenedorRaiz = new VBox();
 
         // Creamos contenedores HBox para cada campo de entrada (Nombre, Apellidos, Edad)
         HBox contenedorNombre = new HBox();
-        HBox contenedorSexo = new HBox();
-        HBox contenedorPeso = new HBox();
-        HBox contenedorAltura = new HBox();
 
         // Establecemos un espaciado entre elementos en los contenedores HBox
         contenedorNombre.setSpacing(10);
-        contenedorSexo.setSpacing(10);
-        contenedorPeso.setSpacing(10);
-        contenedorAltura.setSpacing(10);
 
         // le damos valor a los TextFields
         tfNombre = new TextField();
         tfNombre.setText(d.getNombre());
         
-        tfSexo = new TextField();
-        tfSexo.setText(d.getSexo());
-        
-        tfPeso = new TextField();
-        tfPeso.setText(d.getPeso() + "");
-        
-        tfAltura = new TextField();
-        tfAltura.setText(d.getAltura() + "");
-        
         // Si el campo de Nombre no existe, creamos uno nuevo (tfNombre)
         contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
-        contenedorSexo.getChildren().addAll(new javafx.scene.control.Label("Sexo"), tfSexo);
-        contenedorPeso.getChildren().addAll(new javafx.scene.control.Label("Peso"), tfPeso);
-        contenedorAltura.getChildren().addAll(new javafx.scene.control.Label("Altura"), tfAltura);
 
         // Creamos un contenedor HBox para los botones (Guardar y Cerrar)
         HBox contenedorBotones = new HBox();
@@ -99,7 +81,7 @@ public class ControllerEditarDeportista {
         contenedorBotones.getChildren().addAll(guardarBtn, cerrarBtn);
 
         // Agregamos todos los contenedores al contenedor raíz
-        contenedorRaiz.getChildren().addAll(contenedorNombre, contenedorSexo, contenedorPeso, contenedorAltura, contenedorBotones);
+        contenedorRaiz.getChildren().addAll(contenedorNombre, contenedorBotones);
 
         // Configuramos propiedades del contenedor raíz
         contenedorRaiz.setPadding(new Insets(20));
@@ -122,17 +104,14 @@ public class ControllerEditarDeportista {
 
         if (errores.isEmpty()) {
             try {
-            	DeportistasDao deportistaDao = new DeportistasDao();
+            	DeportesDao deporteDao = new DeportesDao();
             	// Le ponemos los datos nuevos al deportista
-            	deportista.setNombre(this.tfNombre.getText().toString());
-            	deportista.setSexo(this.tfSexo.getText().toString());
-            	deportista.setPeso(Integer.parseInt(this.tfPeso.getText()));
-            	deportista.setAltura(Integer.parseInt(this.tfAltura.getText()));
+            	deporte.setNombre(this.tfNombre.getText().toString());
             	
-                deportistaDao.editarDeportista(deportista);
+            	deporteDao.editarDeporte(deporte);
                 
                 ventanaEmergente.close();
-                alertaInformacion("Se ha modificado la persona seleccionada\nActualiza la tabla para ver los cambios");
+                alertaInformacion("Se ha modificado el deporte seleccionado\nActualiza la tabla para ver los cambios");
             } catch (Exception e) {
                 // Manejamos cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
             }
@@ -146,34 +125,8 @@ public class ControllerEditarDeportista {
     private String validarCampos() {
     	String errores = "";
     	
-    	if(tfPeso.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Peso\n";
-        }else {
-        	try {
-                Integer.parseInt(tfPeso.getText());
-            } catch (NumberFormatException e) {
-            	errores += "El campo de peso tiene que ser numerico\n";
-            }
-        }
-    	
-    	if(tfAltura.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Altura\n";
-        }else {
-        	try {
-                Integer.parseInt(tfAltura.getText());
-            } catch (NumberFormatException e) {
-                errores += "El campo de altura tiene que ser numerico\n";
-            }
-        }
-    	
     	if(tfNombre.getText().isEmpty()) {
             errores += "Tienes que rellenar el campo Nombre\n";
-        }
-    	
-    	if(tfSexo.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Sexo\n";
-        }else if(!tfSexo.getText().equals("M") && !tfSexo.getText().equals("F")){
-        	errores += "El campo de sexo tiene que ser 'M' o 'F'";
         }
     	
     	return errores;

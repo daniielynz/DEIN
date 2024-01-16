@@ -23,6 +23,30 @@ public class Deportista {
 		this.sexo = sexo;
 	}
 
+	public void setId_deportista(int id_deportista) {
+		this.id_deportista = id_deportista;
+	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
 	public int getId_deportista() {
 		return id_deportista;
 	}

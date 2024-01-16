@@ -126,8 +126,14 @@ public class ListadoController {
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
-		                Deporte deporteSeleccionado = tablaDeporte.getSelectionModel().getSelectedItem();
-		                alertaInformacion("Modificar Deporte");
+		            	Deporte deporteSeleccionado = tablaDeporte.getSelectionModel().getSelectedItem();
+		                if(deporteSeleccionado != null) {
+		                	ControllerEditarDeporte contr = new ControllerEditarDeporte();
+		                	// Modificamos el deportista
+		                	contr.editarDeporte(deporteSeleccionado);
+		                	// mensaje una vez de haya modificado
+		                	cargarTablaDeportistas("");
+		                }
 		            });
 
 		            itemBorrar.setOnAction(e -> {
@@ -423,7 +429,7 @@ public class ListadoController {
 	    }
     }
     
-    void cargarTablaDeportistas(String cadena) {
+    private void cargarTablaDeportistas(String cadena) {
 	    try {
 	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
 	        DeportistasDao deportistaDao = new DeportistasDao();
