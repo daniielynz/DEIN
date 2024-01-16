@@ -125,7 +125,11 @@
 									<property name="com.jaspersoft.studio.unit.tabStopWidth" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.25" lineColor="#030000"/>
+=======
+									<pen lineWidth="1.5" lineColor="#030000"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font size="10" isBold="true"/>
@@ -140,7 +144,11 @@
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.0"/>
+=======
+									<pen lineWidth="1.5"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement verticalAlignment="Middle">
 									<paragraph leftIndent="10"/>
@@ -156,7 +164,11 @@
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.0" lineColor="#030000"/>
+=======
+									<pen lineWidth="1.5" lineColor="#030000"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font size="10" isBold="true"/>
@@ -171,7 +183,11 @@
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.0"/>
+=======
+									<pen lineWidth="1.5"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement verticalAlignment="Middle">
 									<paragraph leftIndent="10"/>
@@ -187,7 +203,11 @@
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.0" lineColor="#030000"/>
+=======
+									<pen lineWidth="1.5" lineColor="#030000"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font size="10" isBold="true"/>
@@ -202,7 +222,11 @@
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.0"/>
+=======
+									<pen lineWidth="1.5"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement verticalAlignment="Middle">
 									<paragraph leftIndent="10"/>
@@ -218,7 +242,11 @@
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.0" lineColor="#000302"/>
+=======
+									<pen lineWidth="1.5" lineColor="#000302"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font size="10" isBold="true"/>
@@ -233,7 +261,11 @@
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
+<<<<<<< HEAD
 									<pen lineWidth="1.0"/>
+=======
+									<pen lineWidth="1.5"/>
+>>>>>>> parent of 10537ea (DELETE JASPER)
 								</box>
 								<textElement verticalAlignment="Middle">
 									<paragraph leftIndent="10"/>
