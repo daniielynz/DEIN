@@ -11,6 +11,19 @@ public class Equipo {
 		this.nombre = nombre;
 		this.iniciales = iniciales;
 	}
+	
+	public Equipo(String nombre, String iniciales) {
+		this.nombre = nombre;
+		this.iniciales = iniciales;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setIniciales(String iniciales) {
+		this.iniciales = iniciales;
+	}
 
 	public int getId_equipo() {
 		return id_equipo;

@@ -132,7 +132,7 @@ public class ListadoController {
 		                	// Modificamos el deportista
 		                	contr.editarDeporte(deporteSeleccionado);
 		                	// mensaje una vez de haya modificado
-		                	cargarTablaDeportistas("");
+		                	cargarTablaDeportes("");
 		                }
 		            });
 
@@ -182,8 +182,14 @@ public class ListadoController {
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
-		                Equipo equipoSeleccionado = tablaEquipos.getSelectionModel().getSelectedItem();
-		                alertaInformacion("Modificar Equipo");
+		            	Equipo equipoSeleccionado = tablaEquipos.getSelectionModel().getSelectedItem();
+		                if(equipoSeleccionado != null) {
+		                	ControllerEditarEquipo contr = new ControllerEditarEquipo();
+		                	// Modificamos el deportista
+		                	contr.editarEquipo(equipoSeleccionado);
+		                	// mensaje una vez de haya modificado
+		                	cargarTablaEquipos("");
+		                }
 		            });
 
 		            itemBorrar.setOnAction(e -> {
@@ -456,7 +462,18 @@ public class ListadoController {
     private TableColumn<Deporte, Integer> colIdDeporte;
     @FXML
     void accionAniadirDeporte(ActionEvent event) {
-
+    	try {
+	        // Abre la ventana para añadir un nuevo aeropuerto
+	        Stage primaryStage = new Stage();
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirDeporte.fxml"));
+	        Scene scene = new Scene(root);
+	        primaryStage.setTitle("AÑADIR DEPORTE");
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+	        e.printStackTrace();
+	    }
     }
     
     void cargarTablaDeportes(String cadena) {
@@ -524,7 +541,18 @@ public class ListadoController {
     
     @FXML
     void accionAniadirEquipo(ActionEvent event) {
-
+    	try {
+	        // Abre la ventana para añadir un nuevo aeropuerto
+	        Stage primaryStage = new Stage();
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirEquipo.fxml"));
+	        Scene scene = new Scene(root);
+	        primaryStage.setTitle("AÑADIR EQUIPO");
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+	        e.printStackTrace();
+	    }
     }
     
     void cargarTablaEquipos(String cadena) {
