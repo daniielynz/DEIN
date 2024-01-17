@@ -12,6 +12,21 @@ import model.Deportista;
 public class DeportesDao {
     private ConexionBD conexion;
     
+    public void aniadirDeporte(Deporte a) {
+    	try {
+            conexion = new ConexionBD();  
+            /*
+            // añadir en la tabla de Deportistas
+            String consulta = "insert into Deportista (nombre, sexo, peso, altura, foto) VALUES ('"+a.getNombre()+"','"+a.getSexo()+"',"+a.getPeso()+","+a.getAltura()+",'"+a.getFoto()+"')";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	pstmt.executeUpdate();
+        	*/
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }  
+    }
+    
     public ObservableList<Deporte> cargarDeportes(String cadena)  {
 		ObservableList<Deporte> listaDeportes = FXCollections.observableArrayList();
 	    try {
@@ -68,6 +83,25 @@ public class DeportesDao {
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();
 	    } 
+    }
+    
+    public void editarDeporte(Deporte a) {
+    	try {
+            conexion = new ConexionBD();
+            
+            System.out.println(a);
+            
+            // editamos la tabla Deportista
+            String consulta = "UPDATE Deporte "
+            				+ "SET nombre = '"+a.getNombre()+"' "
+            				+ "WHERE id_deporte = "+a.getId_deporte();
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	pstmt.executeUpdate();
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }
     }
     
     public int ultimoId() {

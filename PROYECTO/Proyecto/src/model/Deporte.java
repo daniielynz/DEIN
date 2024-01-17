@@ -10,6 +10,10 @@ public class Deporte {
 		this.id_deporte = id_deporte;
 		this.nombre = nombre;
 	}
+	
+	public Deporte(String nombre) {
+		this.nombre = nombre;
+	}
 
 	public int getId_deporte() {
 		return id_deporte;
@@ -22,6 +26,10 @@ public class Deporte {
 	@Override
 	public String toString() {
 		return "Deporte [id_deporte=" + id_deporte + ", nombre=" + nombre + "]";
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	@Override
