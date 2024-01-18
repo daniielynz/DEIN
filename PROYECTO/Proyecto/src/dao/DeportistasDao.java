@@ -52,8 +52,6 @@ public class DeportistasDao {
     	try {
             conexion = new ConexionBD();
             
-            System.out.println(a);
-            
             // editamos la tabla Deportista
             String consulta = "UPDATE Deportista "
             				+ "SET nombre = '"+a.getNombre()+"', sexo = '"+a.getSexo()+"', peso = "+a.getPeso()+", altura = "+a.getAltura()+" "

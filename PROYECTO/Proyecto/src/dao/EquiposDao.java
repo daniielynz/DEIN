@@ -6,11 +6,43 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Deportista;
 import model.Equipo;
 
 public class EquiposDao {
     private ConexionBD conexion;
+    
+    public void aniadirEquipo(Equipo equipo) {
+    	try {
+            conexion = new ConexionBD();  
+            
+            // añadir en la tabla de Deportistas
+            String consulta = "insert into Equipo (nombre, iniciales) VALUES ('"+equipo.getNombre()+"', '"+equipo.getIniciales()+"')";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	pstmt.executeUpdate();
+        	
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }  
+    }
+    
+    public void editarDeporte(Equipo equipo) {
+    	try {
+            conexion = new ConexionBD();
+            
+            System.out.println(equipo);
+            // editamos la tabla Deportista
+            String consulta = "UPDATE Equipo "
+            				+ "SET nombre = '"+equipo.getNombre()+"', iniciales = '"+equipo.getIniciales()+"' "
+            				+ "WHERE id_equipo = "+equipo.getId_equipo();
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	pstmt.executeUpdate();
+        	      
+        	conexion.closeConexion();
+	    } catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }
+    }
     
     public ObservableList<Equipo> cargarEquipos(String cadena)  {
 		ObservableList<Equipo> listaEquipos = FXCollections.observableArrayList();
@@ -31,6 +63,7 @@ public class EquiposDao {
 		            
 		            // Creamos el Deporte
 		            Equipo a = new Equipo(id, nombre, iniciales);
+		            System.out.println(a);
 		            listaEquipos.add(a);
 			 }     
 			 rs.close();       

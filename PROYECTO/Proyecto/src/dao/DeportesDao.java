@@ -15,12 +15,12 @@ public class DeportesDao {
     public void aniadirDeporte(Deporte a) {
     	try {
             conexion = new ConexionBD();  
-            /*
+            
             // añadir en la tabla de Deportistas
-            String consulta = "insert into Deportista (nombre, sexo, peso, altura, foto) VALUES ('"+a.getNombre()+"','"+a.getSexo()+"',"+a.getPeso()+","+a.getAltura()+",'"+a.getFoto()+"')";
+            String consulta = "insert into Deporte (nombre) VALUES ('"+a.getNombre()+"')";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
         	pstmt.executeUpdate();
-        	*/
+        	
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();
