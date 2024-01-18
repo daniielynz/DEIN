@@ -1,5 +1,8 @@
 eclipse.preferences.version=1
-encoding//resources/Cherry.jrxml=UTF-8
+encoding//resources/jasper/agendaCalculos.jrxml=UTF-8
+encoding//resources/jasper/agendaSubinformes.jrxml=UTF-8
+encoding//resources/jasper/email1.jrxml=UTF-8
+encoding//resources/jasper/email2.jrxml=UTF-8
+encoding//resources/jasper/formularioMedico.jrxml=UTF-8
+encoding//resources/jasper/informe.jrxml=UTF-8
 encoding/<project>=UTF-8
-encoding/agenda.jrxml=UTF-8
-encoding/informe.jrxml=UTF-8

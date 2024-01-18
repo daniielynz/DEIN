@@ -80,7 +80,7 @@
 		</field>
 	</subDataset>
 	<queryString>
-		<![CDATA[select dni, nombre, apellido1, apellido2 from  agenda.persona ]]>
+		<![CDATA[select dni, nombre, apellido1, apellido2 from  agenda.persona]]>
 	</queryString>
 	<field name="dni" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="dni"/>

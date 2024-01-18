@@ -56,7 +56,7 @@ public class ControllerEjercicio2 {
     	conexion();
     	if (rbPersonas.isSelected()) {
     		try {
-    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/agenda.jasper"));
+    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/agenda.jasper"));
     	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
     	        JasperViewer viewer = new JasperViewer(jprint, false);
     	        viewer.setVisible(true);
@@ -69,9 +69,33 @@ public class ControllerEjercicio2 {
                 e.printStackTrace();
             }
         } else if (rbCalculos.isSelected()) {
-        	System.out.println("2");
+        	try {
+    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/agendaCalculos.jasper"));
+    	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
+    	        JasperViewer viewer = new JasperViewer(jprint, false);
+    	        viewer.setVisible(true);
+    		} catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("ERROR");
+                alert.setContentText("Ha ocurrido un error");
+                alert.showAndWait();
+                e.printStackTrace();
+            }
         } else if (rbSubinformes.isSelected()) {
-        	System.out.println("3");
+        	try {
+    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/agendaSubinformes.jasper"));
+    	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
+    	        JasperViewer viewer = new JasperViewer(jprint, false);
+    	        viewer.setVisible(true);
+    		} catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("ERROR");
+                alert.setContentText("Ha ocurrido un error");
+                alert.showAndWait();
+                e.printStackTrace();
+            }
         }
     }
 

@@ -20,4 +20,16 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>agenda.jasper</name>
+			<type>1</type>
+			<location>/home/dm2/Documentos/GitHub/DEIN/JASPER/Ejercicios_Jasper/resources/agenda.jasper</location>
+		</link>
+		<link>
+			<name>informe.jrxml</name>
+			<type>1</type>
+			<location>/home/dm2/Documentos/GitHub/DEIN/JASPER/Ejercicios_Jasper/informe.jrxml</location>
+		</link>
+	</linkedResources>
 </projectDescription>
