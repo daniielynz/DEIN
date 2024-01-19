@@ -22,7 +22,7 @@ public class Ejercicio1 extends Application {
 	public void start(Stage arg0) throws Exception {
 		try {
 			conexion();
-			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe.jasper"));
+			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/Ejercicio1/informe.jasper"));
 	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
 	        JasperViewer viewer = new JasperViewer(jprint, false);
 	        viewer.setVisible(true);

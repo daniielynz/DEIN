@@ -33,7 +33,7 @@ public class ControllerEjercicio4 {
     private Button btnGenerarInforme;
 
     @FXML
-    private Button btnLimpiar;
+    private Button btnVaciarCampos;
 
     @FXML
     private Button btnSalir;
@@ -60,9 +60,9 @@ public class ControllerEjercicio4 {
     private TextField tfNumeroPaciente;
 
    
-	public static void generarI(Map<String, Object> parameters){
+	public static void generarInforme(Map<String, Object> parameters){
 		 try {
-		    	InputStream jasper = ControllerEjercicio4.class.getResourceAsStream("/jasper/formularioMedico.jasper");
+		    	InputStream jasper = ControllerEjercicio4.class.getResourceAsStream("/jasper/Ejercicio4/formularioMedico.jasper");
 				try {
 					JasperReport report = (JasperReport) JRLoader.loadObject(jasper);
 			        JasperPrint jprint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
@@ -83,36 +83,85 @@ public class ControllerEjercicio4 {
 	}
     
 	@FXML
-	void generarInforme(ActionEvent event) {
-    		try {
-				ControllerEjercicio4.generarI(crearParametros());
-				//TODO
-			} catch (Exception e) {
-	    		Alert alert = new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK);
-	    		alert.show();
-	    		e.printStackTrace();
-			}
+	private void generarDatos() {
+		String errores = validarCampos();
+		
+		if(errores.isEmpty()) {
+			Map<String, Object> parametros = new HashMap<String, Object>(7);
+	    	
+	    	parametros.put("NOM_MEDICO", tfNombreMedico.getText());
+	    	parametros.put("TRATAMIENTO", taTratamiento.getText());
+	    	parametros.put("COD_MEDICO", Integer.parseInt(tfCodigoMedico.getText())); 
+	    	parametros.put("ESP_MEDICO", tfEspecialidadMedico.getText());
+	    	parametros.put("NUM_PACIENTE", Integer.parseInt(tfNumeroPaciente.getText()));
+	    	parametros.put("NOM_PACIENTE", tfNombrePaciente.getText());
+	    	parametros.put("DIR_PACIENTE", tfDireccionPaciente.getText());
+	    	
+	    	ControllerEjercicio4.generarInforme(parametros);
+		}else {
+			alertaError(errores);
+		}
     	
     }
-    private Map<String, Object> crearParametros() {
-    	Map<String, Object> parametros = new HashMap<String, Object>(7);
+	
+	private String validarCampos() {
+    	String errores = "";
     	
-    	parametros.put("NOM_MEDICO", tfNombreMedico.getText().trim());
-    	parametros.put("TRATAMIENTO", taTratamiento.getText().trim());
-    	parametros.put("COD_MEDICO", Integer.parseInt(tfCodigoMedico.getText())); 
-    	parametros.put("ESP_MEDICO", tfEspecialidadMedico.getText().trim());
-    	parametros.put("NUM_PACIENTE", Integer.parseInt(tfNumeroPaciente.getText()));
-    	parametros.put("NOM_PACIENTE", tfNombrePaciente.getText().trim());
-    	parametros.put("DIR_PACIENTE", tfDireccionPaciente.getText().trim());
+    	// Obtenemos el dato del campo Nombre y validamos que no este vacio
+    	if(tfNombreMedico.getText().isEmpty()) {
+    		errores+= "Tienes que rellenar el campo Nombre del paciente\n";
+    	}
+    	if(taTratamiento.getText().isEmpty()) {
+    		errores+= "Tienes que rellenar el campo Tratamiento\n";
+    	}
+    	if(tfCodigoMedico.getText().isEmpty()) {
+    		errores+= "Tienes que rellenar el campo Nombre\n";
+    	}
+    	if(tfEspecialidadMedico.getText().isEmpty()) {
+    		errores+= "Tienes que rellenar el campo Especialidad del medico\n";
+    	}
+    	if(tfNumeroPaciente.getText().isEmpty()) {
+    		errores+= "Tienes que rellenar el campo Numero de paciente\n";
+    	}
+    	if(tfNombrePaciente.getText().isEmpty()) {
+    		errores+= "Tienes que rellenar el campo Nombre de paciente\n";
+    	}
+    	if(tfDireccionPaciente.getText().isEmpty()) {
+    		errores+= "Tienes que rellenar el campo Direccion de paciente\n";
+    	}
+    	try {
+    		Integer.parseInt(tfNumeroPaciente.getText());
+		}catch(NumberFormatException e) {
+			errores+= "El numero de paciente tiene que ser numerica\n";
+		}
+    	try {
+    		Integer.parseInt(tfCodigoMedico.getText());
+		}catch(NumberFormatException e) {
+			errores+= "El codigo del medico tiene que ser numerico\n";
+		}
     	
-    	
-    	return parametros;
+    	return errores;
     }
-
-    
+	
+	private void alertaError(String mensaje) {
+        // Creamos una nueva ventana emergente de tipo "Error"
+        Alert ventanaEmergente = new Alert(AlertType.ERROR);
+        // Establecemos el título de la ventana emergente
+        ventanaEmergente.setTitle("Información");
+        // Establecemos el contenido de la ventana emergente como el mensaje proporcionado
+        ventanaEmergente.setContentText(mensaje);
+        // Creamos un botón "Aceptar" para cerrar la ventana emergente
+        Button ocultarBtn = new Button("Aceptar");
+        // Configuramos el evento del botón para ocultar la ventana emergente al hacer clic en "Aceptar"
+        ocultarBtn.setOnAction(e -> {
+            ventanaEmergente.hide();
+        });
+        // Mostramos la ventana emergente
+        ventanaEmergente.show();
+    }
 
 	@FXML
-    void limpiar(ActionEvent event) {
+    void vaciarCampos(ActionEvent event) {
     	taTratamiento.clear();
         tfCodigoMedico.clear();
         tfDireccionPaciente.clear();

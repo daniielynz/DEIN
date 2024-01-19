@@ -79,19 +79,19 @@
 			</textField>
 			<subreport>
 				<reportElement x="0" y="140" width="270" height="70" uuid="a04e0aac-2370-4ba9-a8cb-6cbbc6ff6e27"/>
-				<subreportParameter name="DNI_DEL_TIO">
+				<subreportParameter name="dni_persona">
 					<subreportParameterExpression><![CDATA[$F{dni}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["/home/dm2/eclipse-workspace/Ejercicios_Jasper/resources/jasper/email1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["/home/dm2/eclipse-workspace/Ejercicios_Jasper/resources/jasper/Ejercicio2/email1.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="290" y="140" width="265" height="70" uuid="e0c94381-3d08-4453-89ef-f7a974197cb1"/>
-				<subreportParameter name="DNI_DEL_TIO">
+				<subreportParameter name="dni_persona">
 					<subreportParameterExpression><![CDATA[$F{dni}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["/home/dm2/eclipse-workspace/Ejercicios_Jasper/resources/jasper/email2.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["/home/dm2/eclipse-workspace/Ejercicios_Jasper/resources/jasper/Ejercicio2/email2.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

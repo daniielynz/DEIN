@@ -56,7 +56,7 @@ public class ControllerEjercicio2 {
     	conexion();
     	if (rbPersonas.isSelected()) {
     		try {
-    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/agenda.jasper"));
+    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/Ejercicio2/agenda.jasper"));
     	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
     	        JasperViewer viewer = new JasperViewer(jprint, false);
     	        viewer.setVisible(true);
@@ -70,7 +70,7 @@ public class ControllerEjercicio2 {
             }
         } else if (rbCalculos.isSelected()) {
         	try {
-    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/agendaCalculos.jasper"));
+    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/Ejercicio2/agendaCalculos.jasper"));
     	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
     	        JasperViewer viewer = new JasperViewer(jprint, false);
     	        viewer.setVisible(true);
@@ -84,7 +84,7 @@ public class ControllerEjercicio2 {
             }
         } else if (rbSubinformes.isSelected()) {
         	try {
-    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/agendaSubinformes.jasper"));
+    			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/Ejercicio2/agendaSubinformes.jasper"));
     	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
     	        JasperViewer viewer = new JasperViewer(jprint, false);
     	        viewer.setVisible(true);

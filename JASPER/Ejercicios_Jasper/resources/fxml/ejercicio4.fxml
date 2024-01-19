@@ -118,8 +118,8 @@
    <bottom>
       <FlowPane alignment="CENTER" hgap="100.0" prefHeight="111.0" prefWidth="707.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnGenerarInforme" mnemonicParsing="false" onAction="#generarInforme" text="Generar Informe" />
-            <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+            <Button fx:id="btnGenerarInforme" mnemonicParsing="false" onAction="#generarDatos" text="Generar Informe" />
+            <Button fx:id="btnVaciarCampos" mnemonicParsing="false" onAction="#vaciarCampos" text="Limpiar" />
             <Button fx:id="btnSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
          </children>
       </FlowPane>
