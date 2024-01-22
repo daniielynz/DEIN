@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Deportista;
+import model.Equipo;
 import model.Evento;
 import model.Olimpiada;
 
@@ -45,6 +47,51 @@ private ConexionBD conexion;
 	    }    
 	    return listaOlimpiadas;    
 	}
+    
+    public void aniadirOlimpiada(Olimpiada olimpiada) {
+        try {
+            conexion = new ConexionBD();  
+
+            // Añadir en la tabla de Olimpiada utilizando PreparedStatement
+            String consulta = "INSERT INTO Olimpiada (nombre, anio, temporada, ciudad) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta)) {
+                // Establecer los parámetros
+                pstmt.setString(1, olimpiada.getNombre());
+                pstmt.setInt(2, olimpiada.getAnio());
+                pstmt.setString(3, olimpiada.getTemporada());
+                pstmt.setString(4, olimpiada.getCiudad());
+
+                // Ejecutar la inserción
+                pstmt.executeUpdate();
+            }
+            
+            conexion.closeConexion();
+        } catch (SQLException e) {
+            // Manejar excepciones de SQL
+            e.printStackTrace();
+        }  
+    }
+    
+    public void editarOlimpiada(Olimpiada olimpiada) {
+    	try{
+    		conexion = new ConexionBD();
+    		String consulta = "UPDATE Olimpiada SET nombre = ?, anio = ?, temporada = ?, ciudad = ? WHERE id_olimpiada = ?";
+    		
+    		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+    	    // Establecer los parámetros
+    	    pstmt.setString(1, olimpiada.getNombre());
+    	    pstmt.setInt(2, olimpiada.getAnio());
+    	    pstmt.setString(3, olimpiada.getTemporada());
+    	    pstmt.setString(4, olimpiada.getCiudad());
+    	    pstmt.setInt(5, olimpiada.getId_olimpiada());
+
+    	    // Ejecutar la actualización
+    	    pstmt.executeUpdate();
+    	} catch (SQLException e) {
+    	    // Manejar excepciones de SQL
+    	    e.printStackTrace();
+    	}
+    }
     
     public void borrarOlimpiada(Olimpiada a) {
     	try {

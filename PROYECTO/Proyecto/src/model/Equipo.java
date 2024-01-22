@@ -39,7 +39,7 @@ public class Equipo {
 
 	@Override
 	public String toString() {
-		return "Equipo [id_equipo=" + id_equipo + ", nombre=" + nombre + ", iniciales=" + iniciales + "]";
+		return id_equipo+"-"+nombre;
 	}
 
 	@Override

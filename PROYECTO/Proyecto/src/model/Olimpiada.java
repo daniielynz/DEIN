@@ -13,6 +13,35 @@ public class Olimpiada {
 		this.ciudad = ciudad;
 		this.temporada = temporada;
 	}
+	
+	public Olimpiada(int anio, String nombre, String ciudad, String temporada) {
+		this.anio = anio;
+		this.nombre = nombre;
+		this.ciudad = ciudad;
+		this.temporada = temporada;
+	}
+	
+	
+
+	public void setId_olimpiada(int id_olimpiada) {
+		this.id_olimpiada = id_olimpiada;
+	}
+
+	public void setAnio(int anio) {
+		this.anio = anio;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public void setTemporada(String temporada) {
+		this.temporada = temporada;
+	}
 
 	public int getId_olimpiada() {
 		return id_olimpiada;

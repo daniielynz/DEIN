@@ -22,6 +22,12 @@ public class Participacion {
 		this.edad = edad;
 		this.medalla = medalla;
 	}
+	
+	public Participacion(int id_equipo, int edad, String medalla) {
+		this.id_equipo = id_equipo;
+		this.edad = edad;
+		this.medalla = medalla;
+	}
 
 	public String getDeportista() {
 		return deportista;

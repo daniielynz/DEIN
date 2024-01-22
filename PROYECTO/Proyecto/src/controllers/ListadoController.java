@@ -296,8 +296,14 @@ public class ListadoController {
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
-		                Olimpiada olimpiadaSeleccionada = tablaOlimpiadas.getSelectionModel().getSelectedItem();
-		                alertaInformacion("Modificar Olimpiada");
+		            	Olimpiada olimpiadaSeleccionada = tablaOlimpiadas.getSelectionModel().getSelectedItem();
+		                if(olimpiadaSeleccionada != null) {
+		                	ControllerEditarOlimpiada contr = new ControllerEditarOlimpiada();
+		                	// Modificamos la Olimpiada
+		                	contr.editarOlimpiada(olimpiadaSeleccionada);
+		                	// mensaje una vez de haya modificado
+		                	cargarTablaEquipos("");
+		                }
 		            });
 
 		            itemBorrar.setOnAction(e -> {
@@ -428,7 +434,7 @@ public class ListadoController {
     @FXML
     void accionAniadirDeportista(ActionEvent event) {
     	try {
-	        // Abre la ventana para añadir un nuevo aeropuerto
+	        // Abre la ventana para añadir un nuevo Deportista
 	        Stage primaryStage = new Stage();
 	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirDeportista.fxml"));
 	        Scene scene = new Scene(root);
@@ -443,7 +449,7 @@ public class ListadoController {
     
     private void cargarTablaDeportistas(String cadena) {
 	    try {
-	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	        // Carga la tabla de Deportes con la cadena de búsqueda
 	        DeportistasDao deportistaDao = new DeportistasDao();
 	        ObservableList<Deportista> listaDeportista =  deportistaDao.cargarDeportista(cadena);
 	        tablaDeportistas.setItems(listaDeportista);
@@ -470,7 +476,7 @@ public class ListadoController {
     @FXML
     void accionAniadirDeporte(ActionEvent event) {
     	try {
-	        // Abre la ventana para añadir un nuevo aeropuerto
+	        // Abre la ventana para añadir un nuevo Deporte
 	        Stage primaryStage = new Stage();
 	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirDeporte.fxml"));
 	        Scene scene = new Scene(root);
@@ -485,7 +491,7 @@ public class ListadoController {
     
     void cargarTablaDeportes(String cadena) {
 	    try {
-	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	        // Carga la tabla de Deportes con la cadena de búsqueda
 	        DeportesDao deportesDao = new DeportesDao();
 	        ObservableList<Deporte> listaDeportes =  deportesDao.cargarDeportes(cadena);
 	        tablaDeporte.setItems(listaDeportes);
@@ -516,7 +522,7 @@ public class ListadoController {
     @FXML
     void accionAniadirEvento(ActionEvent event) {
     	try {
-	        // Abre la ventana para añadir un nuevo aeropuerto
+	        // Abre la ventana para añadir un nuevo Evento
 	        Stage primaryStage = new Stage();
 	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirEvento.fxml"));
 	        Scene scene = new Scene(root);
@@ -531,7 +537,7 @@ public class ListadoController {
     
     void cargarTablaEventos(String cadena) {
 	    try {
-	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	        // Carga la tabla de Eventos con la cadena de búsqueda
 	        EventosDao eventosDao = new EventosDao();
 	        ObservableList<Evento> listaEventos =  eventosDao.cargarEventos(cadena);
 	        tablaEventos.setItems(listaEventos);
@@ -560,7 +566,7 @@ public class ListadoController {
     @FXML
     void accionAniadirEquipo(ActionEvent event) {
     	try {
-	        // Abre la ventana para añadir un nuevo aeropuerto
+	        // Abre la ventana para añadir un nuevo Equipo
 	        Stage primaryStage = new Stage();
 	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirEquipo.fxml"));
 	        Scene scene = new Scene(root);
@@ -575,7 +581,7 @@ public class ListadoController {
     
     void cargarTablaEquipos(String cadena) {
 	    try {
-	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	        // Carga la tabla de Equipos con la cadena de búsqueda
 	        EquiposDao equiposDao = new EquiposDao();
 	        ObservableList<Equipo> listaEquipos =  equiposDao.cargarEquipos(cadena);
 	        tablaEquipos.setItems(listaEquipos);
@@ -607,7 +613,7 @@ public class ListadoController {
     
     void cargarTablaOlimpiadas(String cadena) {
 	    try {
-	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	        // Carga la tabla de Olimpiadas con la cadena de búsqueda
 	    	OlimpiadasDao olimpiadasDao = new OlimpiadasDao();
 	        ObservableList<Olimpiada> listaOlimpiadas =  olimpiadasDao.cargarOlimpiadas(cadena);
 	        tablaOlimpiadas.setItems(listaOlimpiadas);
@@ -620,7 +626,18 @@ public class ListadoController {
     
     @FXML
     void accionAniadirOlimpiada(ActionEvent event) {
-
+    	try {
+	        // Abre la ventana para añadir una Olimpiada
+	        Stage primaryStage = new Stage();
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirOlimpiada.fxml"));
+	        Scene scene = new Scene(root);
+	        primaryStage.setTitle("AÑADIR OLIMPIADA");
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+	        e.printStackTrace();
+	    }
     }
     
     /* 	**************************************************************************************************************************************************
@@ -644,7 +661,7 @@ public class ListadoController {
     
     void cargarTablaParticipaciones(String cadena) {
 	    try {
-	        // Carga la tabla de aeropuertos públicos con la cadena de búsqueda
+	        // Carga la tabla de Participaciones con la cadena de búsqueda
 	    	ParticipacionesDao participacionesDao = new ParticipacionesDao();
 	        ObservableList<Participacion> listaParticipaciones =  participacionesDao.cargarParticipaciones(cadena);
 	        tablaParticipaciones.setItems(listaParticipaciones);
@@ -657,7 +674,18 @@ public class ListadoController {
     
     @FXML
     void accionAniadirParticipacion(ActionEvent event) {
-
+    	try {
+	        // Abre la ventana para añadir una Participacion
+	        Stage primaryStage = new Stage();
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirParticipacion.fxml"));
+	        Scene scene = new Scene(root);
+	        primaryStage.setTitle("AÑADIR PARTICIPACION");
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	    } catch(Exception e) {
+	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+	        e.printStackTrace();
+	    }
     }
     
 

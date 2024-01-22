@@ -75,8 +75,7 @@ public class Deportista {
 
 	@Override
 	public String toString() {
-		return "Deportista [id_deportista=" + id_deportista + ", peso=" + peso + ", altura=" + altura + ", nombre="
-				+ nombre + ", foto=" + foto + ", sexo=" + sexo + "]";
+		return id_deportista+"-"+nombre;
 	}
 
 	@Override

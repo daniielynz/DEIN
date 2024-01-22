@@ -7,6 +7,7 @@ import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Deportista;
+import model.Olimpiada;
 import model.Participacion;
 
 public class ParticipacionesDao {
@@ -50,8 +51,32 @@ private ConexionBD conexion;
 	    return listaParticipaciones;    
 	}
     
+    public void aniadirParticipacion(Participacion participacion) {
+        try {
+            conexion = new ConexionBD();  
+
+            // Añadir en la tabla de Olimpiada utilizando PreparedStatement
+            String consulta = "INSERT INTO Participacion (id_deportista, id_evento, id_equipo, edad, medalla) VALUES (?, ? ,?, ?, ?)";
+            try (PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta)) {
+                // Establecer los parámetros
+            	pstmt.setInt(1, participacion.getId_deportista());
+                pstmt.setInt(2, participacion.getId_evento());
+                pstmt.setInt(3, participacion.getId_equipo());
+                pstmt.setInt(4, participacion.getEdad());
+                pstmt.setString(5, participacion.getMedalla());
+
+                // Ejecutar la inserción
+                pstmt.executeUpdate();
+            }
+            
+            conexion.closeConexion();
+        } catch (SQLException e) {
+            // Manejar excepciones de SQL
+            e.printStackTrace();
+        }  
+    }
+    
     public void borrarParticipacion(Participacion a) {
-    	System.out.println(a);
     	try {
     		conexion = new ConexionBD();   
     		

@@ -1,6 +1,7 @@
 package controllers;
 
-import dao.DeportesDao;
+import dao.EquiposDao;
+import dao.OlimpiadasDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -12,10 +13,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Deporte;
+import model.Equipo;
+import model.Olimpiada;
 
-public class ControllerEditarDeporte {
-	private Deporte deporte;
+public class ControllerEditarOlimpiada {
+	private Olimpiada olimpiada;
 	
 	// Atributo de la ventana emergente
     private Stage ventanaEmergente;
@@ -24,43 +26,62 @@ public class ControllerEditarDeporte {
     private TextField tfNombre;
     
     @FXML
-    private TextField tfSexo;
+    private TextField tfAnio;
     
     @FXML
-    private TextField tfPeso;
+    private TextField tfTemporada;
     
     @FXML
-    private TextField tfAltura;
+    private TextField tfCiudad;
     
     @FXML
     private Button btnAceptar;
     
     @FXML
     private Button btnCancelar;
+
 	
-	public void editarDeporte(Deporte d) {
-		this.deporte = d;
+	public void editarOlimpiada(Olimpiada olimpiada) {
+		this.olimpiada = olimpiada;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
         ventanaEmergente = new Stage();
         
         // Le ponemos titulo a la ventana
-        ventanaEmergente.setTitle("MODIFICAR DEPORTE");
+        ventanaEmergente.setTitle("MODIFICAR OLIMPIADA");
         
         // Creamos un contenedor VBox como raíz de la ventana emergente
         VBox contenedorRaiz = new VBox();
 
-        // Creamos contenedores HBox para cada campo de entrada (Nombre, Apellidos, Edad)
+        // Creamos contenedores HBox para cada campo de entrada 
         HBox contenedorNombre = new HBox();
+        HBox contenedorAnio = new HBox();
+        HBox contenedorTemporada = new HBox();
+        HBox contenedorCiudad = new HBox();
 
         // Establecemos un espaciado entre elementos en los contenedores HBox
         contenedorNombre.setSpacing(10);
+        contenedorAnio.setSpacing(10);
+        contenedorTemporada.setSpacing(10);
+        contenedorCiudad.setSpacing(10);
 
         // le damos valor a los TextFields
         tfNombre = new TextField();
-        tfNombre.setText(d.getNombre());
+        tfNombre.setText(olimpiada.getNombre());
         
-        // Si el campo de Nombre no existe, creamos uno nuevo (tfNombre)
+        tfAnio = new TextField();
+        tfAnio.setText(olimpiada.getAnio()+"");
+        
+        tfTemporada = new TextField();
+        tfTemporada.setText(olimpiada.getTemporada());
+        
+        tfCiudad = new TextField();
+        tfCiudad.setText(olimpiada.getCiudad());
+        
+        // Añadimos los labels al contenedor
         contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
+        contenedorAnio.getChildren().addAll(new javafx.scene.control.Label("Año"), tfAnio);
+        contenedorTemporada.getChildren().addAll(new javafx.scene.control.Label("Temporada"), tfTemporada);
+        contenedorCiudad.getChildren().addAll(new javafx.scene.control.Label("Ciudad"), tfCiudad);
 
         // Creamos un contenedor HBox para los botones (Guardar y Cerrar)
         HBox contenedorBotones = new HBox();
@@ -78,7 +99,7 @@ public class ControllerEditarDeporte {
         contenedorBotones.getChildren().addAll(guardarBtn, cerrarBtn);
 
         // Agregamos todos los contenedores al contenedor raíz
-        contenedorRaiz.getChildren().addAll(contenedorNombre, contenedorBotones);
+        contenedorRaiz.getChildren().addAll(contenedorNombre, contenedorAnio, contenedorTemporada, contenedorCiudad, contenedorBotones);
 
         // Configuramos propiedades del contenedor raíz
         contenedorRaiz.setPadding(new Insets(20));
@@ -101,14 +122,17 @@ public class ControllerEditarDeporte {
 
         if (errores.isEmpty()) {
             try {
-            	DeportesDao deporteDao = new DeportesDao();
+            	OlimpiadasDao olimpiadasDao = new OlimpiadasDao();
             	// Le ponemos los datos nuevos al deportista
-            	deporte.setNombre(this.tfNombre.getText().toString());
+            	olimpiada.setNombre(this.tfNombre.getText().toString());
+            	olimpiada.setAnio(Integer.parseInt(this.tfAnio.getText().toString()));
+            	olimpiada.setTemporada(this.tfTemporada.getText().toString());
+            	olimpiada.setCiudad(this.tfCiudad.getText().toString());
             	
-            	deporteDao.editarDeporte(deporte);
+            	olimpiadasDao.editarOlimpiada(olimpiada);
                 
                 ventanaEmergente.close();
-                alertaInformacion("Se ha modificado el deporte seleccionado\nActualiza la tabla para ver los cambios");
+                alertaInformacion("Se ha modificado la olimpiada seleccionada\nActualiza la tabla para ver los cambios");
             } catch (Exception e) {
                 // Manejamos cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
             }
@@ -124,6 +148,25 @@ public class ControllerEditarDeporte {
     	
     	if(tfNombre.getText().isEmpty()) {
             errores += "Tienes que rellenar el campo Nombre\n";
+        }else if(tfNombre.getText().length()>11){
+        	errores += "El nombre tiene que tener un maximo de 11 caracteres\n";
+        }
+    	if(tfAnio.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo Año\n";
+        }else {
+        	try {
+                Integer.parseInt(tfAnio.getText());
+            } catch (NumberFormatException e) {
+                errores += "El campo del año tiene que ser numerico\n";
+            }
+        }
+    	if(tfTemporada.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo temporada\n";
+        }else if(!tfTemporada.getText().equals("Summer") && !tfTemporada.getText().equals("Winter")){
+        	errores += "La temporada solo puede ser 'Summer' o 'Winter'\n";
+        }
+    	if(tfCiudad.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo Ciudad\n";
         }
     	
     	return errores;
