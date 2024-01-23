@@ -13,24 +13,39 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		try {
-			String idioma = Propiedades.getValor("idioma");
-			String region = Propiedades.getValor("region");
-			Locale.setDefault(new Locale(idioma, region));
-			ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");			
-			GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/Listado.fxml"), bundle);
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm());
-			primaryStage.setTitle(bundle.getString("titulo"));
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	    try {
+	        // Obtener configuración de idioma y región desde un archivo de propiedades
+	        String idioma = Propiedades.getValor("idioma");
+	        String region = Propiedades.getValor("region");
+	        
+	        // Establecer la configuración regional por defecto
+	        Locale.setDefault(new Locale(idioma, region));
+	        
+	        // Cargar los recursos de idioma
+	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
+	        
+	        // Cargar la interfaz de usuario desde un archivo FXML
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/Listado.fxml"), bundle);
+	        
+	        // Crear la escena y agregar hojas de estilo
+	        Scene scene = new Scene(root);
+	        scene.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm());
+	        
+	        // Establecer el título de la ventana principal usando la configuración de idioma
+	        primaryStage.setTitle(bundle.getString("titulo"));
+	        
+	        // Establecer la escena en la ventana principal y mostrarla
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
+	    } catch(Exception e) {
+	        // Manejar excepciones imprimiendo la traza de errores
+	        e.printStackTrace();
+	    }
 	}
-	
+
+	// Método principal que inicia la aplicación
 	public static void main(String[] args) {
-		launch(args);
+	    launch(args);
 	}
 }
 

@@ -1,6 +1,5 @@
 package controllers;
 
-import dao.EquiposDao;
 import dao.OlimpiadasDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +12,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Equipo;
 import model.Olimpiada;
 
 public class ControllerEditarOlimpiada {

@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Deporte;
-import model.Equipo;
 import model.Evento;
 
 public class EventosDao {
@@ -92,9 +90,7 @@ private ConexionBD conexion;
             consulta = "DELETE FROM Evento WHERE id_evento = "+a.getId_evento();
             pstmt = conexion.getConexion().prepareStatement(consulta);      
             pstmt.executeUpdate();
-            
-            
-        	      
+           
         	conexion.closeConexion();
 	    } catch (SQLException e) {	    	
 	    	e.printStackTrace();

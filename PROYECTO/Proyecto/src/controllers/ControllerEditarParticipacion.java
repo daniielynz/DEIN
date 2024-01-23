@@ -1,8 +1,7 @@
 package controllers;
 
-import dao.DeportesDao;
-import dao.EventosDao;
-import dao.OlimpiadasDao;
+import dao.EquiposDao;
+import dao.ParticipacionesDao;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,76 +15,68 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Deporte;
-import model.Evento;
-import model.Olimpiada;
+import model.Equipo;
+import model.Participacion;
 
-public class ControllerEditarEvento {
-	private Evento evento;
+public class ControllerEditarParticipacion {
+	private Participacion participacion;
 	
 	// Atributo de la ventana emergente
     private Stage ventanaEmergente;
     
-    @FXML
-    private TextField tfNombre;
+    ComboBox<Equipo> cbEquipos;
     
     @FXML
-    private TextField tfOlimpiada;
+    private TextField tfEdad;
     
     @FXML
-    private TextField tfDeporte;
+    private TextField tfMedalla;
     
     @FXML
     private Button btnAceptar;
     
     @FXML
     private Button btnCancelar;
-    
-    ComboBox<Olimpiada> cbOlimpiadas;
-    
-    ComboBox<Deporte> cbDeportes;
 
 	
-	public void editarEvento(Evento evento) {
-		this.evento = evento;
+	public void editarParticipacion(Participacion participacion) {
+		this.participacion = participacion;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
         ventanaEmergente = new Stage();
         
         // Le ponemos titulo a la ventana
-        ventanaEmergente.setTitle("MODIFICAR EVENTO");
+        ventanaEmergente.setTitle("MODIFICAR PARTICIPACION");
         
         // Creamos un contenedor VBox como raíz de la ventana emergente
         VBox contenedorRaiz = new VBox();
 
-        // Creamos contenedores HBox para cada campo de entrada (Nombre, Apellidos, Edad)
-        HBox contenedorNombre = new HBox();
-        HBox contenedorOlimpiada = new HBox();
-        HBox contenedorDeporte = new HBox();
+        // Creamos contenedores HBox para cada campo de entrada 
+        HBox contenedorEquipo = new HBox();
+        HBox contenedorEdad = new HBox();
+        HBox contenedorMedalla = new HBox();
 
         // Establecemos un espaciado entre elementos en los contenedores HBox
-        contenedorNombre.setSpacing(10);
-        contenedorOlimpiada.setSpacing(10);
-        contenedorDeporte.setSpacing(10);
+        contenedorEquipo.setSpacing(10);
+        contenedorEdad.setSpacing(10);
+        contenedorMedalla.setSpacing(10);
 
-        // le damos valor a los TextFields
-        tfNombre = new TextField();
-        tfNombre.setText(evento.getNombre());
-        
         // hacemos dos combos para Olimpiadas y Deportes
-        OlimpiadasDao olimpiadasDao = new OlimpiadasDao();
-        ObservableList<Olimpiada> listaOlimpiadas =  olimpiadasDao.cargarOlimpiadas("");
-        cbOlimpiadas = new ComboBox<>();
-        cbOlimpiadas.setItems(listaOlimpiadas);
+        EquiposDao equiposDao = new EquiposDao();
+        ObservableList<Equipo> listaEquipos =  equiposDao.cargarEquipos("");
+        cbEquipos = new ComboBox<>();
+        cbEquipos.setItems(listaEquipos);
         
-        DeportesDao deportesDao = new DeportesDao();
-        ObservableList<Deporte> listaDeportes =  deportesDao.cargarDeportes("");
-        cbDeportes = new ComboBox<>();
-        cbDeportes.setItems(listaDeportes);
+        // le damos valor a los TextFields
+        tfEdad = new TextField();
+        tfEdad.setText(participacion.getEdad()+"");
         
-        // Añadimos los labels al contenedor
-        contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
-        contenedorOlimpiada.getChildren().addAll(new javafx.scene.control.Label("Olimpiada"), cbOlimpiadas);
-        contenedorDeporte.getChildren().addAll(new javafx.scene.control.Label("Deporte"), cbDeportes);
+        tfMedalla = new TextField();
+        tfMedalla.setText(participacion.getMedalla());
+        
+        // Añadimos los elementos al contenedor
+        contenedorEquipo.getChildren().addAll(new javafx.scene.control.Label("Equipos"), cbEquipos);
+        contenedorEdad.getChildren().addAll(new javafx.scene.control.Label("Edad"), tfEdad);
+        contenedorMedalla.getChildren().addAll(new javafx.scene.control.Label("Medalla"), tfMedalla);
 
         // Creamos un contenedor HBox para los botones (Guardar y Cerrar)
         HBox contenedorBotones = new HBox();
@@ -103,7 +94,7 @@ public class ControllerEditarEvento {
         contenedorBotones.getChildren().addAll(guardarBtn, cerrarBtn);
 
         // Agregamos todos los contenedores al contenedor raíz
-        contenedorRaiz.getChildren().addAll(contenedorNombre, contenedorOlimpiada, contenedorDeporte, contenedorBotones);
+        contenedorRaiz.getChildren().addAll(contenedorEquipo, contenedorEdad, contenedorMedalla, contenedorBotones);
 
         // Configuramos propiedades del contenedor raíz
         contenedorRaiz.setPadding(new Insets(20));
@@ -126,16 +117,16 @@ public class ControllerEditarEvento {
 
         if (errores.isEmpty()) {
             try {
-            	EventosDao eventosDao = new EventosDao();
+            	ParticipacionesDao participacionesDao = new ParticipacionesDao();
             	// Le ponemos los datos nuevos al deportista
-            	evento.setNombre(this.tfNombre.getText().toString());
-            	evento.setId_olimpiada(this.cbOlimpiadas.getSelectionModel().getSelectedItem().getId_olimpiada());
-            	evento.setId_deporte(this.cbDeportes.getSelectionModel().getSelectedItem().getId_deporte());
+            	participacion.setId_equipo(this.cbEquipos.getSelectionModel().getSelectedItem().getId_equipo());
+            	participacion.setEdad(Integer.parseInt(this.tfEdad.getText().toString()));
+            	participacion.setMedalla(this.tfMedalla.getText().toString());
             	
-            	eventosDao.editarEvento(evento);
+            	participacionesDao.editarParticipacion(participacion);
                 
                 ventanaEmergente.close();
-                alertaInformacion("Se ha modificado el Evento seleccionado\nActualiza la tabla para ver los cambios");
+                alertaInformacion("Se ha modificado la participacion\nActualiza la tabla para ver los cambios");
             } catch (Exception e) {
                 // Manejamos cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
             }
@@ -149,16 +140,16 @@ public class ControllerEditarEvento {
     private String validarCampos() {
     	String errores = "";
     	
-    	if(tfNombre.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Peso\n";
+    	if(tfMedalla.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo Medalla\n";
         }
     	
-    	if(this.cbOlimpiadas.getSelectionModel().getSelectedItem() == null) {
-            errores += "Tienes que seleccionar una Olimpiada\n";
+    	if(tfEdad.getText().isEmpty()) {
+            errores += "Tienes que rellenar el campo Edad\n";
         }
     	
-    	if(this.cbDeportes.getSelectionModel().getSelectedItem() == null) {
-            errores += "Tienes que seleccionar un Deporte\n";
+    	if(this.cbEquipos.getSelectionModel().getSelectedItem() == null) {
+            errores += "Tienes que seleccionar un Equipo\n";
         }
     	
     	return errores;

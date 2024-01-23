@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Deportista;
-import model.Olimpiada;
 import model.Participacion;
 
 public class ParticipacionesDao {
@@ -17,7 +15,7 @@ private ConexionBD conexion;
 		ObservableList<Participacion> listaParticipaciones = FXCollections.observableArrayList();
 	    try {
 	        conexion = new ConexionBD();        	
-	    	String consulta = "select Deportista.nombre, Participacion.id_evento, Evento.nombre, Equipo.nombre, Participacion.edad, Participacion.medalla "
+	    	String consulta = "select Deportista.nombre, Participacion.id_deportista ,Participacion.id_evento, Evento.nombre, Equipo.nombre, Participacion.edad, Participacion.medalla "
 			    			+ "from Evento, Deportista, Equipo, Participacion "
 			    			+ "WHERE Deportista.nombre LIKE '%"+cadena+"%' "
 			    			+ "AND Deportista.id_deportista = Participacion.id_deportista "
@@ -30,6 +28,7 @@ private ConexionBD conexion;
 			 while (rs.next()) {
 				 	// Guardamos todos los datos
 				 	String nombre_deportista = rs.getString("Deportista.nombre");
+				 	int id_deportista = rs.getInt("Participacion.id_deportista");
 				 	int id_evento = rs.getInt("Participacion.id_evento");
 		            String nombre_evento = rs.getString("Evento.nombre");
 		            String nombre_equipo = rs.getString("Equipo.nombre");
@@ -37,7 +36,7 @@ private ConexionBD conexion;
 		            String medalla = rs.getString("Participacion.medalla");
 		            
 		            // Creamos la Participacion
-		            Participacion p = new Participacion(nombre_deportista, id_evento, nombre_evento, nombre_equipo, edad, medalla);
+		            Participacion p = new Participacion(nombre_deportista, id_deportista, id_evento, nombre_evento, nombre_equipo, edad, medalla);
 		            listaParticipaciones.add(p);
 			 }     
 			 rs.close();       
@@ -50,6 +49,27 @@ private ConexionBD conexion;
 	    }    
 	    return listaParticipaciones;    
 	}
+    
+    public void editarParticipacion(Participacion participacion) {
+    	try{
+    		conexion = new ConexionBD();
+    		String consulta = "UPDATE Participacion SET id_equipo = ?, edad = ?, medalla = ? WHERE id_deportista = ? and id_evento = ?";
+    		
+    		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+    	    // Establecer los parámetros
+    	    pstmt.setInt(1, participacion.getId_equipo());
+    	    pstmt.setInt(2, participacion.getEdad());
+    	    pstmt.setString(3, participacion.getMedalla());
+    	    pstmt.setInt(4, participacion.getId_deportista());
+    	    pstmt.setInt(5, participacion.getId_evento());
+
+    	    // Ejecutar la actualización
+    	    pstmt.executeUpdate();
+    	} catch (SQLException e) {
+    	    // Manejar excepciones de SQL
+    	    e.printStackTrace();
+    	}
+    }
     
     public void aniadirParticipacion(Participacion participacion) {
         try {

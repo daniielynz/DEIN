@@ -89,8 +89,6 @@ public class DeportesDao {
     	try {
             conexion = new ConexionBD();
             
-            System.out.println(a);
-            
             // editamos la tabla Deportista
             String consulta = "UPDATE Deporte "
             				+ "SET nombre = '"+a.getNombre()+"' "

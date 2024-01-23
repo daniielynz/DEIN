@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Deportista;
-import model.Equipo;
-import model.Evento;
 import model.Olimpiada;
 
 public class OlimpiadasDao {

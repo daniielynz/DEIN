@@ -129,7 +129,7 @@ public class ListadoController {
 		            	Deporte deporteSeleccionado = tablaDeporte.getSelectionModel().getSelectedItem();
 		                if(deporteSeleccionado != null) {
 		                	ControllerEditarDeporte contr = new ControllerEditarDeporte();
-		                	// Modificamos el deportista
+		                	// Modificamos el Deporte
 		                	contr.editarDeporte(deporteSeleccionado);
 		                	// mensaje una vez de haya modificado
 		                	cargarTablaDeportes("");
@@ -140,7 +140,7 @@ public class ListadoController {
 		            	Deporte deporteSeleccionado = tablaDeporte.getSelectionModel().getSelectedItem();
 		                if(deporteSeleccionado!=null) {
 		                	DeportesDao dao = new DeportesDao();
-		                	// hay que borrar el deportista de la participacion
+		                	// borramos el Deporte
 		                	dao.borrarDeporte(deporteSeleccionado);
 		                	alertaInformacion("Se ha borrado el deporte seleccionado");
 		                	cargarTablaDeportes("");
@@ -185,7 +185,7 @@ public class ListadoController {
 		            	Equipo equipoSeleccionado = tablaEquipos.getSelectionModel().getSelectedItem();
 		                if(equipoSeleccionado != null) {
 		                	ControllerEditarEquipo contr = new ControllerEditarEquipo();
-		                	// Modificamos el deportista
+		                	// Modificamos el Equipo
 		                	contr.editarEquipo(equipoSeleccionado);
 		                	// mensaje una vez de haya modificado
 		                	cargarTablaEquipos("");
@@ -196,7 +196,7 @@ public class ListadoController {
 		            	Equipo equipoSeleccionado = tablaEquipos.getSelectionModel().getSelectedItem();
 		                if(equipoSeleccionado!=null) {
 		                	EquiposDao dao = new EquiposDao();
-		                	// hay que borrar el deportista de la participacion
+		                	// borramos el Equipo
 		                	dao.borrarEquipo(equipoSeleccionado);
 		                	alertaInformacion("Se ha borrado el Equipo seleccionado");
 		                	cargarTablaEquipos("");
@@ -253,7 +253,7 @@ public class ListadoController {
 		            	Evento eventoSeleccionado = tablaEventos.getSelectionModel().getSelectedItem();
 		                if(eventoSeleccionado!=null) {
 		                	EventosDao dao = new EventosDao();
-		                	// hay que borrar el deportista de la participacion
+		                	// borramos el Evento
 		                	dao.borrarEvento(eventoSeleccionado);
 		                	alertaInformacion("Se ha borrado el Evento seleccionado");
 		                	cargarTablaEventos("");
@@ -310,7 +310,7 @@ public class ListadoController {
 		            	Olimpiada olimpiadaSeleccionada = tablaOlimpiadas.getSelectionModel().getSelectedItem();
 		                if(olimpiadaSeleccionada!=null) {
 		                	OlimpiadasDao dao = new OlimpiadasDao();
-		                	// hay que borrar el deportista de la participacion
+		                	// borramos la Olimpiada
 		                	dao.borrarOlimpiada(olimpiadaSeleccionada);
 		                	alertaInformacion("Se ha borrado la olimpiada seleccionado");
 		                	cargarTablaOlimpiadas("");
@@ -357,14 +357,20 @@ public class ListadoController {
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
 		            	Participacion participacionSeleccionada = tablaParticipaciones.getSelectionModel().getSelectedItem();
-		                alertaInformacion("Modificar Participacion");
+		                if(participacionSeleccionada != null) {
+		                	ControllerEditarParticipacion contr = new ControllerEditarParticipacion();
+		                	// Modificamos la Participacion
+		                	contr.editarParticipacion(participacionSeleccionada);
+		                	// mensaje una vez de haya modificado
+		                	cargarTablaEquipos("");
+		                }
 		            });
 
 		            itemBorrar.setOnAction(e -> {
 		            	Participacion participacionSeleccionada = tablaParticipaciones.getSelectionModel().getSelectedItem();
 		                if(participacionSeleccionada!=null) {
 		                	ParticipacionesDao dao = new ParticipacionesDao();
-		                	// hay que borrar el deportista de la participacion
+		                	// borramos la Participacion
 		                	dao.borrarParticipacion(participacionSeleccionada);
 		                	alertaInformacion("Se ha borrado la participacion seleccionada");
 		                	cargarTablaParticipaciones("");

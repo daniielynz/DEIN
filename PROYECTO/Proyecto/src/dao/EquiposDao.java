@@ -61,9 +61,9 @@ public class EquiposDao {
 		            String iniciales = rs.getString("iniciales");
 		            
 		            // Creamos el Deporte
-		            Equipo a = new Equipo(id, nombre, iniciales);
+		            Equipo equipo = new Equipo(id, nombre, iniciales);
 		            
-		            listaEquipos.add(a);
+		            listaEquipos.add(equipo);
 			 }     
 			 rs.close();       
 			 conexion.closeConexion();

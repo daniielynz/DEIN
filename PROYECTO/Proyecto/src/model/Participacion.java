@@ -6,8 +6,9 @@ public class Participacion {
 	int id_deportista, id_evento, id_equipo, edad;
 	String medalla, deportista, evento, equipo;
 	
-	public Participacion(String deportista, int id_evento, String evento, String equipo, int edad, String medalla) {
+	public Participacion(String deportista, int id_deportista, int id_evento, String evento, String equipo, int edad, String medalla) {
 		this.deportista = deportista;
+		this.id_deportista = id_deportista;
 		this.id_evento = id_evento;
 		this.evento = evento;
 		this.equipo = equipo;
@@ -27,6 +28,40 @@ public class Participacion {
 		this.id_equipo = id_equipo;
 		this.edad = edad;
 		this.medalla = medalla;
+	}
+
+
+	
+	public void setId_deportista(int id_deportista) {
+		this.id_deportista = id_deportista;
+	}
+
+	public void setId_evento(int id_evento) {
+		this.id_evento = id_evento;
+	}
+
+	public void setId_equipo(int id_equipo) {
+		this.id_equipo = id_equipo;
+	}
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
+	public void setMedalla(String medalla) {
+		this.medalla = medalla;
+	}
+
+	public void setDeportista(String deportista) {
+		this.deportista = deportista;
+	}
+
+	public void setEvento(String evento) {
+		this.evento = evento;
+	}
+
+	public void setEquipo(String equipo) {
+		this.equipo = equipo;
 	}
 
 	public String getDeportista() {
