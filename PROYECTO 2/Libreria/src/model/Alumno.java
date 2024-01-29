@@ -1,10 +1,9 @@
 package model;
 
 public class Alumno {
-	int dni;
-	String nombre, apellido1, apellido2;
+	String dni, nombre, apellido1, apellido2;
 	
-	public Alumno(int dni, String nombre, String apellido1, String apellido2) {
+	public Alumno(String dni, String nombre, String apellido1, String apellido2) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
@@ -17,11 +16,11 @@ public class Alumno {
 		this.apellido2 = apellido2;
 	}
 
-	public int getDni() {
+	public String getDni() {
 		return dni;
 	}
 
-	public void setDni(int dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 

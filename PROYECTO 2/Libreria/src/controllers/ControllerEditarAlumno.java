@@ -20,7 +20,7 @@ public class ControllerEditarAlumno {
 	// Atributo de la ventana emergente
     private Stage ventanaEmergente;
     
-    private int dniAntiguo;
+    private String dniAntiguo;
     
     @FXML
     private TextField tfDni;
@@ -125,7 +125,7 @@ public class ControllerEditarAlumno {
             try {
             	AlumnoDao alumnoDao = new AlumnoDao();
             	// Le ponemos los datos nuevos al deportista
-            	alumno.setDni(Integer.parseInt(this.tfDni.getText().toString()));
+            	alumno.setDni(this.tfDni.getText().toString());
             	alumno.setNombre(this.tfNombre.getText().toString());
             	alumno.setApellido1(this.tfApellido1.getText().toString());
             	alumno.setApellido2(this.tfApellido2.getText().toString());

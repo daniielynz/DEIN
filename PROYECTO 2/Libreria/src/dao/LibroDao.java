@@ -6,30 +6,32 @@ import java.sql.SQLException;
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Alumno;
+import model.Libro;
 
-public class AlumnoDao {
+public class LibroDao {
     private ConexionBD conexion;
-    public ObservableList<Alumno> cargarAlumnos(String cadena)  {
-		ObservableList<Alumno> listaAlumnos = FXCollections.observableArrayList();
+    public ObservableList<Libro> cargarLibros(String cadena)  {
+		ObservableList<Libro> listaAlumnos = FXCollections.observableArrayList();
 	    try {
 	        conexion = new ConexionBD();        	
 	    	String consulta = "select * "
-			    			+ "from Alumno "
-			    			+ "WHERE nombre LIKE '%"+cadena+"%'";
+			    			+ "from Libro "
+			    			+ "WHERE titulo LIKE '%"+cadena+"%'";
 	    	
 	    	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
 	    	ResultSet rs = pstmt.executeQuery();   
 				
 			 while (rs.next()) {
 				 	// Guardamos todos los datos
-				 	String dni = rs.getString("dni");
-		            String nombre = rs.getString("nombre");
-		            String apellido1 = rs.getString("apellido1");
-		            String apellido2 = rs.getString("apellido2");
+				 	int codigo = rs.getInt("codigo");
+				 	String titulo = rs.getString("titulo");
+		            String autor = rs.getString("autor");
+		            String editorial = rs.getString("editorial");
+		            String estado = rs.getString("estado");
+		            int baja = rs.getInt("baja");
 		            
 		            // Creamos el Alumno
-		            Alumno a = new Alumno(dni, nombre, apellido1, apellido2);
+		            Libro a = new Libro(codigo, titulo, autor, editorial, estado, baja);
 		            listaAlumnos.add(a);
 			 }     
 			 rs.close();       
@@ -43,18 +45,19 @@ public class AlumnoDao {
 	    return listaAlumnos;    
 	}
     
-    public void editarAlumno(Alumno alumno, String dniAntiguo) {
+    public void editarLibro(Libro libro) {
     	try{
     		conexion = new ConexionBD();
-    		String consulta = "UPDATE Alumno SET dni=?, nombre = ?, apellido1 = ?, apellido2 = ? WHERE dni = ?";
+    		String consulta = "UPDATE Libro SET titulo = ?, autor = ?, editorial = ?, estado = ?, baja = ? WHERE codigo = ?";
     		
     		PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
     	    // Establecer los parámetros
-    		pstmt.setString(1, alumno.getDni());
-    	    pstmt.setString(2, alumno.getNombre());
-    	    pstmt.setString(3, alumno.getApellido1());
-    	    pstmt.setString(4, alumno.getApellido2());
-    	    pstmt.setString(5, dniAntiguo);
+    		pstmt.setString(1, libro.getTitulo());
+    	    pstmt.setString(2, libro.getAutor());
+    	    pstmt.setString(3, libro.getEditorial());
+    	    pstmt.setString(4, libro.getEditorial());
+    	    pstmt.setInt(5, libro.getBaja());
+    	    pstmt.setInt(5, libro.getCodigo());
 
     	    // Ejecutar la actualización
     	    pstmt.executeUpdate();
@@ -64,37 +67,37 @@ public class AlumnoDao {
     	}
     }
     
-    public void borrarAlumno(Alumno alumno) {
+    public void borrarLibro(Libro libro) {
     	try {
     		conexion = new ConexionBD();   
     		// borrar de la tabla Prestamos (si existe)
-    		String existePrestamos = "SELECT COUNT(*) FROM Prestamo WHERE dni_alumno = '"+alumno.getDni()+"'";
+    		String existePrestamos = "SELECT COUNT(*) FROM Prestamo WHERE codigo_libro = "+libro.getCodigo();
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(existePrestamos);      
         	ResultSet rs = pstmt.executeQuery();   
         	rs.next();
             int count = rs.getInt(1);
-            // si hay alguna referencia a ese alumno en la tabla Prestamo lo borramos
+            // si hay alguna referencia a ese libro en la tabla Prestamo lo borramos
             if (count > 0) { 
-            	String consulta = "DELETE FROM Historico_prestamo WHERE dni_alumno = '"+alumno.getDni()+"'";
+            	String consulta = "DELETE FROM Historico_prestamo WHERE codigo_libro = "+libro.getCodigo();
         		pstmt = conexion.getConexion().prepareStatement(consulta);      
                 pstmt.executeUpdate();
             }
             
             // borrar de la tabla Historico Prestamos (si existe)
-    		String existeHistoricoPrestamos = "SELECT COUNT(*) FROM Historico_prestamo WHERE dni_alumno = '"+alumno.getDni()+"'";
+    		String existeHistoricoPrestamos = "SELECT COUNT(*) FROM Historico_prestamo WHERE codigo_libro = "+libro.getCodigo();
         	pstmt = conexion.getConexion().prepareStatement(existeHistoricoPrestamos);      
         	rs = pstmt.executeQuery();   
         	rs.next();
             count = rs.getInt(1);
-            // si hay alguna referencia a ese alumno en la tabla Historico prestamo lo borramos
+            // si hay alguna referencia a ese libro en la tabla Historico prestamo lo borramos
             if (count > 0) { 
-                String consulta = "DELETE FROM Prestamo WHERE dni_alumno = '"+alumno.getDni()+"'";
+                String consulta = "DELETE FROM Prestamo WHERE codigo_libro = "+libro.getCodigo();
                 pstmt = conexion.getConexion().prepareStatement(consulta);      
                 pstmt.executeUpdate();
             }
             
-            // borrar de la tabla Alumno
-            String consulta = "DELETE FROM Alumno WHERE dni = '"+alumno.getDni()+"'";
+            // borrar de la tabla Libro
+            String consulta = "DELETE FROM Libro WHERE codigo = "+libro.getCodigo();
             pstmt = conexion.getConexion().prepareStatement(consulta);      
             pstmt.executeUpdate();
             
@@ -109,7 +112,7 @@ public class AlumnoDao {
     public int ultimoId() {
     	try {
             conexion = new ConexionBD();        	
-        	String consulta = "select MAX(dni) as ID from Alumnos";
+        	String consulta = "select MAX(codigo) as ID from Libro";
         	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
         	ResultSet rs = pstmt.executeQuery();   
 				
