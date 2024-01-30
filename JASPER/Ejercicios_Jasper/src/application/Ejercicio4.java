@@ -8,16 +8,23 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Ejercicio4 extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/fxml/ejercicio4.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	    try {
+	        // Cargar el archivo FXML
+	        BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/fxml/ejercicio4.fxml"));
+
+	        // Crear una escena con el nodo raíz
+	        Scene scene = new Scene(root);
+
+	        // Configurar el escenario principal (primaryStage)
+	        primaryStage.setScene(scene);  // Establecer la escena en el escenario
+	        primaryStage.show();  // Mostrar el escenario en pantalla
+	    } catch(Exception e) {
+	        // Manejar cualquier excepción
+	        e.printStackTrace();
+	    }
 	}
 	
 	public static void main(String[] args) {

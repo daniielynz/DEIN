@@ -61,53 +61,68 @@ public class ControllerEjercicio4 {
 
    
 	public static void generarInforme(Map<String, Object> parameters){
-		 try {
-		    	InputStream jasper = ControllerEjercicio4.class.getResourceAsStream("/jasper/Ejercicio4/formularioMedico.jasper");
-				try {
-					JasperReport report = (JasperReport) JRLoader.loadObject(jasper);
-			        JasperPrint jprint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
-			        JasperViewer viewer = new JasperViewer(jprint, false);
-			        viewer.setVisible(true);
-				} catch (Exception e) {
-		            Alert alert = new Alert(Alert.AlertType.ERROR);
-		            alert.setHeaderText(null);
-		            alert.setTitle("ERROR");
-		            alert.setContentText("Ha ocurrido un error");
-		            alert.showAndWait();
-		            e.printStackTrace();
-		        }
-		        
+		try {
+		    // Obtener el archivo Jasper 
+		    InputStream jasper = ControllerEjercicio4.class.getResourceAsStream("/jasper/Ejercicio4/formularioMedico.jasper");
+
+		    try {
+		        // Cargar el informe Jasper desde el archivo obtenido
+		        JasperReport report = (JasperReport) JRLoader.loadObject(jasper);
+
+		        // Llenar el informe con datos sin uso de base de datos
+		        JasperPrint jprint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+
+		        // Crear un visor de informes Jasper y mostrarlo en pantalla
+		        JasperViewer viewer = new JasperViewer(jprint, false);
+		        viewer.setVisible(true);
 		    } catch (Exception e) {
-		    	e.printStackTrace();
+		        // Manejar cualquier excepción 
+		        Alert alert = new Alert(Alert.AlertType.ERROR);
+		        alert.setHeaderText(null);
+		        alert.setTitle("ERROR");
+		        alert.setContentText("Ha ocurrido un error");
+		        alert.showAndWait();
+		        e.printStackTrace();
 		    }
+		} catch (Exception e) {
+		    // Manejar cualquier excepción
+		    e.printStackTrace();
+		}
+
 	}
     
 	@FXML
 	private void generarDatos() {
+		// Validar los campos y almacenar los mensajes de error en la variable "errores"
 		String errores = validarCampos();
-		
-		if(errores.isEmpty()) {
-			Map<String, Object> parametros = new HashMap<String, Object>(7);
-	    	
-	    	parametros.put("NOM_MEDICO", tfNombreMedico.getText());
-	    	parametros.put("TRATAMIENTO", taTratamiento.getText());
-	    	parametros.put("COD_MEDICO", Integer.parseInt(tfCodigoMedico.getText())); 
-	    	parametros.put("ESP_MEDICO", tfEspecialidadMedico.getText());
-	    	parametros.put("NUM_PACIENTE", Integer.parseInt(tfNumeroPaciente.getText()));
-	    	parametros.put("NOM_PACIENTE", tfNombrePaciente.getText());
-	    	parametros.put("DIR_PACIENTE", tfDireccionPaciente.getText());
-	    	
-	    	ControllerEjercicio4.generarInforme(parametros);
-		}else {
-			alertaError(errores);
+
+		// Verificar si no hay errores de validación
+		if (errores.isEmpty()) {
+		    // Crear un mapa de parámetros para pasar al método generarInforme
+		    Map<String, Object> parametros = new HashMap<>(7);
+		    
+		    // Agregar valores al mapa de parámetros utilizando los datos de los campos de la interfaz
+		    parametros.put("NOM_MEDICO", tfNombreMedico.getText());
+		    parametros.put("TRATAMIENTO", taTratamiento.getText());
+		    parametros.put("COD_MEDICO", Integer.parseInt(tfCodigoMedico.getText()));
+		    parametros.put("ESP_MEDICO", tfEspecialidadMedico.getText());
+		    parametros.put("NUM_PACIENTE", Integer.parseInt(tfNumeroPaciente.getText()));
+		    parametros.put("NOM_PACIENTE", tfNombrePaciente.getText());
+		    parametros.put("DIR_PACIENTE", tfDireccionPaciente.getText());
+
+		    // Llamar al método estático generarInforme del controlador ControllerEjercicio4
+		    ControllerEjercicio4.generarInforme(parametros);
+		} else {
+		    // Si hay errores, mostrar una alerta de error con los mensajes obtenidos
+		    alertaError(errores);
 		}
-    	
+
     }
 	
 	private String validarCampos() {
     	String errores = "";
     	
-    	// Obtenemos el dato del campo Nombre y validamos que no este vacio
+    	// Validamos si los campos estan vacios
     	if(tfNombreMedico.getText().isEmpty()) {
     		errores+= "Tienes que rellenar el campo Nombre del paciente\n";
     	}
@@ -129,6 +144,7 @@ public class ControllerEjercicio4 {
     	if(tfDireccionPaciente.getText().isEmpty()) {
     		errores+= "Tienes que rellenar el campo Direccion de paciente\n";
     	}
+    	// validamos si los campos son numericos
     	try {
     		Integer.parseInt(tfNumeroPaciente.getText());
 		}catch(NumberFormatException e) {
@@ -162,6 +178,7 @@ public class ControllerEjercicio4 {
 
 	@FXML
     void vaciarCampos(ActionEvent event) {
+		// vaciar todos los campos
     	taTratamiento.clear();
         tfCodigoMedico.clear();
         tfDireccionPaciente.clear();

@@ -1,7 +1,6 @@
 package application;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import conexion.ConexionBD;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -12,39 +11,35 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class Ejercicio1 extends Application {
-	Connection connection = null;
-    
+	
     public static void main(String[] args) {
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage arg0) throws Exception {
-		try {
-			conexion();
-			JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/Ejercicio1/informe.jasper"));
-	        JasperPrint jprint = JasperFillManager.fillReport(report, null, connection);
+	    try {
+	        // Establecer conexión a la base de datos usando la clase ConexionBD
+	        ConexionBD con = new ConexionBD("urlPaises");
+
+	        // Cargar el informe Jasper desde el archivo .jasper
+	        JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/Ejercicio1/informe.jasper"));
+
+	        // Llenar el informe con datos desde la base de datos utilizando la conexión
+	        JasperPrint jprint = JasperFillManager.fillReport(report, null, con.getConexion());
+
+	        // Crear un visor de informes Jasper y mostrarlo en pantalla
 	        JasperViewer viewer = new JasperViewer(jprint, false);
 	        viewer.setVisible(true);
-		} catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("ERROR");
-            alert.setContentText("Ha ocurrido un error");
-            alert.showAndWait();
-            e.printStackTrace();
-        }
+	    } catch (Exception e) {
+	        // Manejar cualquier excepción
+	        Alert alert = new Alert(Alert.AlertType.ERROR);
+	        alert.setHeaderText(null);
+	        alert.setTitle("ERROR");
+	        alert.setContentText("Ha ocurrido un error");
+	        alert.showAndWait();
+	        e.printStackTrace();
+	    }
 	}
-	
-	private void conexion() {
-    	try {
-    		String url = "jdbc:mysql://localhost:3306/paises";
-    		String user = "admin";
-    		String password = "dm2";
-    		
-    		connection = DriverManager.getConnection(url, user, password);
-    	}catch (Exception e) {
-			// TODO: handle exception
-		}
-    }
+
 }
