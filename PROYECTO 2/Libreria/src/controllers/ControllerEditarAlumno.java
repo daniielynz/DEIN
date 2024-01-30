@@ -79,10 +79,10 @@ public class ControllerEditarAlumno {
         tfApellido2.setText(alumno.getApellido2() + "");
         
         // Le ponemos los Labels junto a su TextField correspondiente
-        contenedorDni.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
-        contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Sexo"), tfNombre);
-        contenedorApellido1.getChildren().addAll(new javafx.scene.control.Label("Peso"), tfApellido1);
-        contenedorApellido2.getChildren().addAll(new javafx.scene.control.Label("Altura"), tfApellido2);
+        contenedorDni.getChildren().addAll(new javafx.scene.control.Label("DNI"), tfDni);
+        contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
+        contenedorApellido1.getChildren().addAll(new javafx.scene.control.Label("Primer apellido"), tfApellido1);
+        contenedorApellido2.getChildren().addAll(new javafx.scene.control.Label("Segundo apellido"), tfApellido2);
 
         // Creamos un contenedor HBox para los botones (Guardar y Cerrar)
         HBox contenedorBotones = new HBox();
@@ -149,12 +149,6 @@ public class ControllerEditarAlumno {
     	
     	if(tfDni.getText().isEmpty()) {
             errores += "Tienes que rellenar el campo DNI\n";
-        }else {
-        	try {
-                Integer.parseInt(tfDni.getText());
-            } catch (NumberFormatException e) {
-            	errores += "El campo de DNI tiene que ser numerico\n";
-            }
         }
     	
     	if(tfNombre.getText().isEmpty()) {

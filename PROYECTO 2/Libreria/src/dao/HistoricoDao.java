@@ -10,27 +10,35 @@ import model.HistoricoPrestamo;
 
 public class HistoricoDao {
     private ConexionBD conexion;
-    public ObservableList<HistoricoPrestamo> cargarHistoricoPrestamos(String cadena)  {
+    public ObservableList<HistoricoPrestamo> cargarHistoricoPrestamos(String dni, String codigo)  {
 		ObservableList<HistoricoPrestamo> listaHistoricoPrestamos = FXCollections.observableArrayList();
 	    try {
-	        conexion = new ConexionBD();        	
-	    	String consulta = "select * "
-			    			+ "from Historico_prestamo "
-			    			+ "WHERE dni_alumno LIKE '%"+cadena+"%'";
+	        conexion = new ConexionBD(); 
+	        
+	        String consulta = "";
+	        if(!codigo.isEmpty()) {
+	        	consulta = "select * "
+		    			+ "from Historico_prestamo "
+		    			+ "WHERE codigo_libro LIKE '%"+codigo+"%'";
+	        }else {
+	        	consulta = "select * "
+		    			+ "from Historico_prestamo "
+		    			+ "WHERE dni_alumno LIKE '%"+dni+"%'";
+	        }
 	    	
 	    	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);      
 	    	ResultSet rs = pstmt.executeQuery();   
 				
 			 while (rs.next()) {
 				 	// Guardamos todos los datos
-				 	int idid_prestamo = rs.getInt("id_prestamo");
+				 	int id_prestamo = rs.getInt("id_prestamo");
 		            String dni_alumno = rs.getString("dni_alumno");
 		            int codigo_libro = rs.getInt("codigo_libro");
 		            String fecha_prestamo = rs.getString("fecha_prestamo");
 		            String fecha_devolucion = rs.getString("fecha_devolucion");
 		            
 		            // Creamos el HistoricoPrestamo
-		            HistoricoPrestamo HistoricoPrestamo = new HistoricoPrestamo(idid_prestamo, dni_alumno, codigo_libro, fecha_prestamo, fecha_devolucion);
+		            HistoricoPrestamo HistoricoPrestamo = new HistoricoPrestamo(id_prestamo, dni_alumno, codigo_libro, fecha_prestamo, fecha_devolucion);
 		            listaHistoricoPrestamos.add(HistoricoPrestamo);
 			 }     
 			 rs.close();       
