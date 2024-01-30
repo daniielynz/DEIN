@@ -130,11 +130,9 @@ public class ListadoController {
 		            itemModificar.setOnAction(e -> {
 		            	Libro libroSeleccionado = tablaLibros.getSelectionModel().getSelectedItem();
 		                if(libroSeleccionado != null) {
-		                	//ControllerEditarAlumno contr = new ControllerEditarAlumno();
+		                	ControllerEditarLibro contr = new ControllerEditarLibro();
 		                	// Modificamos el Libro
-		                	//contr.editarAlumno(libroSeleccionado);
-		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha modificado el libro seleccionado");
+		                	contr.editarLibro(libroSeleccionado);
 		                	cargarTablaLibros("");
 		                }
 		            });
@@ -146,7 +144,7 @@ public class ListadoController {
 		                	// borramos el Libro
 		                	dao.borrarLibro(libroSeleccionado);
 		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha borrado el libro seleccionado");
+		                	alertaInformacion("Se ha dado de baja el libro seleccionado");
 		                	cargarTablaLibros("");
 		                }
 		            });
@@ -183,38 +181,26 @@ public class ListadoController {
 		        	colFechaPrestamo.setCellValueFactory(new PropertyValueFactory<Prestamo,String>("fechaPrestamo") );
 		        	colCodigoLibroPrestamo.setCellValueFactory(new PropertyValueFactory<Prestamo,Integer>("codigoLibro") );
 		        	cargarTablaPrestamo("");
-		    		
-		    		// Creamos un menú contextual para la tabla
+		        	
+		        	// Creamos un menú contextual para la tabla
 		            ContextMenu contextMenu = new ContextMenu();
-		            MenuItem itemModificar = new MenuItem("Modificar");
 		            MenuItem itemBorrar = new MenuItem("Eliminar");
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
-		            itemModificar.setOnAction(e -> {
-		            	Prestamo prestamoSeleccionado = tablaPrestamos.getSelectionModel().getSelectedItem();
-		                if(prestamoSeleccionado != null) {
-		                	//ControllerEditarAlumno contr = new ControllerEditarAlumno();
-		                	// Modificamos el Prestamo
-		                	//contr.editarPrestamo(prestamoSeleccionado);
-		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha modificado el Prestamo seleccionado");
-		                	cargarTablaPrestamo("");
-		                }
-		            });
-
 		            itemBorrar.setOnAction(e -> {
 		            	Prestamo prestamoSeleccionado = tablaPrestamos.getSelectionModel().getSelectedItem();
 		                if(prestamoSeleccionado!=null) {
 		                	PrestamoDao dao = new PrestamoDao();
 		                	// borramos el Prestamo
 		                	dao.borrarPrestamo(prestamoSeleccionado);
+		                	
 		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha borrado el Prestamo seleccionado");
-		                	cargarTablaPrestamo("");
+		                	alertaInformacion("Se ha borrado el prestamo seleccionado");
+		                	cargarTablaLibros("");
 		                }
 		            });
 		            // agregamos los items al menu
-		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            contextMenu.getItems().addAll(itemBorrar);
 		            tablaPrestamos.setContextMenu(contextMenu);
 		    	
 		            // ponemos evento al TextField del filtrado por nombre
@@ -248,26 +234,36 @@ public class ListadoController {
 		        	colFechaDevolucionHistorico.setCellValueFactory(new PropertyValueFactory<HistoricoPrestamo,String>("fechaDevolucion") );
 		        	cargarTablaHistorico("","");
 		    		
-		    		// Creamos un menú contextual para la tabla
+		        	// Creamos un menú contextual para la tabla
 		            ContextMenu contextMenu = new ContextMenu();
 		            MenuItem itemModificar = new MenuItem("Modificar");
+		            MenuItem itemBorrar = new MenuItem("Eliminar");
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
-		            	HistoricoPrestamo historicoSeleccionado = tablaHistoricoPrestamos.getSelectionModel().getSelectedItem();
-		                if(historicoSeleccionado != null) {
-		                	HistoricoDao contr = new HistoricoDao();
-		                	// Modificamos el Historico
-		                	//contr.editarPrestamo(prestamoSeleccionado);
-		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha modificado el Historico seleccionado");
-		                	cargarTablaHistorico("","");
+		            	Libro libroSeleccionado = tablaLibros.getSelectionModel().getSelectedItem();
+		                if(libroSeleccionado != null) {
+		                	ControllerEditarLibro contr = new ControllerEditarLibro();
+		                	// Modificamos el Libro
+		                	contr.editarLibro(libroSeleccionado);
+		                	cargarTablaLibros("");
 		                }
 		            });
-		            
+
+		            itemBorrar.setOnAction(e -> {
+		            	Libro libroSeleccionado = tablaLibros.getSelectionModel().getSelectedItem();
+		                if(libroSeleccionado!=null) {
+		                	LibroDao dao = new LibroDao();
+		                	// borramos el Libro
+		                	dao.borrarLibro(libroSeleccionado);
+		                	// mensaje una vez de haya modificado
+		                	alertaInformacion("Se ha dado de baja el libro seleccionado");
+		                	cargarTablaLibros("");
+		                }
+		            });
 		            // agregamos los items al menu
-		            contextMenu.getItems().addAll(itemModificar);
-		            tablaHistoricoPrestamos.setContextMenu(contextMenu);
+		            contextMenu.getItems().addAll(itemModificar, itemBorrar);
+		            tablaLibros.setContextMenu(contextMenu);
 		    	
 		            // ponemos evento al TextField del filtrado por nombre
 		            lbFiltro.setText("Dni:");

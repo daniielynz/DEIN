@@ -8,7 +8,7 @@ module Ejercicios {
 	requires javafx.graphics;
 	requires javafx.base;
 	requires java.sql;
-	requires jasperreports; // Agregar la dependencia de JasperReports
+	requires jasperreports;
 	
 	
 	opens application to javafx.graphics, javafx.fxml;

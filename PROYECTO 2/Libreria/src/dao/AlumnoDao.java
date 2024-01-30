@@ -3,13 +3,19 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import conexion.ConexionBD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import model.Alumno;
 
 public class AlumnoDao {
     private ConexionBD conexion;
+    
     public ObservableList<Alumno> cargarAlumnos(String cadena)  {
 		ObservableList<Alumno> listaAlumnos = FXCollections.observableArrayList();
 	    try {
@@ -42,6 +48,26 @@ public class AlumnoDao {
 	    }    
 	    return listaAlumnos;    
 	}
+    
+    public void aniadirAlumno(Alumno alumno) {
+    	try {
+            conexion = new ConexionBD();  
+            
+            // añadir en la tabla de Alumno
+            String consulta = "insert into Alumno VALUES ('"+alumno.getDni()+"','"+alumno.getNombre()+"','"+alumno.getApellido1()+"','"+alumno.getApellido2()+"')";
+        	PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
+        	pstmt.executeUpdate();
+        	      
+        	conexion.closeConexion();
+        	
+        	alertaInformacion("Se ha añadido correctamente el Alumno\nActualiza la tabla para ver los cambios");
+    	} catch (SQLIntegrityConstraintViolationException e) {
+    	    // Manejar la excepción de clave duplicada aquí
+    	    alertaError("Ya existe un alumno con ese Dni");
+    	} catch (SQLException e) {	    	
+	    	e.printStackTrace();
+	    }  
+    }
     
     public void editarAlumno(Alumno alumno, String dniAntiguo) {
     	try{
@@ -124,6 +150,31 @@ public class AlumnoDao {
 	    	e.printStackTrace();
 	    }
     	return 0;
+    }
+    
+    // Metodos de diferentes ventanas emergentes
+    private void alertaError(String mensaje) {
+    	// Alerta de error con boton
+    	Alert ventanaEmergente = new Alert(AlertType.ERROR);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
+    }
+    
+    private void alertaInformacion(String mensaje) {
+    	// Alerta de informacion con boton
+    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+    	ventanaEmergente.setTitle("info");
+    	ventanaEmergente.setContentText(mensaje);
+    	Button ocultarBtn = new Button("Aceptar");
+        ocultarBtn.setOnAction(e -> {
+        	ventanaEmergente.hide();
+        });
+        ventanaEmergente.show();
     }
     
 }

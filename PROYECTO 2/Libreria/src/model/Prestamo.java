@@ -4,8 +4,14 @@ public class Prestamo {
 	int id, codigoLibro;
 	String dni, fechaPrestamo;
 	
-	public Prestamo(int id, String dni, String fechaPrestamo, int codigo_libro) {
+	public Prestamo(int id, String dni, int codigo_libro, String fechaPrestamo) {
 		this.id = id;
+		this.dni = dni;
+		this.fechaPrestamo = fechaPrestamo;
+		this.codigoLibro = codigo_libro;
+	}
+	
+	public Prestamo(String dni, int codigo_libro, String fechaPrestamo) {
 		this.dni = dni;
 		this.fechaPrestamo = fechaPrestamo;
 		this.codigoLibro = codigo_libro;
