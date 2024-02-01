@@ -124,7 +124,7 @@
       </TableView>
       <MenuBar GridPane.columnSpan="4">
         <menus>
-          <Menu mnemonicParsing="false" text="Alumnos">
+          <Menu mnemonicParsing="false" text="%Alumnos">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#accionAniadirAlumno" text="Añadir" />
             </items>

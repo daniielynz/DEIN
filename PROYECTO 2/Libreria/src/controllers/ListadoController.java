@@ -1,5 +1,10 @@
 package controllers;
 
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import conexion.Propiedades;
 import dao.AlumnoDao;
 import dao.HistoricoDao;
 import dao.LibroDao;
@@ -9,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -30,7 +36,7 @@ import model.HistoricoPrestamo;
 import model.Libro;
 import model.Prestamo;
 
-public class ListadoController {
+public class ListadoController implements Initializable{
 
 	//
     @FXML
@@ -54,8 +60,12 @@ public class ListadoController {
     @FXML
     private RadioButton rbAlumnos, rbLibros, rbHistoricoPrestamos, rbPrestamos;
     
-    @FXML
-    void initialize() {
+    private ResourceBundle bundle;
+    
+    @Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		bundle = arg1;
 		   // ponemos evento al radioButon de Alumno
 		   rbAlumnos.setOnAction(new EventHandler<ActionEvent>() {
 		        @Override
@@ -311,7 +321,7 @@ public class ListadoController {
 		            });
 		        }
 		    });
-    }
+	}
     
     private void ocultarTablas(){
     	tablaAlumnos.setVisible(false);
@@ -361,11 +371,19 @@ public class ListadoController {
     @FXML
     void accionAniadirAlumno(ActionEvent event) {
     	try {
+    		String idioma = Propiedades.getValor("idioma");
+ 	        String region = Propiedades.getValor("region");
+ 	        
+ 	        // Establecer la configuración regional por defecto
+ 	        Locale.setDefault(new Locale(idioma, region));
+ 	        
+ 	        // Cargar los recursos de idioma
+ 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
 	        // Abre la ventana para añadir un nuevo Deportista
 	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirAlumno.fxml"));
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirAlumno.fxml"), bundle);
 	        Scene scene = new Scene(root);
-	        primaryStage.setTitle("AÑADIR ALUMNO");
+	        primaryStage.setTitle(bundle.getString("tituloAniadirAlumno"));
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	    } catch(Exception e) {
@@ -412,11 +430,19 @@ public class ListadoController {
 	@FXML
 	void accionAniadirLibro(ActionEvent event) {
 		try {
+    		String idioma = Propiedades.getValor("idioma");
+ 	        String region = Propiedades.getValor("region");
+ 	        
+ 	        // Establecer la configuración regional por defecto
+ 	        Locale.setDefault(new Locale(idioma, region));
+ 	        
+ 	        // Cargar los recursos de idioma
+ 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
 	        // Abre la ventana para añadir un nuevo Deportista
 	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirLibro.fxml"));
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirLibro.fxml"), bundle);
 	        Scene scene = new Scene(root);
-	        primaryStage.setTitle("AÑADIR LIBRO");
+	        primaryStage.setTitle(bundle.getString("tituloAniadirLibro"));
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	    } catch(Exception e) {
@@ -459,11 +485,19 @@ public class ListadoController {
 	@FXML
 	void accionAniadirPrestamo(ActionEvent event) {
 		try {
+    		String idioma = Propiedades.getValor("idioma");
+ 	        String region = Propiedades.getValor("region");
+ 	        
+ 	        // Establecer la configuración regional por defecto
+ 	        Locale.setDefault(new Locale(idioma, region));
+ 	        
+ 	        // Cargar los recursos de idioma
+ 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
 	        // Abre la ventana para añadir un nuevo Deportista
 	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirPrestamo.fxml"));
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirPrestamo.fxml"), bundle);
 	        Scene scene = new Scene(root);
-	        primaryStage.setTitle("AÑADIR PRESTAMO");
+	        primaryStage.setTitle(bundle.getString("tituloAniadirAlumno"));
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	    } catch(Exception e) {
@@ -508,11 +542,19 @@ public class ListadoController {
 	@FXML
 	void accionAniadirHistorico(ActionEvent event) {
 		try {
-	        // Abre la ventana para añadir un nuevo Historico
+    		String idioma = Propiedades.getValor("idioma");
+ 	        String region = Propiedades.getValor("region");
+ 	        
+ 	        // Establecer la configuración regional por defecto
+ 	        Locale.setDefault(new Locale(idioma, region));
+ 	        
+ 	        // Cargar los recursos de idioma
+ 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
+	        // Abre la ventana para añadir un nuevo Deportista
 	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirHistoricoPrestamo.fxml"));
+	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirHistoricoPrestamo.fxml"), bundle);
 	        Scene scene = new Scene(root);
-	        primaryStage.setTitle("AÑADIR HISTORICO PRESTAMO");
+	        primaryStage.setTitle(bundle.getString("tituloAniadirAlumno"));
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	    } catch(Exception e) {

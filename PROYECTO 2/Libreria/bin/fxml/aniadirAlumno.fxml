@@ -26,7 +26,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                <children>
-                  <Label text="DATOS DEL ALUMNO">
+                  <Label text="%tituloAniadirAlumno">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -35,7 +35,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Dni:" />
+                  <Label text="%dniAniadirAlumno" />
                   <TextField fx:id="tfDni">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -45,7 +45,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Nombre:" />
+                  <Label text="%nombreAniadirAlumno" />
                   <TextField fx:id="tfNombre">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -55,7 +55,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Primer apellido:" />
+                  <Label text="%primerApellidoAniadirAlumno" />
                   <TextField fx:id="tfApellido1">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -65,7 +65,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Segundo apellido:" />
+                  <Label text="%segundoApellidoAniadirAlumno" />
                   <TextField fx:id="tfApellido2">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -75,8 +75,8 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#accionGuardar" text="Guardar" />
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#accionCancelar" text="Cancelar">
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#accionGuardar" text="%guardar" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#accionCancelar" text="%cancelar">
                      <HBox.margin>
                         <Insets left="35.0" />
                      </HBox.margin>

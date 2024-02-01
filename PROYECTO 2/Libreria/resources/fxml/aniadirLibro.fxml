@@ -26,7 +26,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                <children>
-                  <Label text="DATOS DEL LIBRO">
+                  <Label text="%tituloAniadirLibro">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -35,7 +35,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Titulo:" />
+                  <Label text="%Titulo" />
                   <TextField fx:id="tfTitulo">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -45,7 +45,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Autor:" />
+                  <Label text="%Autor" />
                   <TextField fx:id="tfAutor">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -55,7 +55,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Editorial:" />
+                  <Label text="%Editorial" />
                   <TextField fx:id="tfEditorial">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -65,7 +65,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Estado:" />
+                  <Label text="%Estado" />
                   <TextField fx:id="tfEstado">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -75,7 +75,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Baja:" />
+                  <Label text="%Baja" />
                   <TextField fx:id="tfBaja">
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -85,8 +85,8 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#accionGuardar" text="Guardar" />
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#accionCancelar" text="Cancelar">
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#accionGuardar" text="%guardar" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#accionCancelar" text="%cancelar">
                      <HBox.margin>
                         <Insets left="35.0" />
                      </HBox.margin>
