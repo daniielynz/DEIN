@@ -82,7 +82,7 @@ public class ListadoController implements Initializable{
 		    		
 		    		// Creamos un menú contextual para la tabla
 		            ContextMenu contextMenu = new ContextMenu();
-		            MenuItem itemModificar = new MenuItem("Modificar");
+		            MenuItem itemModificar = new MenuItem(bundle.getString("Modificar"));
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
@@ -100,7 +100,7 @@ public class ListadoController implements Initializable{
 		            tablaAlumnos.setContextMenu(contextMenu);
 		    	
 		    		// ponemos evento al TextField del filtrado por nombre
-		            lbFiltro.setText("Nombre:");
+		            lbFiltro.setText(bundle.getString("nombreFiltro"));
 		            lbFiltro.setVisible(true);
 		            
 		            tfFiltro.setVisible(true);
@@ -133,8 +133,8 @@ public class ListadoController implements Initializable{
 		    		
 		    		// Creamos un menú contextual para la tabla
 		            ContextMenu contextMenu = new ContextMenu();
-		            MenuItem itemModificar = new MenuItem("Modificar");
-		            MenuItem itemBorrar = new MenuItem("Eliminar");
+		            MenuItem itemModificar = new MenuItem(bundle.getString("Modificar"));
+		            MenuItem itemBorrar = new MenuItem(bundle.getString("Eliminar"));
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
@@ -163,7 +163,7 @@ public class ListadoController implements Initializable{
 		            tablaLibros.setContextMenu(contextMenu);
 		    	
 		            // ponemos evento al TextField del filtrado por nombre
-		            lbFiltro.setText("Titulo:");
+		            lbFiltro.setText(bundle.getString("tituloFiltro"));
 		            lbFiltro.setVisible(true);
 		            
 		            tfFiltro.setVisible(true);
@@ -194,7 +194,7 @@ public class ListadoController implements Initializable{
 		        	
 		        	// Creamos un menú contextual para la tabla
 		            ContextMenu contextMenu = new ContextMenu();
-		            MenuItem itemBorrar = new MenuItem("Eliminar");
+		            MenuItem itemBorrar = new MenuItem(bundle.getString("Eliminar"));
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemBorrar.setOnAction(e -> {
@@ -214,7 +214,7 @@ public class ListadoController implements Initializable{
 		            tablaPrestamos.setContextMenu(contextMenu);
 		    	
 		            // ponemos evento al TextField del filtrado por nombre
-		            lbFiltro.setText("Dni:");
+		            lbFiltro.setText(bundle.getString("dniFiltro"));
 		            lbFiltro.setVisible(true);
 		            
 		            tfFiltro.setVisible(true);
@@ -246,8 +246,8 @@ public class ListadoController implements Initializable{
 		    		
 		        	// Creamos un menú contextual para la tabla
 		            ContextMenu contextMenu = new ContextMenu();
-		            MenuItem itemModificar = new MenuItem("Modificar");
-		            MenuItem itemBorrar = new MenuItem("Eliminar");
+		            MenuItem itemModificar = new MenuItem(bundle.getString("Modificar"));
+		            MenuItem itemBorrar = new MenuItem(bundle.getString("Eliminar"));
 
 		            // Manejamos eventos de clic para las opciones del menú contextual
 		            itemModificar.setOnAction(e -> {
@@ -276,7 +276,7 @@ public class ListadoController implements Initializable{
 		            tablaLibros.setContextMenu(contextMenu);
 		    	
 		            // ponemos evento al TextField del filtrado por nombre
-		            lbFiltro.setText("Dni:");
+		            lbFiltro.setText(bundle.getString("dniFiltro"));
 		            lbFiltro.setVisible(true);
 		            
 		            tfFiltro.setVisible(true);
@@ -290,7 +290,7 @@ public class ListadoController implements Initializable{
 		                }
 		            });
 		            
-		            lbFiltro2.setText("Codigo:");
+		            lbFiltro2.setText(bundle.getString("codigoFiltro"));
 		            lbFiltro2.setVisible(true);
 		            
 		            tfFiltro2.setVisible(true);

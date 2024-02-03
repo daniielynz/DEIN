@@ -1,7 +1,6 @@
 package controllers;
 
 import java.time.format.DateTimeFormatter;
-
 import dao.AlumnoDao;
 import dao.LibroDao;
 import dao.PrestamoDao;
@@ -12,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.Alumno;
