@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import conexion.ConexionBD;
 import conexion.Propiedades;
 import dao.AlumnoDao;
 import dao.HistoricoDao;
@@ -37,6 +38,11 @@ import model.Alumno;
 import model.HistoricoPrestamo;
 import model.Libro;
 import model.Prestamo;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * Controlador para la ventana de listado.
@@ -385,6 +391,111 @@ public class ListadoController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
+        }
+    }
+    
+    /**
+     * Método que realiza la acción de generar un informe específico (informe1.jasper) y mostrarlo en un visor JasperViewer.
+     * Este método está diseñado para ser invocado como manejador de eventos de un controlador de interfaz gráfica de usuario.
+     *
+     * @param event Evento de acción que desencadena la generación del informe (por ejemplo, clic en un botón).
+     */
+    @FXML
+    private void accionGenerarInforme2(ActionEvent event) {
+        try {
+            // Establecer conexión a la base de datos usando la clase ConexionBD
+            ConexionBD con = new ConexionBD();
+
+            // Cargar el informe Jasper desde el archivo .jasper
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe1.jasper"));
+
+            // Llenar el informe con datos desde la base de datos utilizando la conexión
+            JasperPrint jprint = JasperFillManager.fillReport(report, null, con.getConexion());
+
+            // Crear un visor de informes Jasper y mostrarlo en pantalla
+            JasperViewer viewer = new JasperViewer(jprint, false);
+            viewer.setVisible(true);
+        } catch (Exception e) {
+            // Manejar cualquier excepción
+
+            // Mostrar un cuadro de diálogo de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.showAndWait();
+
+            // Imprimir la traza de la excepción para el registro
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Método que realiza la acción de generar un informe específico (informe1.jasper) y mostrarlo en un visor JasperViewer.
+     * Este método está diseñado para ser invocado como manejador de eventos de un controlador de interfaz gráfica de usuario.
+     *
+     * @param event Evento de acción que desencadena la generación del informe (por ejemplo, clic en un botón).
+     */
+    @FXML
+    private void accionGenerarInforme3(ActionEvent event) {
+        try {
+            // Establecer conexión a la base de datos usando la clase ConexionBD
+            ConexionBD con = new ConexionBD();
+
+            // Cargar el informe Jasper desde el archivo .jasper
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe3.jasper"));
+
+            // Llenar el informe con datos desde la base de datos utilizando la conexión
+            JasperPrint jprint = JasperFillManager.fillReport(report, null, con.getConexion());
+
+            // Crear un visor de informes Jasper y mostrarlo en pantalla
+            JasperViewer viewer = new JasperViewer(jprint, false);
+            viewer.setVisible(true);
+        } catch (Exception e) {
+            // Manejar cualquier excepción
+
+            // Mostrar un cuadro de diálogo de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.showAndWait();
+
+            // Imprimir la traza de la excepción para el registro
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Método que realiza la acción de generar un informe específico (informe1.jasper) y mostrarlo en un visor JasperViewer.
+     * Este método está diseñado para ser invocado como manejador de eventos de un controlador de interfaz gráfica de usuario.
+     *
+     * @param event Evento de acción que desencadena la generación del informe (por ejemplo, clic en un botón).
+     */
+    @FXML
+    private void accionGenerarInforme4(ActionEvent event) {
+        try {
+            // Establecer conexión a la base de datos usando la clase ConexionBD
+            ConexionBD con = new ConexionBD();
+
+            // Cargar el informe Jasper desde el archivo .jasper
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe4.jasper"));
+
+            // Llenar el informe con datos desde la base de datos utilizando la conexión
+            JasperPrint jprint = JasperFillManager.fillReport(report, null, con.getConexion());
+
+            // Crear un visor de informes Jasper y mostrarlo en pantalla
+            JasperViewer viewer = new JasperViewer(jprint, false);
+            viewer.setVisible(true);
+        } catch (Exception e) {
+            // Manejar cualquier excepción
+
+            // Mostrar un cuadro de diálogo de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.showAndWait();
+
+            // Imprimir la traza de la excepción para el registro
+            e.printStackTrace();
         }
     }
 

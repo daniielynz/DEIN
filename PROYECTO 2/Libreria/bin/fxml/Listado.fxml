@@ -162,6 +162,17 @@
                   <MenuItem mnemonicParsing="false" onAction="#accionAniadirPrestamo" text="%aniadir" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="%informes">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#accionGenerarInforme2" text="%informe2" />
+               </items>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#accionGenerarInforme3" text="%informe3"  />
+               </items>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#accionGenerarInforme4" text="%informe4"  />
+               </items>
+            </Menu>
         </menus>
          <tooltip>
             <Tooltip text="%tooltipMenuBar" />

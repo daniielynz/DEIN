@@ -2,8 +2,10 @@ package controllers;
 
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
-
+import conexion.ConexionBD;
 import dao.AlumnoDao;
 import dao.LibroDao;
 import dao.PrestamoDao;
@@ -20,6 +22,11 @@ import javafx.stage.Stage;
 import model.Alumno;
 import model.Libro;
 import model.Prestamo;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * Controlador para la interfaz de añadir préstamo.
@@ -95,16 +102,20 @@ public class ControllerAniadirPrestamo implements Initializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String fechaFormateada = dpFechaPrestamo.getValue().atStartOfDay().format(formatter);
 
+            // Crear el objeto dao
+            PrestamoDao dao = new PrestamoDao();
+            
             // Crear un nuevo objeto Prestamo
-            Prestamo prestamo = new Prestamo(
+            Prestamo prestamo = new Prestamo(dao.ultimoId(),
                     this.cbAlumnos.getSelectionModel().getSelectedItem().getDni(),
                     this.cbLibros.getSelectionModel().getSelectedItem().getCodigo(),
                     fechaFormateada
             );
-
+            
             // Añadir el préstamo utilizando el DAO
-            PrestamoDao dao = new PrestamoDao();
             dao.aniadirPrestamo(prestamo, bundle);
+            
+            generarInforme(prestamo);
 
             // Limpiar campos después de añadir el préstamo
             vaciarCampos();
@@ -113,6 +124,44 @@ public class ControllerAniadirPrestamo implements Initializable {
             alertaError(errores);
         }
     }
+    
+    /**
+     * Método para generar un informe utilizando JasperReports y mostrarlo en un visor JasperViewer.
+     * Se espera que el informe esté definido en un archivo .jasper y se llenará con datos de una base de datos.
+     */
+    private void generarInforme(Prestamo prestamo) {
+        try {
+            // Establecer conexión a la base de datos usando la clase ConexionBD
+            ConexionBD con = new ConexionBD();
+
+            // Cargar un mapa con los parametros que queremos pasarle (El id del prestamo que acabamos de crear)
+            Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("id_prestamo_creado", prestamo.getId());
+			
+			// Cargar el informe Jasper desde el archivo .jasper
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe1.jasper"));
+
+            // Llenar el informe con datos desde la base de datos utilizando la conexión
+            JasperPrint jprint = JasperFillManager.fillReport(report, parameters, con.getConexion());
+
+            // Crear un visor de informes Jasper y mostrarlo en pantalla
+            JasperViewer viewer = new JasperViewer(jprint, false);
+            viewer.setVisible(true);
+        } catch (Exception e) {
+            // Manejar cualquier excepción
+
+            // Mostrar un cuadro de diálogo de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("Ha ocurrido un error");
+            alert.showAndWait();
+
+            // Imprimir la traza de la excepción para el registro
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Valida la entrada antes de añadir un préstamo.
