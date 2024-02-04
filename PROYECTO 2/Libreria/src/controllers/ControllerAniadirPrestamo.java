@@ -139,7 +139,7 @@ public class ControllerAniadirPrestamo implements Initializable {
 			parameters.put("id_prestamo_creado", prestamo.getId());
 			
 			// Cargar el informe Jasper desde el archivo .jasper
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe1.jasper"));
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe1/informe1.jasper"));
 
             // Llenar el informe con datos desde la base de datos utilizando la conexión
             JasperPrint jprint = JasperFillManager.fillReport(report, parameters, con.getConexion());

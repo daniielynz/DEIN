@@ -407,7 +407,7 @@ public class ListadoController implements Initializable {
             ConexionBD con = new ConexionBD();
 
             // Cargar el informe Jasper desde el archivo .jasper
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe1.jasper"));
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe2/informe2.jasper"));
 
             // Llenar el informe con datos desde la base de datos utilizando la conexión
             JasperPrint jprint = JasperFillManager.fillReport(report, null, con.getConexion());
@@ -442,7 +442,7 @@ public class ListadoController implements Initializable {
             ConexionBD con = new ConexionBD();
 
             // Cargar el informe Jasper desde el archivo .jasper
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe3.jasper"));
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe3/informe3.jasper"));
 
             // Llenar el informe con datos desde la base de datos utilizando la conexión
             JasperPrint jprint = JasperFillManager.fillReport(report, null, con.getConexion());
@@ -477,7 +477,7 @@ public class ListadoController implements Initializable {
             ConexionBD con = new ConexionBD();
 
             // Cargar el informe Jasper desde el archivo .jasper
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe4.jasper"));
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("/jasper/informe4/informe4.jasper"));
 
             // Llenar el informe con datos desde la base de datos utilizando la conexión
             JasperPrint jprint = JasperFillManager.fillReport(report, null, con.getConexion());

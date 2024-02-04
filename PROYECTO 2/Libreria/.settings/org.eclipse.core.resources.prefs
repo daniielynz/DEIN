@@ -1,3 +1,7 @@
 eclipse.preferences.version=1
-encoding//resources/jasper/informe1.jrxml=UTF-8
+encoding//resources/jasper/informe1/informe1.jrxml=UTF-8
+encoding//resources/jasper/informe2/informe2.jrxml=UTF-8
+encoding//resources/jasper/informe2/subinformePrestamos.jrxml=UTF-8
+encoding//resources/jasper/informe3/informe3.jrxml=UTF-8
+encoding//resources/jasper/informe4/informe4.jrxml=UTF-8
 encoding/<project>=UTF-8

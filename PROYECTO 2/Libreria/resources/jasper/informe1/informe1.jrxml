@@ -13,21 +13,20 @@
 	<parameter name="id_prestamo_creado" class="java.lang.Integer"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT Prestamo.fecha_prestamo,
-Prestamo.id_prestamo,
-Alumno.dni,
-Alumno.nombre,
-Alumno.apellido1,
-Alumno.apellido2, 
-Libro.codigo,
-Libro.titulo,
-Libro.autor,
-Libro.editorial,
-Libro.estado,
-Libro.baja
-FROM Prestamo
-INNER JOIN Alumno ON Alumno.dni = Prestamo.dni_alumno
-INNER JOIN Libro ON Libro.codigo = Prestamo.codigo_libro
-WHERE Prestamo.id_prestamo =  $P{id_prestamo_creado}]]>
+						Prestamo.id_prestamo,
+						Alumno.dni,
+						Alumno.nombre,
+						Alumno.apellido1,
+						Alumno.apellido2, 
+						Libro.codigo,
+						Libro.titulo,
+						Libro.autor,
+						Libro.editorial,
+						Libro.estado
+						FROM Prestamo, Alumno, Libro
+						WHERE Prestamo.id_prestamo =  $P{id_prestamo_creado}
+						AND Alumno.dni = Prestamo.dni_alumno
+						AND Libro.codigo = Prestamo.codigo_libro]]>
 	</queryString>
 	<field name="fecha_prestamo" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.name" value="fecha_prestamo"/>
@@ -84,72 +83,67 @@ WHERE Prestamo.id_prestamo =  $P{id_prestamo_creado}]]>
 		<property name="com.jaspersoft.studio.field.label" value="estado"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="Libro"/>
 	</field>
-	<field name="baja" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="baja"/>
-		<property name="com.jaspersoft.studio.field.label" value="baja"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="Libro"/>
-	</field>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{fecha_prestamo}]]></groupExpression>
 		<groupHeader>
-			<band height="135">
+			<band height="136">
 				<staticText>
-					<reportElement x="0" y="0" width="180" height="20" uuid="3d226174-08e6-4b1c-b78e-8e13abb33606"/>
-					<textElement verticalAlignment="Middle">
-						<font size="14"/>
-					</textElement>
-					<text><![CDATA[DATOS DEL LIBRO:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="90" y="21" width="100" height="20" uuid="4e3ac88d-13c8-4ebd-8ed4-09fdd8d8e4c6"/>
+					<reportElement x="0" y="30" width="80" height="20" uuid="4e3ac88d-13c8-4ebd-8ed4-09fdd8d8e4c6"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<text><![CDATA[Código:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="200" y="20" width="100" height="20" uuid="7f9c0dcd-415f-4dc4-ba98-122c1de44548"/>
+					<reportElement x="87" y="30" width="100" height="20" uuid="7f9c0dcd-415f-4dc4-ba98-122c1de44548"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="320" y="21" width="100" height="20" uuid="3740541a-0d79-4adf-b678-1c3ac9f16784"/>
+					<reportElement x="320" y="30" width="60" height="20" uuid="3740541a-0d79-4adf-b678-1c3ac9f16784"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<text><![CDATA[Estado:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="433" y="20" width="120" height="20" uuid="c8339b11-fd60-42f4-9717-4296dddcc1dd"/>
+					<reportElement x="385" y="30" width="120" height="20" uuid="c8339b11-fd60-42f4-9717-4296dddcc1dd"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="90" y="50" width="100" height="20" uuid="3adabe7e-d7c0-45c4-b3be-92dd3bace4aa"/>
+					<reportElement x="0" y="0" width="80" height="20" uuid="3adabe7e-d7c0-45c4-b3be-92dd3bace4aa"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<text><![CDATA[Título:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="200" y="50" width="353" height="20" uuid="352fb177-108d-4b37-acc4-4f445d54bfae"/>
+					<reportElement x="87" y="0" width="353" height="20" uuid="352fb177-108d-4b37-acc4-4f445d54bfae"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="90" y="80" width="100" height="20" uuid="db2f83f2-5151-41ac-9edb-61fb39fc69b2"/>
+					<reportElement x="0" y="60" width="80" height="20" uuid="db2f83f2-5151-41ac-9edb-61fb39fc69b2"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<text><![CDATA[Autor:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="201" y="80" width="353" height="20" uuid="c351eccb-6fa2-410c-8a36-f28d82c84c01"/>
+					<reportElement x="90" y="60" width="220" height="20" uuid="c351eccb-6fa2-410c-8a36-f28d82c84c01"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{autor}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="90" y="110" width="100" height="20" uuid="ced638c0-ff9c-4369-ab8e-e4b2899c59ee"/>
+					<reportElement x="320" y="60" width="60" height="20" uuid="ced638c0-ff9c-4369-ab8e-e4b2899c59ee"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<text><![CDATA[Editorial:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="201" y="110" width="353" height="20" uuid="3f24f9fe-509b-49cc-99da-9b254f792f72"/>
+					<reportElement x="385" y="60" width="168" height="20" uuid="3f24f9fe-509b-49cc-99da-9b254f792f72"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{editorial}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="187" y="100" width="180" height="20" uuid="c22966b0-da16-4099-9c36-11e7f3586298"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[DATOS DEL PRESTAMO]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -160,33 +154,25 @@ WHERE Prestamo.id_prestamo =  $P{id_prestamo_creado}]]>
 		<groupExpression><![CDATA[$F{id_prestamo}]]></groupExpression>
 		<groupHeader>
 			<band height="30">
-				<line>
-					<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="1" uuid="401e0e59-de38-4dd2-8257-418cb489177c"/>
-					<graphicElement>
-						<pen lineWidth="0.5" lineColor="#999999"/>
-					</graphicElement>
-				</line>
 				<textField>
-					<reportElement x="200" y="5" width="100" height="20" uuid="151e5c81-eb77-4fb1-a031-80861fdf0748"/>
+					<reportElement x="110" y="0" width="150" height="20" uuid="151e5c81-eb77-4fb1-a031-80861fdf0748"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[DATEFORMAT($F{fecha_prestamo},"dd/MM/yyyy")]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="313" y="5" width="107" height="20" uuid="39639387-0e5e-4153-bc74-4aa8111fab35"/>
+					<reportElement x="273" y="0" width="107" height="20" uuid="39639387-0e5e-4153-bc74-4aa8111fab35"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<text><![CDATA[Fecha de devolución:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="433" y="5" width="120" height="20" uuid="9a42776b-54cd-4908-a6d9-c2adc0c1ec38"/>
+					<reportElement x="387" y="0" width="165" height="20" uuid="9a42776b-54cd-4908-a6d9-c2adc0c1ec38"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date($F{fecha_prestamo}.getTime() + 15*25*3600*1000))]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="1" width="180" height="20" uuid="c22966b0-da16-4099-9c36-11e7f3586298"/>
-					<textElement verticalAlignment="Middle">
-						<font size="14"/>
-					</textElement>
-					<text><![CDATA[DATOS DEL PRESTAMO:]]></text>
+					<reportElement x="0" y="0" width="100" height="20" uuid="f3ae96c6-878c-4006-b455-f228a9c9f534"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Fecha prestamo:]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
@@ -218,20 +204,24 @@ WHERE Prestamo.id_prestamo =  $P{id_prestamo_creado}]]>
 	<group name="estado">
 		<groupExpression><![CDATA[$F{estado}]]></groupExpression>
 	</group>
-	<group name="baja">
-		<groupExpression><![CDATA[$F{baja}]]></groupExpression>
-	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="49" splitType="Stretch">
+		<band height="142" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="146" y="0" width="263" height="33" uuid="6f9c1004-6140-4588-9c4f-d75824835765"/>
-				<textElement verticalAlignment="Middle">
-					<font size="20"/>
+				<reportElement style="Title" x="100" y="-10" width="355" height="80" uuid="6f9c1004-6140-4588-9c4f-d75824835765"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="50"/>
 				</textElement>
-				<text><![CDATA[BIBLIOTECA MANOLO]]></text>
+				<text><![CDATA[LIBRERIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="70" width="305" height="40" uuid="1215a81d-b08e-49a7-8d47-4034305d357e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL ALUMNO]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -240,39 +230,33 @@ WHERE Prestamo.id_prestamo =  $P{id_prestamo_creado}]]>
 	</pageHeader>
 	<columnHeader>
 		<band height="89" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="88" width="555" height="1" uuid="544e89f7-0fd1-4142-aa23-e335e3be7007"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
 			<staticText>
-				<reportElement x="0" y="0" width="180" height="20" uuid="1215a81d-b08e-49a7-8d47-4034305d357e"/>
-				<textElement verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
-				<text><![CDATA[DATOS DEL ALUMNO:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="90" y="20" width="100" height="20" uuid="6e0c689e-390c-49ba-b858-52c266cb648f"/>
+				<reportElement x="0" y="0" width="130" height="20" uuid="6e0c689e-390c-49ba-b858-52c266cb648f"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[Nombre completo:]]></text>
+				<text><![CDATA[Nombre y Apellidos:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="200" y="20" width="355" height="20" uuid="f6335410-307f-4ba8-9cbe-0b992fa4528a"/>
+				<reportElement x="140" y="0" width="355" height="20" uuid="f6335410-307f-4ba8-9cbe-0b992fa4528a"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{apellido1} + " " + $F{apellido2} + " " + $F{nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre} + " " + $F{apellido1} + " " + $F{apellido2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="90" y="47" width="100" height="23" uuid="bab9ac5e-0273-45b0-bfec-fd51a5cb4bce"/>
+				<reportElement x="30" y="25" width="100" height="23" uuid="bab9ac5e-0273-45b0-bfec-fd51a5cb4bce"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<text><![CDATA[Nº documento:]]></text>
+				<text><![CDATA[DNI:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="200" y="48" width="355" height="20" uuid="9969169e-cd9a-4a7a-a9b6-627b022a20fc"/>
+				<reportElement x="140" y="28" width="355" height="20" uuid="9969169e-cd9a-4a7a-a9b6-627b022a20fc"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="190" y="60" width="180" height="20" uuid="3d226174-08e6-4b1c-b78e-8e13abb33606"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL LIBRO]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
