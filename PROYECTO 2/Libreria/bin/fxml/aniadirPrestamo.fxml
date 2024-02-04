@@ -27,7 +27,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                <children>
-                  <Label text="DATOS DEL PRESTAMO">
+                  <Label text="%tituloAniadirPrestamo">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -36,7 +36,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Fecha prestamo:" />
+                  <Label text="%fechaPrestamo" />
                   <DatePicker fx:id="dpFechaPrestamo">
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -46,7 +46,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Libro:" />
+                  <Label text="%Libro" />
                   <ComboBox fx:id="cbLibros" prefWidth="150.0">
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -56,7 +56,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
-                  <Label text="Alumno:" />
+                  <Label text="%alumno" />
                   <ComboBox fx:id="cbAlumnos" prefWidth="150.0">
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -66,8 +66,8 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#accionGuardar" text="Guardar" />
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#accionCancelar" text="Cancelar">
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#accionGuardar" text="%guardar" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#accionCancelar" text="%cancelar">
                      <HBox.margin>
                         <Insets left="35.0" />
                      </HBox.margin>

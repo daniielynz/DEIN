@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerAniadirAlumno">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerAniadirAlumno">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,7 +36,7 @@
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
                   <Label text="%dniAniadirAlumno" />
-                  <TextField fx:id="tfDni">
+                  <TextField fx:id="tfDni" promptText="%Dni">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -46,7 +46,7 @@
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
                   <Label text="%nombreAniadirAlumno" />
-                  <TextField fx:id="tfNombre">
+                  <TextField fx:id="tfNombre" promptText="%Nombre">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -56,7 +56,7 @@
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
                   <Label text="%primerApellidoAniadirAlumno" />
-                  <TextField fx:id="tfApellido1">
+                  <TextField fx:id="tfApellido1" promptText="%primerApellido">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -66,7 +66,7 @@
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="642.0">
                <children>
                   <Label text="%segundoApellidoAniadirAlumno" />
-                  <TextField fx:id="tfApellido2">
+                  <TextField fx:id="tfApellido2" promptText="%segundoApellido">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

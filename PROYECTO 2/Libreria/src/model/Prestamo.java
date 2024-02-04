@@ -1,61 +1,122 @@
 package model;
 
+/**
+ * Clase que representa un préstamo con su identificador, DNI del alumno, código del libro y fecha de préstamo.
+ */
 public class Prestamo {
-	int id, codigoLibro;
-	String dni, fechaPrestamo;
-	
-	public Prestamo(int id, String dni, int codigo_libro, String fechaPrestamo) {
-		this.id = id;
-		this.dni = dni;
-		this.fechaPrestamo = fechaPrestamo;
-		this.codigoLibro = codigo_libro;
-	}
-	
-	public Prestamo(String dni, int codigo_libro, String fechaPrestamo) {
-		this.dni = dni;
-		this.fechaPrestamo = fechaPrestamo;
-		this.codigoLibro = codigo_libro;
-	}
+    private int id;
+    private String dni;
+    private String fechaPrestamo;
+    private int codigoLibro;
 
-	public int getId() {
-		return id;
-	}
+    /**
+     * Constructor que recibe todos los detalles del préstamo, incluyendo el identificador.
+     *
+     * @param id            Identificador del préstamo.
+     * @param dni           DNI del alumno.
+     * @param codigo_libro  Código del libro prestado.
+     * @param fechaPrestamo Fecha en la que se realizó el préstamo.
+     */
+    public Prestamo(int id, String dni, int codigo_libro, String fechaPrestamo) {
+        this.id = id;
+        this.dni = dni;
+        this.fechaPrestamo = fechaPrestamo;
+        this.codigoLibro = codigo_libro;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    /**
+     * Constructor que recibe detalles del préstamo sin el identificador.
+     *
+     * @param dni           DNI del alumno.
+     * @param codigo_libro  Código del libro prestado.
+     * @param fechaPrestamo Fecha en la que se realizó el préstamo.
+     */
+    public Prestamo(String dni, int codigo_libro, String fechaPrestamo) {
+        this.dni = dni;
+        this.fechaPrestamo = fechaPrestamo;
+        this.codigoLibro = codigo_libro;
+    }
 
-	public String getDni() {
-		return dni;
-	}
+    /**
+     * Método para obtener el identificador del préstamo.
+     *
+     * @return Identificador del préstamo.
+     */
+    public int getId() {
+        return id;
+    }
 
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
+    /**
+     * Método para establecer el identificador del préstamo.
+     *
+     * @param id Identificador del préstamo.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getFechaPrestamo() {
-		return fechaPrestamo;
-	}
+    /**
+     * Método para obtener el DNI del alumno.
+     *
+     * @return DNI del alumno.
+     */
+    public String getDni() {
+        return dni;
+    }
 
-	public void setFechaPrestamo(String fechaPrestamo) {
-		this.fechaPrestamo = fechaPrestamo;
-	}
+    /**
+     * Método para establecer el DNI del alumno.
+     *
+     * @param dni DNI del alumno.
+     */
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
-	public int getCodigoLibro() {
-		return codigoLibro;
-	}
+    /**
+     * Método para obtener la fecha de préstamo.
+     *
+     * @return Fecha de préstamo.
+     */
+    public String getFechaPrestamo() {
+        return fechaPrestamo;
+    }
 
-	public void setCodigoLibro(int codigo_libro) {
-		this.codigoLibro = codigo_libro;
-	}
+    /**
+     * Método para establecer la fecha de préstamo.
+     *
+     * @param fechaPrestamo Fecha de préstamo.
+     */
+    public void setFechaPrestamo(String fechaPrestamo) {
+        this.fechaPrestamo = fechaPrestamo;
+    }
 
-	@Override
-	public String toString() {
-		return "Prestamo [id=" + id + ", dni=" + dni + ", fechaPrestamo=" + fechaPrestamo
-				+ ", codigo Libro=" + codigoLibro + "]";
-	}
-	
-	
-	
-	
+    /**
+     * Método para obtener el código del libro prestado.
+     *
+     * @return Código del libro prestado.
+     */
+    public int getCodigoLibro() {
+        return codigoLibro;
+    }
+
+    /**
+     * Método para establecer el código del libro prestado.
+     *
+     * @param codigo_libro Código del libro prestado.
+     */
+    public void setCodigoLibro(int codigo_libro) {
+        this.codigoLibro = codigo_libro;
+    }
+
+    /**
+     * Método para obtener una representación en cadena del préstamo.
+     *
+     * @return Representación en cadena del préstamo.
+     */
+    @Override
+    public String toString() {
+        return "Prestamo " + id;
+    }
 }
+

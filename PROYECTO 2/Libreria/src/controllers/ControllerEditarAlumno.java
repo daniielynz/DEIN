@@ -1,200 +1,208 @@
 package controllers;
 
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import conexion.Propiedades;
 import dao.AlumnoDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Alumno;
 
-public class ControllerEditarAlumno {
-	private Alumno alumno;
-	
-	// Atributo de la ventana emergente
-    private Stage ventanaEmergente;
-    
-    private String dniAntiguo;
-    
-    @FXML
-    private TextField tfDni;
-    
+
+/**
+ * Controlador para la interfaz de edición de alumno.
+ */
+public class ControllerEditarAlumno implements Initializable {
+
+    // Alumno que se va a editar
+    private static Alumno alumno;
+
     @FXML
     private TextField tfNombre;
-    
+
     @FXML
     private TextField tfApellido1;
-    
+
     @FXML
     private TextField tfApellido2;
-    
+
     @FXML
-    private Button btnAceptar;
-    
+    private Button btnGuardar;
+
     @FXML
     private Button btnCancelar;
 
-	
-	public void editarAlumno(Alumno alumno) {
-		this.alumno = alumno;
-		this.dniAntiguo = alumno.getDni();
-        // Creamos una nueva instancia de la clase Stage para la ventana emergente
-        ventanaEmergente = new Stage();
-        
-        // Le ponemos titulo a la ventana
-        ventanaEmergente.setTitle("MODIFICAR ALUMNO");
-        
-        // Creamos un contenedor VBox como raíz de la ventana emergente
-        VBox contenedorRaiz = new VBox();
+    // ResourceBundle para manejar recursos específicos del idioma
+    private ResourceBundle bundle;
 
-        // Creamos contenedores HBox para cada campo de entrada
-        HBox contenedorDni = new HBox();
-        HBox contenedorNombre = new HBox();
-        HBox contenedorApellido1 = new HBox();
-        HBox contenedorApellido2 = new HBox();
+    /**
+     * Inicializa la interfaz de edición con los datos del alumno.
+     *
+     * @param arg0 La URL de inicialización.
+     * @param arg1 El ResourceBundle que contiene los recursos específicos del idioma.
+     */
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        // Inicializar el ResourceBundle para manejar recursos específicos del idioma
+        bundle = arg1;
 
-        // Establecemos un espaciado entre elementos en los contenedores HBox
-        contenedorDni.setSpacing(10);
-        contenedorNombre.setSpacing(10);
-        contenedorApellido1.setSpacing(10);
-        contenedorApellido2.setSpacing(10);
-
-        // le damos valor a los TextFields
-        tfDni = new TextField();
-        tfDni.setText(alumno.getDni()+"");
-        
-        tfNombre = new TextField();
+        // Configurar los campos de texto con los datos del alumno
         tfNombre.setText(alumno.getNombre());
-        
-        tfApellido1 = new TextField();
-        tfApellido1.setText(alumno.getApellido1() + "");
-        
-        tfApellido2 = new TextField();
-        tfApellido2.setText(alumno.getApellido2() + "");
-        
-        // Le ponemos los Labels junto a su TextField correspondiente
-        contenedorDni.getChildren().addAll(new javafx.scene.control.Label("DNI"), tfDni);
-        contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
-        contenedorApellido1.getChildren().addAll(new javafx.scene.control.Label("Primer apellido"), tfApellido1);
-        contenedorApellido2.getChildren().addAll(new javafx.scene.control.Label("Segundo apellido"), tfApellido2);
+        tfApellido1.setText(alumno.getApellido1());
+        tfApellido2.setText(alumno.getApellido2());
+    }
 
-        // Creamos un contenedor HBox para los botones (Guardar y Cerrar)
-        HBox contenedorBotones = new HBox();
-        contenedorBotones.setSpacing(10);
+    /**
+     * Establece el alumno que se va a editar y abre la ventana de edición.
+     *
+     * @param alumno El alumno que se va a editar.
+     */
+    public void editarAlumno(Alumno alumno) {
+        // Asignar el alumno proporcionado al atributo estático de la clase
+        this.alumno = alumno;
 
-        // Creamos un botón "Guardar"
-        Button guardarBtn = new Button("Guardar");
-        guardarBtn.setOnAction(e -> modificar(e));
+        try {
+            // Obtener configuración de idioma y región desde un archivo de propiedades
+            String idioma = Propiedades.getValor("idioma");
+            String region = Propiedades.getValor("region");
 
-        // Creamos un botón "Cerrar" y configuramos su evento para cerrar la ventana emergente
-        Button cerrarBtn = new Button("Cerrar");
-        cerrarBtn.setOnAction(e -> ventanaEmergente.close());
+            // Establecer la configuración regional por defecto
+            Locale.setDefault(new Locale(idioma, region));
 
-        // Agregamos los botones al contenedor de botones
-        contenedorBotones.getChildren().addAll(guardarBtn, cerrarBtn);
+            // Cargar los recursos de idioma
+            ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
 
-        // Agregamos todos los contenedores al contenedor raíz
-        contenedorRaiz.getChildren().addAll(contenedorDni, contenedorNombre, contenedorApellido1, contenedorApellido2, contenedorBotones);
-
-        // Configuramos propiedades del contenedor raíz
-        contenedorRaiz.setPadding(new Insets(20));
-        contenedorRaiz.setSpacing(20);
-
-        // Creamos una escena con el contenedor raíz
-        Scene escena = new Scene(contenedorRaiz);
-        // Establecemos la escena en la ventana emergente
-        ventanaEmergente.setScene(escena);
-
-        // Desactivamos la posibilidad de redimensionar la ventana emergente
-        ventanaEmergente.setResizable(false);
-        // Mostramos la ventana emergente
-        ventanaEmergente.show();
+            // Abrir la ventana para editar el alumno
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane) FXMLLoader.load(getClass().getResource("/fxml/editarAlumno.fxml"), bundle);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle(bundle.getString("tituloModificarAlumno"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            // Manejar cualquier excepción que pueda ocurrir al abrir la ventana
+            e.printStackTrace();
+        }
     }
 	
-	void modificar(ActionEvent event) {
+    /**
+     * Valida los campos de entrada y retorna los errores como una cadena.
+     *
+     * @return Cadena que contiene los mensajes de error.
+     */
+    private String validarCampos() {
+        String errores = "";
+
+        // Validar el campo de nombre
+        if (tfNombre.getText().isEmpty()) {
+            errores += bundle.getString("errorNombre") + "\n";
+        }
+
+        // Validar el campo de apellido1
+        if (tfApellido1.getText().isEmpty()) {
+            errores += bundle.getString("errorApellido1") + "\n";
+        }
+
+        // Validar el campo de apellido2
+        if (tfApellido2.getText().isEmpty()) {
+            errores += bundle.getString("errorApellido2") + "\n";
+        }
+
+        return errores;
+    }
+
+    /**
+     * Acción realizada al hacer clic en el botón Guardar.
+     *
+     * Antes de modificar, valida que los campos de entrada no contengan errores.
+     *
+     * @param event El evento de acción.
+     */
+    @FXML
+    void accionGuardar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
 
         if (errores.isEmpty()) {
             try {
-            	AlumnoDao alumnoDao = new AlumnoDao();
-            	// Le ponemos los datos nuevos al deportista
-            	alumno.setDni(this.tfDni.getText().toString());
-            	alumno.setNombre(this.tfNombre.getText().toString());
-            	alumno.setApellido1(this.tfApellido1.getText().toString());
-            	alumno.setApellido2(this.tfApellido2.getText().toString());
-            	
-            	alumnoDao.editarAlumno(alumno, this.dniAntiguo);
-                
-                ventanaEmergente.close();
-                alertaInformacion("Se ha modificado el alumno seleccionado\nActualiza la tabla para ver los cambios");
+                AlumnoDao alumnoDao = new AlumnoDao();
+
+                // Le ponemos los datos nuevos al alumno
+                alumno.setNombre(tfNombre.getText().toString());
+                alumno.setApellido1(tfApellido1.getText().toString());
+                alumno.setApellido2(tfApellido2.getText().toString());
+
+                // Se realiza la edición del alumno
+                alumnoDao.editarAlumno(alumno);
+
+                // Mostrar una alerta de información
+                alertaInformacion();
             } catch (Exception e) {
-                // Manejamos cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
+                // Manejar cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
             }
         } else {
-            // Mostramos una alerta de error con los mensajes de error
+            // Mostrar una alerta de error con los mensajes de error
             alertaError(errores);
         }
     }
 	
-	// Este método valida los campos de entrada y retorna los errores como una cadena
-    private String validarCampos() {
-    	String errores = "";
-    	
-    	if(tfDni.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo DNI\n";
-        }
-    	
-    	if(tfNombre.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Nombre\n";
-        }
-    	
-    	if(tfApellido1.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Primer Apellido\n";
-        }
-    	
-    	if(tfApellido2.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Segundo Apellido\n";
-        }
-    	
-    	return errores;
-    }
-	
-	@FXML
+    /**
+     * Acción realizada al hacer clic en el botón Cancelar.
+     * Cierra la ventana actual al hacer clic en el botón Cancelar.
+     *
+     * @param event El evento de acción.
+     */
+    @FXML
     void accionCancelar(ActionEvent event) {
-    	// Cierra la ventana actual al hacer clic en el botón Cancelar
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
-	
-	// Metodos de diferentes ventanas emergentes
+
+    /**
+     * Muestra una ventana de alerta de error con un mensaje específico.
+     *
+     * @param mensaje El mensaje de error a mostrar.
+     */
     private void alertaError(String mensaje) {
-    	// Alerta de error con boton
-    	Alert ventanaEmergente = new Alert(AlertType.ERROR);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+        Alert ventanaEmergente = new Alert(AlertType.ERROR);
+        ventanaEmergente.setTitle("info");
+        ventanaEmergente.setContentText(mensaje);
+
+        // Botón para ocultar la ventana de alerta
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
+
+        // Mostrar la ventana de alerta
         ventanaEmergente.show();
     }
-    
-    private void alertaInformacion(String mensaje) {
-    	// Alerta de informacion con boton
-    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+
+    /**
+     * Muestra una ventana de alerta de información con un mensaje específico.
+     */
+    private void alertaInformacion() {
+        Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+        ventanaEmergente.setTitle("info");
+        ventanaEmergente.setContentText(bundle.getString("mensajeAlumnoModificado"));
+
+        // Botón para ocultar la ventana de alerta
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
+
+        // Mostrar la ventana de alerta
         ventanaEmergente.show();
     }
 	

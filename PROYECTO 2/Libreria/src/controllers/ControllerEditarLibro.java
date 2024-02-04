@@ -1,222 +1,239 @@
 package controllers;
 
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import conexion.Propiedades;
 import dao.LibroDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Libro;
 
-public class ControllerEditarLibro {
-	private Libro libro;
-	
-	// Atributo de la ventana emergente
-    private Stage ventanaEmergente;
-    
+/**
+ * Clase controladora para la interfaz de edición de un libro.
+ */
+public class ControllerEditarLibro implements Initializable {
+
+    // Atributo estático para almacenar el libro a editar
+    private static Libro libro;
+
+    // Campos de texto de la interfaz gráfica
     @FXML
     private TextField tfTitulo;
-    
+
     @FXML
     private TextField tfAutor;
-    
+
     @FXML
     private TextField tfEditorial;
-    
+
     @FXML
     private TextField tfEstado;
-    
+
     @FXML
     private TextField tfBaja;
-    
+
+    // Botones de la interfaz gráfica
     @FXML
-    private Button btnAceptar;
-    
+    private Button btnGuardar;
+
     @FXML
     private Button btnCancelar;
 
-	
-	public void editarLibro(Libro libro) {
-		this.libro = libro;
-		
-        // Creamos una nueva instancia de la clase Stage para la ventana emergente
-        ventanaEmergente = new Stage();
-        
-        // Le ponemos titulo a la ventana
-        ventanaEmergente.setTitle("MODIFICAR LIBRO");
-        
-        // Creamos un contenedor VBox como raíz de la ventana emergente
-        VBox contenedorRaiz = new VBox();
-
-        // Creamos contenedores HBox para cada campo de entrada
-        HBox contenedorTitulo = new HBox();
-        HBox contenedorAutor = new HBox();
-        HBox contenedorEditorial = new HBox();
-        HBox contenedorEstado = new HBox();
-        HBox contenedorBaja = new HBox();
-
-        // Establecemos un espaciado entre elementos en los contenedores HBox
-        contenedorTitulo.setSpacing(10);
-        contenedorAutor.setSpacing(10);
-        contenedorEditorial.setSpacing(10);
-        contenedorEstado.setSpacing(10);
-        contenedorBaja.setSpacing(10);
-
-        // le damos valor a los TextFields
-        tfTitulo = new TextField();
-        tfTitulo.setText(libro.getTitulo()+"");
-        
-        tfAutor = new TextField();
+    // ResourceBundle utilizado para la internacionalización
+    private ResourceBundle bundle;
+    
+    /**
+     * Inicializa la interfaz de edición de libro con los datos del libro y establece los valores iniciales de los campos.
+     *
+     * @param arg0  La URL de inicialización.
+     * @param arg1  El ResourceBundle utilizado para la internacionalización.
+     */
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        bundle = arg1;
+        tfTitulo.setText(libro.getTitulo());
         tfAutor.setText(libro.getAutor());
-        
-        tfEditorial = new TextField();
-        tfEditorial.setText(libro.getEditorial() + "");
-        
-        tfEstado = new TextField();
-        tfEstado.setText(libro.getEstado() + "");
-        
-        tfBaja = new TextField();
+        tfEditorial.setText(libro.getEditorial());
+        tfEstado.setText(libro.getEstado());
         tfBaja.setText(libro.getBaja() + "");
-        
-        // Le ponemos los Labels junto a su TextField correspondiente
-        contenedorTitulo.getChildren().addAll(new javafx.scene.control.Label("Titulo"), tfTitulo);
-        contenedorAutor.getChildren().addAll(new javafx.scene.control.Label("Autor"), tfAutor);
-        contenedorEditorial.getChildren().addAll(new javafx.scene.control.Label("Editorial"), tfEditorial);
-        contenedorEstado.getChildren().addAll(new javafx.scene.control.Label("Estado"), tfEstado);
-        contenedorBaja.getChildren().addAll(new javafx.scene.control.Label("Baja"), tfBaja);
+    }
 
-        // Creamos un contenedor HBox para los botones (Guardar y Cerrar)
-        HBox contenedorBotones = new HBox();
-        contenedorBotones.setSpacing(10);
+	
+    /**
+     * Inicializa la interfaz de edición de libro con los datos del libro proporcionado.
+     *
+     * @param libro El libro a editar.
+     */
+    public void editarLibro(Libro libro) {
+        this.libro = libro;
 
-        // Creamos un botón "Guardar"
-        Button guardarBtn = new Button("Guardar");
-        guardarBtn.setOnAction(e -> modificar(e));
+        try {
+            String idioma = Propiedades.getValor("idioma");
+            String region = Propiedades.getValor("region");
 
-        // Creamos un botón "Cerrar" y configuramos su evento para cerrar la ventana emergente
-        Button cerrarBtn = new Button("Cerrar");
-        cerrarBtn.setOnAction(e -> ventanaEmergente.close());
+            // Establecer la configuración regional por defecto
+            Locale.setDefault(new Locale(idioma, region));
 
-        // Agregamos los botones al contenedor de botones
-        contenedorBotones.getChildren().addAll(guardarBtn, cerrarBtn);
+            // Cargar los recursos de idioma
+            ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
 
-        // Agregamos todos los contenedores al contenedor raíz
-        contenedorRaiz.getChildren().addAll(contenedorTitulo, contenedorAutor, contenedorEditorial, contenedorEstado, contenedorBaja, contenedorBotones);
-
-        // Configuramos propiedades del contenedor raíz
-        contenedorRaiz.setPadding(new Insets(20));
-        contenedorRaiz.setSpacing(20);
-
-        // Creamos una escena con el contenedor raíz
-        Scene escena = new Scene(contenedorRaiz);
-        // Establecemos la escena en la ventana emergente
-        ventanaEmergente.setScene(escena);
-
-        // Desactivamos la posibilidad de redimensionar la ventana emergente
-        ventanaEmergente.setResizable(false);
-        // Mostramos la ventana emergente
-        ventanaEmergente.show();
+            // Abre la ventana para editar un libro
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane) FXMLLoader.load(getClass().getResource("/fxml/editarLibro.fxml"), bundle);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle(bundle.getString("tituloModificarLibro"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+            e.printStackTrace();
+        }
     }
 	
-	void modificar(ActionEvent event) {
+    /**
+     * Método invocado al hacer clic en el botón "Guardar" para editar un libro.
+     *
+     * @param event El evento de acción.
+     */
+    @FXML
+    private void accionGuardar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
 
         if (errores.isEmpty()) {
             try {
-            	LibroDao libroDao = new LibroDao();
-            	// Le ponemos los datos nuevos al deportista
-            	libro.setTitulo(this.tfTitulo.getText().toString());
-            	libro.setAutor(this.tfAutor.getText().toString());
-            	libro.setEditorial(this.tfEditorial.getText().toString());
-            	libro.setEstado(this.tfEstado.getText().toString());
-            	libro.setBaja(Integer.parseInt(this.tfBaja.getText().toString()));
-            	
-            	libroDao.editarLibro(libro);
-                
-                ventanaEmergente.close();
-                alertaInformacion("Se ha modificado el libro seleccionado\nActualiza la tabla para ver los cambios");
+                LibroDao libroDao = new LibroDao();
+                // Le ponemos los datos nuevos al Libro
+                libro.setTitulo(this.tfTitulo.getText().toString());
+                libro.setAutor(this.tfAutor.getText().toString());
+                libro.setEditorial(this.tfEditorial.getText().toString());
+                libro.setEstado(this.tfEstado.getText().toString());
+                libro.setBaja(Integer.parseInt(this.tfBaja.getText().toString()));
+
+                // Llamamos al método del DAO para editar el libro en la base de datos
+                libroDao.editarLibro(libro);
+
+                // Mostramos una alerta informativa indicando que el libro se ha modificado correctamente
+                alertaInformacion(bundle.getString("mensajeLibroModificado"));
             } catch (Exception e) {
                 // Manejamos cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
+                e.printStackTrace();
             }
         } else {
             // Mostramos una alerta de error con los mensajes de error
             alertaError(errores);
         }
     }
+
 	
-	// Este método valida los campos de entrada y retorna los errores como una cadena
+    /**
+     * Método privado utilizado para validar los campos de entrada al editar un libro.
+     *
+     * @return Una cadena que contiene mensajes de error si existen, o una cadena vacía si no hay errores.
+     */
     private String validarCampos() {
-    	String errores = "";
-    	
-    	if(tfTitulo.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo titulo\n";
+        String errores = "";
+
+        // Validar el campo del título del libro
+        if(tfTitulo.getText().isEmpty()) {
+            errores += bundle.getString("errorTituloLibro") + "\n";
         }
-    	
-    	if(tfAutor.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo autor\n";
+
+        // Validar el campo del autor del libro
+        if(tfAutor.getText().isEmpty()) {
+            errores += bundle.getString("errorAutorLibro") + "\n";
         }
-    	
-    	if(tfEditorial.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo editorial\n";
+
+        // Validar el campo de la editorial del libro
+        if(tfEditorial.getText().isEmpty()) {
+            errores += bundle.getString("errorEditorialLibro") + "\n";
         }
-    	
-    	if(tfEstado.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo estado\n";
-        }
-    	
-    	if(tfBaja.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo baja\n";
-        }else {
-        	try {
-                Integer.parseInt(tfBaja.getText());
-                
-                if(!tfBaja.getText().equals("1") && !tfBaja.getText().equals("0")) {
-                	 errores += "El campo de baja tiene que ser 0 o 1\n";
-                }
-                	
-            } catch (NumberFormatException e) {
-                errores += "El campo de baja tiene que ser numerico\n";
+
+        // Validar el campo del estado del libro
+        if(tfEstado.getText().isEmpty()) {
+            errores += bundle.getString("errorEstadoLibro") + "\n";
+        } else {
+            // Validar que el estado del libro sea uno de los valores permitidos
+            if(!tfEstado.getText().equalsIgnoreCase("nuevo") && !tfEstado.getText().equalsIgnoreCase("usado nuevo") && !tfEstado.getText().equalsIgnoreCase("usado seminuevo") && !tfEstado.getText().equalsIgnoreCase("usado estropeado") && !tfEstado.getText().equalsIgnoreCase("restaurado")) {
+                errores += bundle.getString("errorTiposEstadoLibro") + "\n";
             }
         }
-    	
-    	return errores;
+
+        // Validar el campo de la baja del libro
+        if(tfBaja.getText().isEmpty()) {
+            errores += bundle.getString("errorBajaLibro") + "\n";
+        } else {
+            try {
+                // Validar que la baja del libro sea un valor numérico entero
+                Integer.parseInt(tfBaja.getText());
+
+                // Validar que la baja del libro sea 0 o 1
+                if(!tfBaja.getText().equals("1") && !tfBaja.getText().equals("0")) {
+                    errores += bundle.getString("error0o1Libro") + "\n";
+                }
+
+            } catch (NumberFormatException e) {
+                // Manejar la excepción si el valor no es un número entero
+                errores += bundle.getString("errorIntegerLibro") + "\n";
+            }
+        }
+
+        return errores;
     }
+
 	
-	@FXML
+    /**
+     * Método que se activa cuando se presiona el botón Cancelar.
+     *
+     * @param event Evento de acción generado por la interfaz gráfica.
+     */
+    @FXML
     void accionCancelar(ActionEvent event) {
-    	// Cierra la ventana actual al hacer clic en el botón Cancelar
+        // Cierra la ventana actual al hacer clic en el botón Cancelar
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
-	
-	// Metodos de diferentes ventanas emergentes
+
+    /**
+     * Muestra una alerta de error con un mensaje especificado.
+     *
+     * @param mensaje Mensaje de error a mostrar en la alerta.
+     */
     private void alertaError(String mensaje) {
-    	// Alerta de error con boton
-    	Alert ventanaEmergente = new Alert(AlertType.ERROR);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+        // Alerta de error con botón
+        Alert ventanaEmergente = new Alert(AlertType.ERROR);
+        ventanaEmergente.setTitle("info");
+        ventanaEmergente.setContentText(mensaje);
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
         ventanaEmergente.show();
     }
-    
+
+    /**
+     * Muestra una alerta de información con un mensaje especificado.
+     *
+     * @param mensaje Mensaje de información a mostrar en la alerta.
+     */
     private void alertaInformacion(String mensaje) {
-    	// Alerta de informacion con boton
-    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+        // Alerta de información con botón
+        Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
+        ventanaEmergente.setTitle("info");
+        ventanaEmergente.setContentText(mensaje);
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
         ventanaEmergente.show();
     }

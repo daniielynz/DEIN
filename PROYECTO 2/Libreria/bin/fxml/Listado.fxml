@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -44,6 +45,9 @@
                <toggleGroup>
                   <ToggleGroup fx:id="groupRb" />
                </toggleGroup>
+               <tooltip>
+                  <Tooltip text="%tooltipAlumnos" />
+               </tooltip>
             </RadioButton>
             <RadioButton fx:id="rbLibros" mnemonicParsing="false" text="%Libros" toggleGroup="$groupRb">
                <FlowPane.margin>
@@ -52,6 +56,9 @@
                <padding>
                   <Insets left="10.0" />
                </padding>
+               <tooltip>
+                  <Tooltip text="%tooltipLibros" />
+               </tooltip>
             </RadioButton>
             <RadioButton fx:id="rbHistoricoPrestamos" mnemonicParsing="false" text="%HistoricoPrestamos" toggleGroup="$groupRb">
                <FlowPane.margin>
@@ -60,6 +67,9 @@
                <padding>
                   <Insets left="10.0" />
                </padding>
+               <tooltip>
+                  <Tooltip text="%tooltipHistoricoPrestamos" />
+               </tooltip>
             </RadioButton>
             <RadioButton fx:id="rbPrestamos" mnemonicParsing="false" text="%Prestamos" toggleGroup="$groupRb">
                <FlowPane.margin>
@@ -68,6 +78,9 @@
                <padding>
                   <Insets left="10.0" />
                </padding>
+               <tooltip>
+                  <Tooltip text="%tooltipPrestamos" />
+               </tooltip>
             </RadioButton>
          </children>
       </FlowPane>
@@ -124,6 +137,11 @@
       </TableView>
       <MenuBar GridPane.columnSpan="4">
         <menus>
+           <Menu mnemonicParsing="false" text="%documetacionExterna">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#accionAyudaOffline" text="%ayudaOffline" />
+            </items>
+          </Menu>
           <Menu mnemonicParsing="false" text="%Alumnos">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#accionAniadirAlumno" text="%aniadir" />
@@ -145,6 +163,9 @@
                </items>
             </Menu>
         </menus>
+         <tooltip>
+            <Tooltip text="%tooltipMenuBar" />
+         </tooltip>
       </MenuBar>
       <TableView fx:id="tablaPrestamos" prefHeight="521.0" prefWidth="927.0" visible="false" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.rowSpan="3">
          <columns>

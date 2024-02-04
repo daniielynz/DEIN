@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -15,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -36,32 +38,40 @@ import model.HistoricoPrestamo;
 import model.Libro;
 import model.Prestamo;
 
-public class ListadoController implements Initializable{
+/**
+ * Controlador para la ventana de listado.
+ */
+public class ListadoController implements Initializable {
 
-	//
     @FXML
     private ToggleGroup groupRb;
-    
+
     @FXML
     private TextField tfFiltro;
-    
+
     @FXML
     private Label lbFiltro;
-    
+
     @FXML
     private TextField tfFiltro2;
-    
+
     @FXML
     private Label lbFiltro2;
-    
+
     @FXML
     private Label lblListado;
-    
+
     @FXML
     private RadioButton rbAlumnos, rbLibros, rbHistoricoPrestamos, rbPrestamos;
-    
+
     private ResourceBundle bundle;
     
+    /**
+     * Inicializa el controlador después de que su elemento raíz haya sido completamente procesado.
+     * 
+     * @param arg0 La ubicación utilizada para resolver rutas relativas para el objeto raíz o null si la ubicación no se conoce.
+     * @param arg1 El recurso utilizado para localizar el objeto raíz o null si el objeto raíz no fue localizado.
+     */
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -154,7 +164,7 @@ public class ListadoController implements Initializable{
 		                	// borramos el Libro
 		                	dao.borrarLibro(libroSeleccionado);
 		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha dado de baja el libro seleccionado");
+		                	alertaInformacion(bundle.getString("mensajeLibroBorrado"));
 		                	cargarTablaLibros("");
 		                }
 		            });
@@ -191,27 +201,6 @@ public class ListadoController implements Initializable{
 		        	colFechaPrestamo.setCellValueFactory(new PropertyValueFactory<Prestamo,String>("fechaPrestamo") );
 		        	colCodigoLibroPrestamo.setCellValueFactory(new PropertyValueFactory<Prestamo,Integer>("codigoLibro") );
 		        	cargarTablaPrestamo("");
-		        	
-		        	// Creamos un menú contextual para la tabla
-		            ContextMenu contextMenu = new ContextMenu();
-		            MenuItem itemBorrar = new MenuItem(bundle.getString("Eliminar"));
-
-		            // Manejamos eventos de clic para las opciones del menú contextual
-		            itemBorrar.setOnAction(e -> {
-		            	Prestamo prestamoSeleccionado = tablaPrestamos.getSelectionModel().getSelectedItem();
-		                if(prestamoSeleccionado!=null) {
-		                	PrestamoDao dao = new PrestamoDao();
-		                	// borramos el Prestamo
-		                	dao.borrarPrestamo(prestamoSeleccionado);
-		                	
-		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha borrado el prestamo seleccionado");
-		                	cargarTablaLibros("");
-		                }
-		            });
-		            // agregamos los items al menu
-		            contextMenu.getItems().addAll(itemBorrar);
-		            tablaPrestamos.setContextMenu(contextMenu);
 		    	
 		            // ponemos evento al TextField del filtrado por nombre
 		            lbFiltro.setText(bundle.getString("dniFiltro"));
@@ -256,10 +245,10 @@ public class ListadoController implements Initializable{
 		                	ControllerEditarLibro contr = new ControllerEditarLibro();
 		                	// Modificamos el Libro
 		                	contr.editarLibro(libroSeleccionado);
-		                	cargarTablaLibros("");
+		                	cargarTablaHistorico("","");
 		                }
 		            });
-
+		            
 		            itemBorrar.setOnAction(e -> {
 		            	Libro libroSeleccionado = tablaLibros.getSelectionModel().getSelectedItem();
 		                if(libroSeleccionado!=null) {
@@ -267,8 +256,8 @@ public class ListadoController implements Initializable{
 		                	// borramos el Libro
 		                	dao.borrarLibro(libroSeleccionado);
 		                	// mensaje una vez de haya modificado
-		                	alertaInformacion("Se ha dado de baja el libro seleccionado");
-		                	cargarTablaLibros("");
+		                	alertaInformacion(bundle.getString("mensajeHistoricoBorrado"));
+		                	cargarTablaHistorico("","");
 		                }
 		            });
 		            // agregamos los items al menu
@@ -323,31 +312,82 @@ public class ListadoController implements Initializable{
 		    });
 	}
     
-    private void ocultarTablas(){
-    	tablaAlumnos.setVisible(false);
-    	tablaHistoricoPrestamos.setVisible(false);
-    	tablaLibros.setVisible(false);
-    	tablaPrestamos.setVisible(false);
-    	// ocultamos el filtro de busqueda
-    	lbFiltro.setVisible(false);
+    /**
+     * Oculta las tablas y los campos de filtro de búsqueda en la interfaz gráfica.
+     */
+    private void ocultarTablas() {
+        // Oculta las tablas
+        tablaAlumnos.setVisible(false);
+        tablaHistoricoPrestamos.setVisible(false);
+        tablaLibros.setVisible(false);
+        tablaPrestamos.setVisible(false);
+
+        // Oculta los campos de filtro de búsqueda
+        lbFiltro.setVisible(false);
         tfFiltro.setVisible(false);
         lbFiltro2.setVisible(false);
         tfFiltro2.setVisible(false);
+
+        // Limpia los campos de filtro
         tfFiltro.setText("");
         tfFiltro2.setText("");
     }
-    
+
+    /**
+     * Muestra una ventana emergente de información con un mensaje proporcionado.
+     *
+     * @param mensaje Mensaje que se mostrará en la ventana emergente.
+     */
     private void alertaInformacion(String mensaje) {
-    	// Alerta de informacion con boton
-    	Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
-    	ventanaEmergente.setTitle("info");
-    	ventanaEmergente.setContentText(mensaje);
-    	Button ocultarBtn = new Button("Aceptar");
+        // Alerta de información con botón de aceptar
+        Alert ventanaEmergente = new Alert(Alert.AlertType.INFORMATION);
+        ventanaEmergente.setTitle("info");
+        ventanaEmergente.setContentText(mensaje);
+        Button ocultarBtn = new Button("Aceptar");
         ocultarBtn.setOnAction(e -> {
-        	ventanaEmergente.hide();
+            ventanaEmergente.hide();
         });
         ventanaEmergente.show();
     }
+
+    /**
+     * Maneja la acción del botón de ayuda offline.
+     *
+     * @param event Evento de acción.
+     */
+    @FXML
+    public void accionAyudaOffline(ActionEvent event) {
+        // Se crea un objeto FXMLLoader para cargar la interfaz de usuario desde un archivo FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/VisorAyudaOffline.fxml"));
+
+        // Se declara una variable Parent para contener el nodo raíz del árbol de la interfaz de usuario
+        Parent root;
+
+        try {
+            // Se carga la interfaz de usuario desde el archivo FXML
+            root = loader.load();
+
+            // Se crea una escena con el nodo raíz recién cargado
+            Scene scene = new Scene(root);
+
+            // Se crea un nuevo escenario (Stage) para mostrar la escena
+            Stage stage = new Stage();
+            stage.setScene(scene);
+
+            // Se establece el título de la ventana del escenario
+            stage.setTitle(bundle.getString("ayudaOffline"));
+
+            // Se muestra el escenario al usuario
+            stage.show();
+        } catch (IOException e) {
+            // En caso de error al cargar la interfaz de usuario, se muestra una alerta de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
 		    
     
     /* 	**************************************************************************************************************************************************
@@ -357,53 +397,83 @@ public class ListadoController implements Initializable{
      	**************************************************************************************************************************************************
      */
     
+    /**
+     * Columna para mostrar el DNI de los alumnos en la tabla.
+     */
     @FXML
-    private TableColumn<Alumno,String> colDni;
+    private TableColumn<Alumno, String> colDni;
+
+    /**
+     * Columna para mostrar el nombre de los alumnos en la tabla.
+     */
     @FXML
-    private TableColumn<Alumno,String> colNombreAlumno;
+    private TableColumn<Alumno, String> colNombreAlumno;
+
+    /**
+     * Columna para mostrar el primer apellido de los alumnos en la tabla.
+     */
     @FXML
-    private TableColumn<Alumno,String> colApellido1;
+    private TableColumn<Alumno, String> colApellido1;
+
+    /**
+     * Columna para mostrar el segundo apellido de los alumnos en la tabla.
+     */
     @FXML
-    private TableColumn<Alumno,String> colApellido2;
+    private TableColumn<Alumno, String> colApellido2;
+
+    /**
+     * Tabla que muestra la lista de alumnos.
+     */
     @FXML
     private TableView<Alumno> tablaAlumnos;
-    
+
+    /**
+     * Abre la ventana para añadir un nuevo alumno.
+     *
+     * @param event Evento de acción al hacer clic en el botón "Añadir Alumno".
+     */
     @FXML
     void accionAniadirAlumno(ActionEvent event) {
-    	try {
-    		String idioma = Propiedades.getValor("idioma");
- 	        String region = Propiedades.getValor("region");
- 	        
- 	        // Establecer la configuración regional por defecto
- 	        Locale.setDefault(new Locale(idioma, region));
- 	        
- 	        // Cargar los recursos de idioma
- 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
-	        // Abre la ventana para añadir un nuevo Deportista
-	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirAlumno.fxml"), bundle);
-	        Scene scene = new Scene(root);
-	        primaryStage.setTitle(bundle.getString("tituloAniadirAlumno"));
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
-	        e.printStackTrace();
-	    }
+        try {
+            String idioma = Propiedades.getValor("idioma");
+            String region = Propiedades.getValor("region");
+
+            // Establecer la configuración regional por defecto
+            Locale.setDefault(new Locale(idioma, region));
+
+            // Cargar los recursos de idioma
+            ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
+            // Abre la ventana para añadir un nuevo alumno
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirAlumno.fxml"), bundle);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle(bundle.getString("tituloAniadirAlumno"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+            e.printStackTrace();
+        }
     }
-    
+
+    /**
+     * Carga la tabla de alumnos con la lista obtenida de la base de datos, filtrada por la cadena de búsqueda.
+     *
+     * @param cadena Cadena de búsqueda para filtrar la lista de alumnos.
+     */
     private void cargarTablaAlumnos(String cadena) {
-	    try {
-	        // Carga la tabla de Deportes con la cadena de búsqueda
-	        AlumnoDao alumnoDao = new AlumnoDao();
-	        ObservableList<Alumno> listaAlumnos =  alumnoDao.cargarAlumnos(cadena);
-	        tablaAlumnos.setItems(listaAlumnos);
-	        tablaAlumnos.refresh();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir durante la carga
-	        e.printStackTrace();
-	    }
-	}
+        try {
+            // Carga la tabla de alumnos con la cadena de búsqueda
+            AlumnoDao alumnoDao = new AlumnoDao();
+            ObservableList<Alumno> listaAlumnos =  alumnoDao.cargarAlumnos(cadena);
+            tablaAlumnos.setItems(listaAlumnos);
+            tablaAlumnos.refresh();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir durante la carga
+            e.printStackTrace();
+        }
+    }
+
     
     /* 	**************************************************************************************************************************************************
  	**************************************************************************************************************************************************
@@ -412,57 +482,95 @@ public class ListadoController implements Initializable{
  	**************************************************************************************************************************************************
  	*/
 
-	@FXML
-	private TableColumn<Libro,Integer> colCodigoLibro;
-	@FXML
-	private TableColumn<Libro,String> colTituloLibro;
-	@FXML
-	private TableColumn<Libro,String> colAutorLibro;
-	@FXML
-	private TableColumn<Libro,String> colEditorialLibro;
-	@FXML
-	private TableColumn<Libro,String> colEstadoLibro;
-	@FXML
-	private TableColumn<Libro,Integer> colBajaLibro;
-	@FXML
-	private TableView<Libro> tablaLibros;
-	
-	@FXML
-	void accionAniadirLibro(ActionEvent event) {
-		try {
-    		String idioma = Propiedades.getValor("idioma");
- 	        String region = Propiedades.getValor("region");
- 	        
- 	        // Establecer la configuración regional por defecto
- 	        Locale.setDefault(new Locale(idioma, region));
- 	        
- 	        // Cargar los recursos de idioma
- 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
-	        // Abre la ventana para añadir un nuevo Deportista
-	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirLibro.fxml"), bundle);
-	        Scene scene = new Scene(root);
-	        primaryStage.setTitle(bundle.getString("tituloAniadirLibro"));
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
-	        e.printStackTrace();
-	    }
-	}
-	
-	private void cargarTablaLibros(String cadena) {
-	    try {
-	        // Carga la tabla de Deportes con la cadena de búsqueda
-	        LibroDao libroDao = new LibroDao();
-	        ObservableList<Libro> listaLibros =  libroDao.cargarLibros(cadena);
-	        tablaLibros.setItems(listaLibros);
-	        tablaLibros.refresh();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir durante la carga
-	        e.printStackTrace();
-	    }
-	}
+    /**
+     * Columna para mostrar el código de los libros en la tabla.
+     */
+    @FXML
+    private TableColumn<Libro, Integer> colCodigoLibro;
+
+    /**
+     * Columna para mostrar el título de los libros en la tabla.
+     */
+    @FXML
+    private TableColumn<Libro, String> colTituloLibro;
+
+    /**
+     * Columna para mostrar el autor de los libros en la tabla.
+     */
+    @FXML
+    private TableColumn<Libro, String> colAutorLibro;
+
+    /**
+     * Columna para mostrar la editorial de los libros en la tabla.
+     */
+    @FXML
+    private TableColumn<Libro, String> colEditorialLibro;
+
+    /**
+     * Columna para mostrar el estado de los libros en la tabla.
+     */
+    @FXML
+    private TableColumn<Libro, String> colEstadoLibro;
+
+    /**
+     * Columna para mostrar el estado de baja de los libros en la tabla.
+     */
+    @FXML
+    private TableColumn<Libro, Integer> colBajaLibro;
+
+    /**
+     * Tabla que muestra la lista de libros.
+     */
+    @FXML
+    private TableView<Libro> tablaLibros;
+
+    /**
+     * Abre la ventana para añadir un nuevo libro.
+     *
+     * @param event Evento de acción al hacer clic en el botón "Añadir Libro".
+     */
+    @FXML
+    void accionAniadirLibro(ActionEvent event) {
+        try {
+            String idioma = Propiedades.getValor("idioma");
+            String region = Propiedades.getValor("region");
+
+            // Establecer la configuración regional por defecto
+            Locale.setDefault(new Locale(idioma, region));
+
+            // Cargar los recursos de idioma
+            ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
+            // Abre la ventana para añadir un nuevo libro
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirLibro.fxml"), bundle);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle(bundle.getString("tituloAniadirLibro"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Carga la tabla de libros con la lista obtenida de la base de datos, filtrada por la cadena de búsqueda.
+     *
+     * @param cadena Cadena de búsqueda para filtrar la lista de libros.
+     */
+    private void cargarTablaLibros(String cadena) {
+        try {
+            // Carga la tabla de libros con la cadena de búsqueda
+            LibroDao libroDao = new LibroDao();
+            ObservableList<Libro> listaLibros =  libroDao.cargarLibros(cadena);
+            tablaLibros.setItems(listaLibros);
+            tablaLibros.refresh();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir durante la carga
+            e.printStackTrace();
+        }
+    }
+
 	
 	/* 	**************************************************************************************************************************************************
  	**************************************************************************************************************************************************
@@ -471,53 +579,83 @@ public class ListadoController implements Initializable{
  	**************************************************************************************************************************************************
  	*/
 
-	@FXML
-	private TableColumn<Prestamo,Integer> colIdPrestamo;
-	@FXML
-	private TableColumn<Prestamo,String> colDniPrestamo;
-	@FXML
-	private TableColumn<Prestamo,String> colFechaPrestamo;
-	@FXML
-	private TableColumn<Prestamo,Integer> colCodigoLibroPrestamo;
-	@FXML
-	private TableView<Prestamo> tablaPrestamos;
-	
-	@FXML
-	void accionAniadirPrestamo(ActionEvent event) {
-		try {
-    		String idioma = Propiedades.getValor("idioma");
- 	        String region = Propiedades.getValor("region");
- 	        
- 	        // Establecer la configuración regional por defecto
- 	        Locale.setDefault(new Locale(idioma, region));
- 	        
- 	        // Cargar los recursos de idioma
- 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
-	        // Abre la ventana para añadir un nuevo Deportista
-	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirPrestamo.fxml"), bundle);
-	        Scene scene = new Scene(root);
-	        primaryStage.setTitle(bundle.getString("tituloAniadirAlumno"));
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
-	        e.printStackTrace();
-	    }
-	}
-	
-	private void cargarTablaPrestamo(String cadena) {
-	    try {
-	        // Carga la tabla de Deportes con la cadena de búsqueda
-	        PrestamoDao prestamoDao = new PrestamoDao();
-	        ObservableList<Prestamo> listaPrestamos =  prestamoDao.cargarPrestamos(cadena);
-	        tablaPrestamos.setItems(listaPrestamos);
-	        tablaPrestamos.refresh();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir durante la carga
-	        e.printStackTrace();
-	    }
-	}
+    /**
+     * Columna para mostrar el ID de los préstamos en la tabla.
+     */
+    @FXML
+    private TableColumn<Prestamo, Integer> colIdPrestamo;
+
+    /**
+     * Columna para mostrar el DNI asociado a los préstamos en la tabla.
+     */
+    @FXML
+    private TableColumn<Prestamo, String> colDniPrestamo;
+
+    /**
+     * Columna para mostrar la fecha de los préstamos en la tabla.
+     */
+    @FXML
+    private TableColumn<Prestamo, String> colFechaPrestamo;
+
+    /**
+     * Columna para mostrar el código de los libros asociados a los préstamos en la tabla.
+     */
+    @FXML
+    private TableColumn<Prestamo, Integer> colCodigoLibroPrestamo;
+
+    /**
+     * Tabla que muestra la lista de préstamos.
+     */
+    @FXML
+    private TableView<Prestamo> tablaPrestamos;
+
+    /**
+     * Abre la ventana para añadir un nuevo préstamo.
+     *
+     * @param event Evento de acción al hacer clic en el botón "Añadir Préstamo".
+     */
+    @FXML
+    void accionAniadirPrestamo(ActionEvent event) {
+        try {
+            String idioma = Propiedades.getValor("idioma");
+            String region = Propiedades.getValor("region");
+
+            // Establecer la configuración regional por defecto
+            Locale.setDefault(new Locale(idioma, region));
+
+            // Cargar los recursos de idioma
+            ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
+            // Abre la ventana para añadir un nuevo préstamo
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirPrestamo.fxml"), bundle);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle(bundle.getString("tituloAniadirPrestamo"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Carga la tabla de préstamos con la lista obtenida de la base de datos, filtrada por la cadena de búsqueda.
+     *
+     * @param cadena Cadena de búsqueda para filtrar la lista de préstamos.
+     */
+    private void cargarTablaPrestamo(String cadena) {
+        try {
+            // Carga la tabla de préstamos con la cadena de búsqueda
+            PrestamoDao prestamoDao = new PrestamoDao();
+            ObservableList<Prestamo> listaPrestamos =  prestamoDao.cargarPrestamos(cadena);
+            tablaPrestamos.setItems(listaPrestamos);
+            tablaPrestamos.refresh();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir durante la carga
+            e.printStackTrace();
+        }
+    }
+
 	
 	/* 	**************************************************************************************************************************************************
  	**************************************************************************************************************************************************
@@ -526,54 +664,90 @@ public class ListadoController implements Initializable{
  	**************************************************************************************************************************************************
  	*/
 
-	@FXML
-	private TableColumn<HistoricoPrestamo,Integer> colIdHistorico;
-	@FXML
-	private TableColumn<HistoricoPrestamo,String> colDniHistorico;
-	@FXML
-	private TableColumn<HistoricoPrestamo,Integer> colIdLibroHistorico;
-	@FXML
-	private TableColumn<HistoricoPrestamo,String> colFechaPrestamoHistorico;
-	@FXML
-	private TableColumn<HistoricoPrestamo,String> colFechaDevolucionHistorico;
-	@FXML
-	private TableView<HistoricoPrestamo> tablaHistoricoPrestamos;
-	
-	@FXML
-	void accionAniadirHistorico(ActionEvent event) {
-		try {
-    		String idioma = Propiedades.getValor("idioma");
- 	        String region = Propiedades.getValor("region");
- 	        
- 	        // Establecer la configuración regional por defecto
- 	        Locale.setDefault(new Locale(idioma, region));
- 	        
- 	        // Cargar los recursos de idioma
- 	        ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
-	        // Abre la ventana para añadir un nuevo Deportista
-	        Stage primaryStage = new Stage();
-	        GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirHistoricoPrestamo.fxml"), bundle);
-	        Scene scene = new Scene(root);
-	        primaryStage.setTitle(bundle.getString("tituloAniadirAlumno"));
-	        primaryStage.setScene(scene);
-	        primaryStage.show();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
-	        e.printStackTrace();
-	    }
-	}
-	
-	private void cargarTablaHistorico(String dni, String codigo) {
-	    try {
-	        // Carga la tabla de Deportes con la cadena de búsqueda
-	        HistoricoDao historicoDao = new HistoricoDao();
-	        ObservableList<HistoricoPrestamo> listaHistoricos =  historicoDao.cargarHistoricoPrestamos(dni, codigo);
-	        tablaHistoricoPrestamos.setItems(listaHistoricos);
-	        tablaHistoricoPrestamos.refresh();
-	    } catch(Exception e) {
-	        // Maneja cualquier excepción que pueda ocurrir durante la carga
-	        e.printStackTrace();
-	    }
-	}
+    /**
+     * Columna para mostrar el ID de los registros históricos de préstamos en la tabla.
+     */
+    @FXML
+    private TableColumn<HistoricoPrestamo, Integer> colIdHistorico;
+
+    /**
+     * Columna para mostrar el DNI asociado a los registros históricos de préstamos en la tabla.
+     */
+    @FXML
+    private TableColumn<HistoricoPrestamo, String> colDniHistorico;
+
+    /**
+     * Columna para mostrar el ID del libro asociado a los registros históricos de préstamos en la tabla.
+     */
+    @FXML
+    private TableColumn<HistoricoPrestamo, Integer> colIdLibroHistorico;
+
+    /**
+     * Columna para mostrar la fecha de préstamo de los registros históricos en la tabla.
+     */
+    @FXML
+    private TableColumn<HistoricoPrestamo, String> colFechaPrestamoHistorico;
+
+    /**
+     * Columna para mostrar la fecha de devolución de los registros históricos en la tabla.
+     */
+    @FXML
+    private TableColumn<HistoricoPrestamo, String> colFechaDevolucionHistorico;
+
+    /**
+     * Tabla que muestra el historial de préstamos.
+     */
+    @FXML
+    private TableView<HistoricoPrestamo> tablaHistoricoPrestamos;
+
+    /**
+     * Abre la ventana para añadir un nuevo registro histórico de préstamo.
+     *
+     * @param event Evento de acción al hacer clic en el botón "Añadir Histórico".
+     */
+    @FXML
+    void accionAniadirHistorico(ActionEvent event) {
+        try {
+            String idioma = Propiedades.getValor("idioma");
+            String region = Propiedades.getValor("region");
+
+            // Establecer la configuración regional por defecto
+            Locale.setDefault(new Locale(idioma, region));
+
+            // Cargar los recursos de idioma
+            ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
+            // Abre la ventana para añadir un nuevo registro histórico de préstamo
+            Stage primaryStage = new Stage();
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirHistoricoPrestamo.fxml"), bundle);
+            Scene scene = new Scene(root);
+            primaryStage.setTitle(bundle.getString("tituloAniadirHistorico"));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir al abrir la ventana
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Carga la tabla de registros históricos de préstamos con la lista obtenida de la base de datos,
+     * filtrada por el DNI del alumno y el código del libro.
+     *
+     * @param dni    DNI del alumno para filtrar la lista de registros históricos.
+     * @param codigo Código del libro para filtrar la lista de registros históricos.
+     */
+    private void cargarTablaHistorico(String dni, String codigo) {
+        try {
+            // Carga la tabla de registros históricos con el DNI y código de libro proporcionados
+            HistoricoDao historicoDao = new HistoricoDao();
+            ObservableList<HistoricoPrestamo> listaHistoricos =  historicoDao.cargarHistoricoPrestamos(dni, codigo);
+            tablaHistoricoPrestamos.setItems(listaHistoricos);
+            tablaHistoricoPrestamos.refresh();
+        } catch(Exception e) {
+            // Maneja cualquier excepción que pueda ocurrir durante la carga
+            e.printStackTrace();
+        }
+    }
+
 
 }
